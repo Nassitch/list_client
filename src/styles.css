@@ -1,1 +1,48 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --main-color: #000000;
+  --second-color: #fff;
+  --background-color: #eee;
+  /* Couleurs inputs. */
+  --background-input: rgba(242, 241, 238, 0.6);
+  /* Couleurs de messages d'alerte */
+  --succes-msg: #355233;
+  --succes-background: #d4eed9;
+  --error-msg: #3f1519;
+  --error-background: #f7d7da;
+}
+
+[data-theme="dark"] {
+  --text-color: white;
+  --second-color: #212128;
+  --sub-title: #eee;
+  --window-color: #212128;
+  --window-btn: #eee;
+  --background-page: black;
+  --text-btn: white;
+  --background-pop-up: #ffffff60;
+  --color-card: #5e5cfc;
+  --background-input: #212128;
+}
+
+.auth {
+    height: 100vh;
+    width: 100vw;
+}
+
+.input-text {
+  height: 50px;
+  width: 250px;
+  padding: 5px 15px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+}
+
+.input-text > label {
+    font-size: 14px;
+}
+
+.input-text > input {
+  width: 100%;
+  background-color: var(--background-color);
+  border: none;
+}

@@ -1,0 +1,61 @@
+<section class="d-flex flex-column justify-center align-center auth">
+
+    <h2 class="mb-8 text-6">S'inscrire à <span>List.</span></h2>
+    
+    <div class="input-text mb-4">
+        <label for="email">PRÉNOM *</label>
+        <input
+        name="firstName"
+        id="firstName"
+        [(ngModel)]="firstName"
+        />
+    </div>
+    
+    <div class="input-text mb-4">
+        <label for="email">NOM *</label>
+        <input
+        name="lastName"
+        id="lastName"
+        [(ngModel)]="lastName"
+        />
+    </div>
+    
+    <div class="d-flex">
+        <label for="email">AVATAR *</label>
+        @if (avatars$ | async; as avatars) {
+            @for (avatar of avatars; track $index) {
+                <img [src]="_URL_IMG + avatar" alt="avatar" />
+            }
+        }
+    </div>
+    
+    <div class="input-text mb-4">
+        <label for="email">ADRESSE *</label>
+        <input
+        name="password"
+        id="password"
+        [(ngModel)]="address"
+        />
+    </div>
+    
+    <div class="input-text mb-4">
+        <label for="email">VILLE *</label>
+        <input
+        name="password"
+        id="password"
+        [(ngModel)]="city"
+        />
+    </div>
+    
+    <div class="input-text mb-4">
+        <label for="email">CODE POSTALE *</label>
+        <input
+        type="number"
+        name="zipCode"
+        id="zipCode"
+        [(ngModel)]="zipCode"
+        />
+    </div>
+    
+    <app-submit-btn class="mt-6" [text]="textBtn" [onClick]="onSubmit"></app-submit-btn>
+</section>
