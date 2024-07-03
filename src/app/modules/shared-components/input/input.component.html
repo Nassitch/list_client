@@ -1,0 +1,11 @@
+<div>
+    <label [htmlFor]="name">{{ placeholder }}</label>
+    <input 
+    [type]="type"
+    [name]="name"
+    [(ngModel)]="value"
+    (change)="show()"
+    [placeholder]="placeholder"
+    [required]="required"
+    />
+</div>

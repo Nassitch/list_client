@@ -1,0 +1,28 @@
+<section class="d-flex flex-column justify-center align-center auth">
+
+    <h2 class="mb-8 text-6">Se connecter à <span>List.</span></h2>
+    
+    <div class="input-text mb-4">
+        <label for="email">EMAIL*</label>
+        <input
+        name="email"
+        id="email"
+        [(ngModel)]="email"
+        />
+    </div>
+    
+    <div class="input-text mb-4">
+        <label for="email">MOT DE PASSE*</label>
+        <input
+        type="password"
+        name="password"
+        id="password"
+        [(ngModel)]="password"
+        />
+    </div>
+    
+    <app-submit-btn class="mt-6" [text]="textBtn" [onClick]="onSubmit"></app-submit-btn>
+
+    <p class="text-underline mt-4">Mot de passe oublié ?</p>
+    <p class="mt-4">Pas de compte ? <a class="text-underline" [routerLink]="['/signin']">Inscrivez-vous</a></p>
+</section>
