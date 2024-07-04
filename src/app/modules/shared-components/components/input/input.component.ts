@@ -7,9 +7,9 @@ import {
   inject,
 } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { ControlType, InputType } from '../models/input.type';
+import { ControlType, InputType } from '../../models/input.type';
 import { CommonModule } from '@angular/common';
-import { HandleFormErrorService } from '../services/handle-form-error.service';
+import { HandleFormErrorService } from '../../services/handle-form-error.service';
 
 @Component({
   standalone: true,
