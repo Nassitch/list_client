@@ -7,6 +7,7 @@ import { TokenService } from '../../../../core/services/token.service';
 import { UserToken } from '../../../../models/user-token.interface';
 import { TokenResponse } from '../../../../models/token-response.interface';
 import { AuthRequest } from '../../models/auth-request.interface';
+import { UserInfo } from '../../../user/models/user-info.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,8 @@ export class AuthService {
   private _BASE_URL: string = environment._BASE_URL;
   private _AUTH: string = environment._AUTH;
   private _AUTHENTIFICATE: string = environment._AUTHENTIFICATE;
-  private _REGISTER: string = environment._REGISTER;
+  private _REGISTER_LOG: string = environment._REGISTER_LOG;
+  private _REGISTER_USER: string = environment._REGISTER_USER;
 
   login$(user: AuthRequest): Observable<any> {
     return this.http.post(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
@@ -57,25 +59,29 @@ export class AuthService {
   }
 
   signup$(newUser: AuthRequest): Observable<any> {
-    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER}`, newUser)
+    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
     .pipe(
       mergeMap((user: any) => this.login$(newUser)
-        .pipe(
-          catchError((authError) => {
-            console.error('Error while logging in:', authError);
-            return of(null);
-          }),
-          map(() => ({
-            success: true,
-            message: 'Inscription et connexion réussies'
-          }))
-        )
-      ),
-      catchError((error: HttpErrorResponse) => {
-        console.error('Erreur lors de l\'inscription:', error);
-        return of({ success: false, message: 'Erreur lors de l\'inscription' });
-      })
-    );
+      .pipe(
+        catchError((authError) => {
+          console.error('Error while logging in:', authError);
+          return of(null);
+        }),
+        map(() => ({
+          success: true,
+          message: 'Inscription et connexion réussies'
+        }))
+      )
+    ),
+    catchError((error: HttpErrorResponse) => {
+      console.error('Erreur lors de l\'inscription:', error);
+      return of({ success: false, message: 'Erreur lors de l\'inscription' });
+    })
+  );
+}
+
+register$(userInfo: UserInfo): Observable<any> {
+    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`, userInfo)
   }
 
   getCurrentUser(): Observable<UserToken | null> {

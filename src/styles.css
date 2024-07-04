@@ -25,13 +25,13 @@
 }
 
 .auth {
-  height: 90vh;
+  height: 96vh;
   margin-inline: 50px;
 }
 
 .avatar-choice {
-  width: 80%;
-  margin-left: 70px;
+  width: 110%;
+  margin-left: 65px;
 }
 
 .avatar-list {
