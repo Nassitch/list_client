@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './components/login/login.component';
-import { SigninComponent } from './components/signin/signin.component';
+import { SignupComponent } from './components/signin/signup.component';
 import { SubmitBtnComponent } from '../shared-components/submit-btn/submit-btn.component';
 import { InputComponent } from '../shared-components/input/input.component';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +14,7 @@ import { RegisterComponent } from './components/register/register.component';
 @NgModule({
   declarations: [
     LoginComponent,
-    SigninComponent,
+    SignupComponent,
     RegisterComponent
   ],
   imports: [
@@ -23,6 +23,7 @@ import { RegisterComponent } from './components/register/register.component';
     AuthRoutingModule,
     FormsModule,
     SubmitBtnComponent,
+    InputComponent
     // InputComponent
   ]
 })
