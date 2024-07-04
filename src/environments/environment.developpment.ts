@@ -4,7 +4,8 @@ export const environment = {
     _AUTH: "/auth",
     _PUBLIC: "/public",
     _AUTHENTIFICATE: "/authenticate",
-    _REGISTER: "/register-log",
+    _REGISTER_LOG: "/register-log",
+    _REGISTER_USER: "/register-user",
     _UPLOAD: "/upload",
     _READ: "/read",
     _READ_ALL: "/read/all"

@@ -1,65 +1,71 @@
 <section class="d-flex flex-column justify-center align-center auth">
+  <h2 class="mt-8 mb-8 text-6">Enregistrer sur <span>List.</span></h2>
 
-    <h2 class="mb-8 text-6">Completez votre profile.</h2>
-    
-    <div class="input-text mb-4">
-        <label for="email">PRÉNOM *</label>
-        <input
-        name="firstName"
-        id="firstName"
-        [(ngModel)]="firstName"
-        />
+  <app-input
+    [control]="getFormControl('firstName')"
+    [controlName]="'firstName'"
+    [type]="'text'"
+    [label]="'PRÉNOM *'"
+    [placeholder]="'John'"
+  ></app-input>
+
+  <app-input
+    [control]="getFormControl('lastName')"
+    [controlName]="'lastName'"
+    [type]="'text'"
+    [label]="'NOM *'"
+    [placeholder]="'Doe'"
+  ></app-input>
+
+  <div class="d-flex flex-column mb-4 avatar-choice">
+    <label for="email">AVATAR *</label>
+    <div class="avatar-list mt-4">
+      @if (avatars$ | async; as avatars) { 
+        @for (avatar of avatars; track $index) {
+            <button (click)="takeAvatar(avatar)">
+                <img
+                [src]="_URL_IMG + avatar"
+                [ngClass]="{ selected: avatar === picture }"
+                alt="avatar"
+                />
+            </button>
+      }
+    }
     </div>
-    
-    <div class="input-text mb-4">
-        <label for="email">NOM *</label>
-        <input
-        name="lastName"
-        id="lastName"
-        [(ngModel)]="lastName"
-        />
-    </div>
-    
-    <div class="d-flex flex-column mb-4 avatar-choice">
-        <label for="email">AVATAR *</label>
-        <div class="avatar-list mt-4">
-        @if (avatars$ | async; as avatars) {
-                @for (avatar of avatars; track $index) {
-                    <button (click)="takeAvatar(avatar)">
-                        <img [src]="_URL_IMG + avatar" [ngClass]="{'selected' : avatar === picture}" alt="avatar"/>
-                    </button>
-                }
-            }
-        </div>
-    </div>
-    
-    <div class="input-text mb-4">
-        <label for="email">ADRESSE *</label>
-        <input
-        name="password"
-        id="password"
-        [(ngModel)]="address"
-        />
-    </div>
-    
-    <div class="input-text mb-4">
-        <label for="email">VILLE *</label>
-        <input
-        name="password"
-        id="password"
-        [(ngModel)]="city"
-        />
-    </div>
-    
-    <div class="input-text mb-4">
-        <label for="email">CODE POSTALE *</label>
-        <input
-        type="number"
-        name="zipCode"
-        id="zipCode"
-        [(ngModel)]="zipCode"
-        />
-    </div>
-    
-    <app-submit-btn class="mt-6" [text]="textBtn" [onClick]="onSubmit"></app-submit-btn>
+  </div>
+
+  <app-input
+    [control]="getFormControl('address')"
+    [controlName]="'address'"
+    [type]="'text'"
+    [label]="'ADRESSE *'"
+    [placeholder]="'15 Rue Bel-Air'"
+  ></app-input>
+
+  <app-input
+    [control]="getFormControl('city')"
+    [controlName]="'city'"
+    [type]="'text'"
+    [label]="'VILLE *'"
+    [placeholder]="'Bordeaux'"
+  ></app-input>
+
+  <app-input
+    [control]="getFormControl('zipCode')"
+    [controlName]="'zipCode'"
+    [type]="'text'"
+    [label]="'CODE POSTAL *'"
+    [placeholder]="'33100'"
+  ></app-input>
+
+  <app-submit-btn
+    class="mt-6"
+    [text]="textBtn"
+    (click)="onSubmit()"
+  ></app-submit-btn>
+
+  <p class="mt-4">
+    Déjà un compte ?
+    <a class="text-underline" [routerLink]="['/login']">Connectez-vous</a>
+  </p>
 </section>

@@ -51,11 +51,6 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.formGroup) {
-      console.error('FormGroup is not initialized');
-      return;
-    }
-
     if (this.formGroup.invalid) {
       Object.keys(this.formGroup.controls).forEach((key) => {
         const control = this.formGroup.get(key);
