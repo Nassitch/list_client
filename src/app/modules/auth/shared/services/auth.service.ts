@@ -19,7 +19,7 @@ export class AuthService {
     return this.http.post(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, {email, password})
   }
 
-  signin$(pseudo: string, email: string, password: string): Observable<any> {
+  signup$(pseudo: string, email: string, password: string): Observable<any> {
     return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER}`, {pseudo, email, password})
   }
 }

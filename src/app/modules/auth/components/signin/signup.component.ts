@@ -2,11 +2,11 @@ import { Component, inject } from '@angular/core';
 import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
-  selector: 'app-signin',
-  templateUrl: './signin.component.html',
-  styleUrl: './signin.component.css'
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.css'
 })
-export class SigninComponent {
+export class SignupComponent {
 
   private authService = inject(AuthService);
 
@@ -22,7 +22,7 @@ export class SigninComponent {
     console.log("userName: " + this.email);
     console.log("password: " + this.password);
   
-    this.authService.signin$(this.pseudo, this.email, this.password)
+    this.authService.signup$(this.pseudo, this.email, this.password)
         .subscribe(
           response => {
             console.log("Réponse du serveur:", response);
