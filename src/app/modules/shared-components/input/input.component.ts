@@ -1,26 +1,59 @@
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  inject,
+} from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { ControlType, InputType } from '../models/input.type';
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { HandleFormErrorService } from '../services/handle-form-error.service';
 
 @Component({
-  selector: 'app-input',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [CommonModule, ReactiveFormsModule],
+  selector: 'app-input',
   templateUrl: './input.component.html',
-  styleUrl: './input.component.css'
+  styleUrl: './input.component.scss',
 })
-export class InputComponent {
+export class InputComponent implements OnInit {
+  
+  @Input() public autocomplete = 'off';
+  @Input({ required: true }) public control!: FormControl;
+  @Input({ required: true }) public controlName = '';
+  @Input() public controlType: ControlType = '';
+  @Input() public debounce = 400;
+  @Input() public inputClass = '';
+  @Input() public label?: string;
+  @Input() public labelClass = '';
+  @Input() public placeholder = '';
+  @Input() public type: InputType = 'text';
+  @Input() public disabled = false;
 
-  @Input() name: string = '';
-  @Input() id: string = '';
-  @Input() type: string = 'text';
-  @Input() value: string = '';
-  @Input() placeholder: string = '';
-  @Input() required: boolean = false;
+  @Output() public valueChange = new EventEmitter<string>();
 
-  @Output() valueEmitter = new EventEmitter<string>();
 
-  show(): void {
-    this.valueEmitter.emit(this.value);
+  private readonly handleFormErrorService = inject(HandleFormErrorService);
+
+  isPasswordVisible: boolean = false;
+  isPasswordField: boolean = false;
+
+  ngOnInit() {
+    this.isPasswordField = this.type === 'password';
+  }
+
+  togglePasswordVisibility() {
+    this.isPasswordVisible = !this.isPasswordVisible;
+    this.type = this.isPasswordVisible ? 'text' : 'password';
+  }
+
+  get showError(): boolean {
+    return this.control.invalid && this.control.touched;
+  }
+
+  get errorMessage(): string | undefined {
+    return this.handleFormErrorService.getErrorMessage(this.control);
   }
 }

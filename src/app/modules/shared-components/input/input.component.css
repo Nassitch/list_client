@@ -1,0 +1,47 @@
+/* Default. */
+.input-text {
+    height: 50px;
+    width: 100%;
+    padding: 5px 15px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+  }
+  
+  .input-text > label {
+      font-size: 14px;
+  }
+  
+  .input-text > input {
+    width: 100%;
+    background-color: var(--background-color);
+    border: none;
+  }
+
+  /* Password. */
+  .input-password {
+    width: 100%;
+}
+
+.input-password > button {
+  height: 50px;
+  width: 50px;
+  background: none;
+  border: none;
+}
+
+.input-password > button > img {
+  width: 100%;
+}
+
+.input-password > div {
+    height: 50px;
+    padding: 5px 15px;
+    background-color: var(--background-color);
+    border-radius: 10px;
+}
+
+.input-password > div > input {
+    width: 100%;
+    background-color: var(--background-color);
+    border: none;
+  }
