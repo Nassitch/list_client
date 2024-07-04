@@ -1,6 +1,6 @@
 <section class="d-flex flex-column justify-center align-center auth">
 
-    <h2 class="mb-8 text-6">S'inscrire à <span>List.</span></h2>
+    <h2 class="mb-8 text-6">Completez votre profile.</h2>
     
     <div class="input-text mb-4">
         <label for="email">PRÉNOM *</label>
@@ -20,13 +20,17 @@
         />
     </div>
     
-    <div class="d-flex">
+    <div class="d-flex flex-column mb-4 avatar-choice">
         <label for="email">AVATAR *</label>
+        <div class="avatar-list mt-4">
         @if (avatars$ | async; as avatars) {
-            @for (avatar of avatars; track $index) {
-                <img [src]="_URL_IMG + avatar" alt="avatar" />
+                @for (avatar of avatars; track $index) {
+                    <button (click)="takeAvatar(avatar)">
+                        <img [src]="_URL_IMG + avatar" [ngClass]="{'selected' : avatar === picture}" alt="avatar"/>
+                    </button>
+                }
             }
-        }
+        </div>
     </div>
     
     <div class="input-text mb-4">

@@ -46,3 +46,30 @@
   background-color: var(--background-color);
   border: none;
 }
+
+.avatar-choice {
+  width: 80%;
+  margin-left: 70px;
+}
+
+.avatar-list {
+  display: flex;
+  overflow: auto;
+}
+
+.avatar-list > button {
+  min-width: 100px;
+  margin-inline: 5px;
+  border: none;
+  background: none;
+}
+
+.avatar-list > button > img {
+  width: 100%;
+  border-radius: 50%;
+  border: 2px solid var(--background-color);
+}
+
+.avatar-list > button > img.selected {
+  border: 2px solid var(--main-color);
+}

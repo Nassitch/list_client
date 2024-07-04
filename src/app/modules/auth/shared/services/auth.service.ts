@@ -8,8 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
 
-  // protected http = inject(HttpClient)
-  constructor(private http: HttpClient) {}
+  protected http = inject(HttpClient)
 
   private _BASE_URL: string = environment._BASE_URL;
   private _AUTH: string = environment._AUTH;
