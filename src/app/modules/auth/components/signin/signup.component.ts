@@ -6,6 +6,7 @@ import { AuthRequest } from '../../models/auth-request.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { passwordMatchValidator } from '../../../shared-components/validators/password-match.validator';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
+import { ToastService } from '../../../shared-components/services/toast.service';
 
 @Component({
   selector: 'app-signup',
@@ -18,6 +19,7 @@ export class SignupComponent implements OnInit {
   private authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   formGroup!: FormGroup;
 
@@ -70,12 +72,14 @@ export class SignupComponent implements OnInit {
     this.newUser$.subscribe({
       next: (user) => {
         if (user) {
+          this.toastService.show('Votre compte à bien été créer.', 'Succès', 'success');
           this.router.navigate(['/register']);
         } else {
           console.error('User ID is undefined');
         }
       },
       error: (error) => {
+        this.toastService.show('Erreur lors de la création du compte.', 'Erreur', 'error')
         console.error("Erreur lors de la création de l'utilisateur", error);
       },
     });
