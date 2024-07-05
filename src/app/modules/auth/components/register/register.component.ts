@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of, switchMap } from 'rxjs';
 import { UserService } from '../../../user/shared/services/user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
@@ -7,6 +7,7 @@ import { UserInfo } from '../../../user/models/user-info.interface';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared-components/services/toast.service';
+import { UserToken } from '../../../../models/user-token.interface';
 
 @Component({
   selector: 'app-register',
@@ -82,24 +83,38 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    const userInfo: UserInfo = {
-      firstName: this.formGroup.get('firstName')?.value,
-      lastName: this.formGroup.get('lastName')?.value,
-      picture: this.picture,
-      address: this.formGroup.get('address')?.value,
-      city: this.formGroup.get('city')?.value,
-      zipCode: this.formGroup.get('zipCode')?.value,
-    };
+    this.authService.getCurrentUser().pipe(
+      switchMap((user: UserToken | null) => {
+        if (!user || !user.loginId) {
+          console.error('User not authenticated or loginId not found');
+          return of(null);
+        }
 
-    this.authService.register$(userInfo).subscribe({
-      next: (response) => {
-        console.log('User registered successfully', response);
-        this.toastService.show('Vos données sont correctement enregistrées.', 'Succès', 'success');
+        const userInfo: UserInfo = {
+          firstName: this.formGroup.get('firstName')?.value,
+          lastName: this.formGroup.get('lastName')?.value,
+          picture: this.picture,
+          address: this.formGroup.get('address')?.value,
+          city: this.formGroup.get('city')?.value,
+          zipCode: this.formGroup.get('zipCode')?.value,
+          loginId: user.loginId,
+        };
+
+        console.log(userInfo);
+
+        return this.authService.register$(userInfo).pipe(
+          catchError((error) => {
+            this.toastService.show('Erreur lors de la création du compte.', 'Erreur', 'error')
+            console.error('Error registering user', error);
+            return of(null);
+          })
+        );
+      })
+    ).subscribe((response) => {
+      if (response) {
+        this.toastService.show('Vos données sont bien enregistrées.', 'Succès', 'success');
         this.router.navigate(['/']);
-      },
-      error: (error) => {
-        this.toastService.show('Une erreur est survenue, veuillez réessayer plus tard.', 'Erreur', 'error')
-        console.error('Error registering user', error);
+        console.log('User registered successfully', response);
       }
     });
   }
