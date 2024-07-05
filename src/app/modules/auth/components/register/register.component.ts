@@ -6,6 +6,7 @@ import { assertFormControl } from '../../../shared-components/utils/assert-form-
 import { UserInfo } from '../../../user/models/user-info.interface';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
+import { ToastService } from '../../../shared-components/services/toast.service';
 
 @Component({
   selector: 'app-register',
@@ -17,6 +18,7 @@ export class RegisterComponent implements OnInit {
   private userService = inject(UserService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   formGroup!: FormGroup;
 
@@ -92,9 +94,11 @@ export class RegisterComponent implements OnInit {
     this.authService.register$(userInfo).subscribe({
       next: (response) => {
         console.log('User registered successfully', response);
-        this.router.navigate(['/home']);
+        this.toastService.show('Vos données sont correctement enregistrées.', 'Succès', 'success');
+        this.router.navigate(['/']);
       },
       error: (error) => {
+        this.toastService.show('Une erreur est survenue, veuillez réessayer plus tard.', 'Erreur', 'error')
         console.error('Error registering user', error);
       }
     });

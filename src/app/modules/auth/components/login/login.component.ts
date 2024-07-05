@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AuthRequest } from '../../models/auth-request.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
+import { ToastService } from '../../../shared-components/services/toast.service';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit {
   private authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   email: string = '';
   password: string = '';
@@ -50,6 +52,7 @@ export class LoginComponent implements OnInit {
 
     this.loginResult$.subscribe((result) => {
       if (result.success) {
+        this.toastService.show('Connexion réussie', 'Succès', 'success');
         this.authService.getCurrentUser().subscribe((currentUser) => {
           if (currentUser) {
             if (currentUser.userId) {
@@ -62,6 +65,7 @@ export class LoginComponent implements OnInit {
           }
         });
       } else {
+        this.toastService.show(result.message, 'Erreur', 'error');
         console.error(result.message);
       }
     });
