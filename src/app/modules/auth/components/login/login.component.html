@@ -1,0 +1,35 @@
+<section class="d-flex flex-column justify-center align-center auth">
+
+    <h2 class="mb-8 text-6">Se connecter à <span>List.</span></h2>
+    
+    <app-input
+    [control]="getFormControl('email')"
+    [controlName]="'email'"
+    [type]="'email'"
+    [label]="'EMAIL *'"
+    [placeholder]="'user@list.com'"
+  ></app-input>
+
+  <app-input
+  [control]="getFormControl('password')"
+  [controlName]="'password'"
+  [type]="'password'"
+  [label]="'MOT DE PASSE *'"
+  [placeholder]="'***************'"
+></app-input>
+    
+    <app-submit-btn class="mt-6" [text]="textBtn" [onClick]="onSubmit"></app-submit-btn>
+
+    @if(loginResult$ | async; as loginResult){ 
+        @if(loginResult.success){
+          <p>Connexion réussie !</p>
+        } 
+      
+        @if(!loginResult.success){
+          <p class="error">Connexion échouée : {{ loginResult.message }}</p>
+        }
+      }
+
+    <p class="text-underline mt-4">Mot de passe oublié ?</p>
+    <p class="mt-4">Pas de compte ? <a class="text-underline" [routerLink]="['/signup']">Inscrivez-vous</a></p>
+</section>

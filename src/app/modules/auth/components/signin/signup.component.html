@@ -1,0 +1,40 @@
+<section class="d-flex flex-column justify-center align-center auth">
+
+  <h2 class="mb-8 text-6">S'inscrire à <span>List.</span></h2>
+
+  <app-input
+    [control]="getFormControl('pseudo')"
+    [controlName]="'pseudo'"
+    [type]="'text'"
+    [label]="'PSEUDO *'"
+    [placeholder]="'user01'"
+  ></app-input>
+
+  <app-input
+    [control]="getFormControl('email')"
+    [controlName]="'email'"
+    [type]="'email'"
+    [label]="'EMAIL *'"
+    [placeholder]="'user@list.com'"
+  ></app-input>
+
+  <app-input
+    [control]="getFormControl('password')"
+    [controlName]="'password'"
+    [type]="'password'"
+    [label]="'MOT DE PASSE *'"
+    [placeholder]="'***************'"
+  ></app-input>
+
+  <app-input
+    [control]="getFormControl('confirmPassword')"
+    [controlName]="'confirmPassword'"
+    [type]="'password'"
+    [label]="'CONFIRMER *'"
+    [placeholder]="'***************'"
+  ></app-input>
+
+  <app-submit-btn class="mt-6" [text]="textBtn" (click)="onSubmit()"></app-submit-btn>
+
+  <p class="mt-4">Déjà un compte ? <a class="text-underline" [routerLink]="['/login']">Connectez-vous</a></p>
+</section>

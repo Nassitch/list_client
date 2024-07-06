@@ -1,0 +1,8 @@
+<div class="toast-container">
+    @for (toast of toasts; track $index) {
+        <div class="toast d-flex flex-column " [ngClass]="toast.type" [@toastAnimation] >
+            <strong class="mb-4">{{ toast.title }} :</strong>
+            <p>{{ toast.message }}</p>
+        </div>
+    }
+</div>
