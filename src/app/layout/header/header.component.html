@@ -1,24 +1,26 @@
-<div class="d-flex header">
-    <div class="nav-section">
-        <button class="ghost-btn" type="button" (click)="navigateTo('/shop')">
-            <img src="../../../assets/icons/shop.svg" />
-        </button>
-        
-        <button class="ghost-btn" type="button" (click)="navigateTo('/search')">
-            <img src="../../../assets/icons/search.svg" />
-        </button>
-        
-        <button class="ghost-btn" type="button" (click)="navigateTo('/')">
-            <img src="../../../assets/icons/home.svg" />
-        </button>
-    </div>
-    
-    <div class="settings-section">
-        <button class="ghost-btn" (click)="toggleSettingWindow()">
-                <img [src]="profile" class="settings-btn" />
-        </button>
-        @if (isSettingWindowActive) {
-            <app-setting-window (closeWindow)="toggleSettingWindow()"></app-setting-window>
-        }
-    </div>
+<div id="header" class="d-flex">
+  <div class="nav-section">
+    <button class="ghost-btn" (click)="navigateTo('/shop')">
+      <img src="../../../assets/icons/shop.svg" />
+    </button>
+
+    <button class="ghost-btn" (click)="navigateTo('/search')">
+      <img src="../../../assets/icons/search.svg" />
+    </button>
+
+    <button class="ghost-btn" (click)="navigateTo('/')">
+      <img src="../../../assets/icons/home.svg" />
+    </button>
+  </div>
+
+  <div id="settings-section">
+    <button (click)="toggleSettingWindow()">
+      <img [src]="profile" />
+    </button>
+    @if (isSettingWindowActive) {
+        <app-setting-window
+        (closeWindow)="toggleSettingWindow()"
+        ></app-setting-window>
+    }
+  </div>
 </div>
