@@ -56,6 +56,7 @@ export class TokenService {
   // Je décode le token
   private _getDecodedTokenResponse(token: string): any {
     // J'utilise une librairie pour décoder le corps du token
+    console.log(token);
     return jwtDecode(token);
   }
 

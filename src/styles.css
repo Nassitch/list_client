@@ -29,6 +29,22 @@
   margin-inline: 50px;
 }
 
+.ghost-btn {
+  height: 50px;
+  width: 50px;
+  border: none;
+  background: transparent;
+}
+
+.ghost-btn > img {
+  width: 100%;
+}
+
+.ghost-btn > .settings-btn {
+  border-radius: 50%;
+  border: 2px solid var(--main-color);
+}
+
 .avatar-choice {
   width: 110%;
   margin-left: 65px;

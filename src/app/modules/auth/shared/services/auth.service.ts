@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { environment } from '../../../../../environments/environment.developpment';
 import { BehaviorSubject, catchError, map, mergeMap, Observable, of, tap } from 'rxjs';
 import { CookieService } from '../../../../core/services/cookie.service';
@@ -12,10 +12,10 @@ import { UserInfo } from '../../../user/models/user-info.interface';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-
-  private currentUser = new BehaviorSubject<UserToken | null>(null);
-
+export class AuthService implements OnInit {
+  
+  private currentUser: BehaviorSubject<UserToken | null> = new BehaviorSubject<UserToken | null>(null);
+  
   protected http = inject(HttpClient)
   private cookieService = inject(CookieService);
   private tokenService = inject(TokenService);
@@ -25,6 +25,10 @@ export class AuthService {
   private _AUTHENTIFICATE: string = environment._AUTHENTIFICATE;
   private _REGISTER_LOG: string = environment._REGISTER_LOG;
   private _REGISTER_USER: string = environment._REGISTER_USER;
+
+  ngOnInit(): void {
+    this.initializeCurrentUser();
+  }
 
   login$(user: AuthRequest): Observable<any> {
     return this.http.post(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
@@ -39,6 +43,7 @@ export class AuthService {
             userId: decodedToken.userId,
             loginId: decodedToken.loginId,
             role: decodedToken.role,
+            picture: decodedToken.picture
           }
 
           this.setCurrentUser(userInfo);
@@ -84,7 +89,23 @@ register$(userInfo: UserInfo): Observable<any> {
     return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`, userInfo)
   }
 
+  private initializeCurrentUser(): void {
+    const decodedToken = this.tokenService.getTokenFromCookiesAndDecode();
+    if (decodedToken) {
+      const userInfo: UserToken = {
+        userId: decodedToken.userId,
+        loginId: decodedToken.loginId,
+        role: decodedToken.role,
+        picture: decodedToken.picture
+      };
+      this.setCurrentUser(userInfo);
+    }
+  }
+
   getCurrentUser(): Observable<UserToken | null> {
+    if (!this.currentUser.getValue()) {
+      this.initializeCurrentUser();
+    }
     return this.currentUser.asObservable();
   }
 
