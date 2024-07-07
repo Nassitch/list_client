@@ -1,0 +1,16 @@
+
+.header {
+    margin: 10px 15px 0px 15px;
+}
+
+.header > .nav-section {
+    width: 85%;
+}
+
+.header > .nav-section > button {
+    margin-right: 20px;
+}
+
+.header > .settings-section {
+    width: 15%;
+}
