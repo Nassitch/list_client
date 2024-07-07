@@ -20,11 +20,11 @@ export class AuthService implements OnInit {
   private cookieService = inject(CookieService);
   private tokenService = inject(TokenService);
 
-  private _BASE_URL: string = environment._BASE_URL;
-  private _AUTH: string = environment._AUTH;
-  private _AUTHENTIFICATE: string = environment._AUTHENTIFICATE;
-  private _REGISTER_LOG: string = environment._REGISTER_LOG;
-  private _REGISTER_USER: string = environment._REGISTER_USER;
+  private readonly _BASE_URL: string = environment._BASE_URL;
+  private readonly _AUTH: string = environment._AUTH;
+  private readonly _AUTHENTIFICATE: string = environment._AUTHENTIFICATE;
+  private readonly _REGISTER_LOG: string = environment._REGISTER_LOG;
+  private readonly _REGISTER_USER: string = environment._REGISTER_USER;
 
   ngOnInit(): void {
     this.initializeCurrentUser();
