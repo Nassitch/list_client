@@ -8,6 +8,8 @@ import { UserToken } from '../../../../models/user-token.interface';
 import { TokenResponse } from '../../../../models/token-response.interface';
 import { AuthRequest } from '../../models/auth-request.interface';
 import { UserInfo } from '../../../user/models/user-info.interface';
+import { ToastService } from '../../../shared-components/services/toast.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,8 @@ export class AuthService implements OnInit {
   protected http = inject(HttpClient)
   private cookieService = inject(CookieService);
   private tokenService = inject(TokenService);
+  private toastService = inject(ToastService);
+  private router = inject(Router);
 
   private readonly _BASE_URL: string = environment._BASE_URL;
   private readonly _AUTH: string = environment._AUTH;
@@ -61,6 +65,12 @@ export class AuthService implements OnInit {
         return of({ success: false, message: 'Identifiants invalides' });
       })
     )
+  }
+
+  logout(): void {
+    this.tokenService.resetToken();
+    this.toastService.show('Déconnexion réussie', 'Succès', 'success');
+    this.router.navigate(['/login']);
   }
 
   signup$(newUser: AuthRequest): Observable<any> {
