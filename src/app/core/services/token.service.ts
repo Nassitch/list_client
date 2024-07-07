@@ -1,16 +1,25 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from './cookie.service';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TokenResponse } from '../../models/token-response.interface';
+import { ToastService } from '../../modules/shared-components/services/toast.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TokenService {
-  cookieService = inject(CookieService);
-  private readonly _tokenDetailsSubject$: BehaviorSubject<any> =
-    new BehaviorSubject<any>(this.getTokenFromCookiesAndDecode());
+export class TokenService implements OnInit {
+  private _tokenDetailsSubject$: BehaviorSubject<any> =
+  new BehaviorSubject<any>([]);
+  
+  private cookieService = inject(CookieService);
+  private toastService = inject(ToastService);
+  private router = inject(Router);
+
+  ngOnInit(): void {
+    this._tokenDetailsSubject$ = this.getTokenFromCookiesAndDecode();
+  }
 
   updateToken(tokenFromDB: TokenResponse) {
     this._clearCookiesAndThenPutNewToken(tokenFromDB);
@@ -23,11 +32,14 @@ export class TokenService {
     if (tokenId) {
       const decodedToken = this._decodeToken({ token: tokenId });
       if (this._isTokenExpired(decodedToken)) {
+        this.toastService.show('Votre session à expirée', 'Erreur', 'error');
         this.resetToken();
+        this.router.navigate(['/login']);
         return null;
       }
       return decodedToken;
     } else {
+      this.router.navigate(['/login']);
       return null;
     }
   }

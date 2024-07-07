@@ -14,8 +14,11 @@
     </div>
     
     <div class="settings-section">
-        <button class="ghost-btn">
+        <button class="ghost-btn" (click)="toggleSettingWindow()">
                 <img [src]="profile" class="settings-btn" />
         </button>
+        @if (isSettingWindowActive) {
+            <app-setting-window (closeWindow)="toggleSettingWindow()"></app-setting-window>
+        }
     </div>
 </div>
