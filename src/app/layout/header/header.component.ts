@@ -4,6 +4,7 @@ import { AuthService } from '../../modules/auth/shared/services/auth.service';
 import { Observable, Subscriber, Subscription } from 'rxjs';
 import { UserToken } from '../../models/user-token.interface';
 import { environment } from '../../../environments/environment.developpment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   profile: string = '../../../assets/icons/default-person.svg';
 
   private authService = inject(AuthService);
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.currentUserSubscription = this.authService.getCurrentUser().subscribe(user => {
@@ -29,6 +31,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.profile = getImage + user.picture;
       }
     });
+  }
+
+  navigateTo(path: string): void {
+    this.router.navigate([path]);
   }
 
   ngOnDestroy(): void {
