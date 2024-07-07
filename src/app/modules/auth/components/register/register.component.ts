@@ -30,8 +30,6 @@ export class RegisterComponent implements OnInit {
   protected _URL_IMG: string = 'http://localhost:8080/api/v1/public/upload/read/avatar/';
 
   ngOnInit() {
-    console.log('ngOnInit called');
-
     this.avatars$ = this.userService.getAvatars$();
 
     this.formGroup = this.fb.group({
@@ -55,7 +53,6 @@ export class RegisterComponent implements OnInit {
       ]),
     });
 
-    console.log('FormGroup initialized', this.formGroup);
   }
 
   getFormControl(name: string): FormControl {
@@ -64,17 +61,9 @@ export class RegisterComponent implements OnInit {
 
   takeAvatar(avatar: string): void {
     this.picture = avatar;
-    console.log(this.picture);
   }
 
   onSubmit(): void {
-    console.log('Clicked!');
-
-    if (!this.formGroup) {
-      console.error('FormGroup is not initialized');
-      return;
-    }
-
     if (this.formGroup.invalid) {
       Object.keys(this.formGroup.controls).forEach((key) => {
         const control = this.formGroup.get(key);
@@ -114,7 +103,6 @@ export class RegisterComponent implements OnInit {
       if (response) {
         this.toastService.show('Vos données sont bien enregistrées.', 'Succès', 'success');
         this.router.navigate(['/']);
-        console.log('User registered successfully', response);
       }
     });
   }

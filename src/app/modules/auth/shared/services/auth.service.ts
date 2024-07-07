@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnInit, inject } from '@angular/core';
 import { environment } from '../../../../../environments/environment.developpment';
 import { BehaviorSubject, catchError, map, mergeMap, Observable, of, tap } from 'rxjs';
 import { CookieService } from '../../../../core/services/cookie.service';
@@ -8,23 +8,31 @@ import { UserToken } from '../../../../models/user-token.interface';
 import { TokenResponse } from '../../../../models/token-response.interface';
 import { AuthRequest } from '../../models/auth-request.interface';
 import { UserInfo } from '../../../user/models/user-info.interface';
+import { ToastService } from '../../../shared-components/services/toast.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-
-  private currentUser = new BehaviorSubject<UserToken | null>(null);
-
+export class AuthService implements OnInit {
+  
+  private currentUser: BehaviorSubject<UserToken | null> = new BehaviorSubject<UserToken | null>(null);
+  
   protected http = inject(HttpClient)
   private cookieService = inject(CookieService);
   private tokenService = inject(TokenService);
+  private toastService = inject(ToastService);
+  private router = inject(Router);
 
-  private _BASE_URL: string = environment._BASE_URL;
-  private _AUTH: string = environment._AUTH;
-  private _AUTHENTIFICATE: string = environment._AUTHENTIFICATE;
-  private _REGISTER_LOG: string = environment._REGISTER_LOG;
-  private _REGISTER_USER: string = environment._REGISTER_USER;
+  private readonly _BASE_URL: string = environment._BASE_URL;
+  private readonly _AUTH: string = environment._AUTH;
+  private readonly _AUTHENTIFICATE: string = environment._AUTHENTIFICATE;
+  private readonly _REGISTER_LOG: string = environment._REGISTER_LOG;
+  private readonly _REGISTER_USER: string = environment._REGISTER_USER;
+
+  ngOnInit(): void {
+    this.initializeCurrentUser();
+  }
 
   login$(user: AuthRequest): Observable<any> {
     return this.http.post(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
@@ -39,6 +47,7 @@ export class AuthService {
             userId: decodedToken.userId,
             loginId: decodedToken.loginId,
             role: decodedToken.role,
+            picture: decodedToken.picture
           }
 
           this.setCurrentUser(userInfo);
@@ -56,6 +65,12 @@ export class AuthService {
         return of({ success: false, message: 'Identifiants invalides' });
       })
     )
+  }
+
+  logout(): void {
+    this.tokenService.resetToken();
+    this.toastService.show('Déconnexion réussie', 'Succès', 'success');
+    this.router.navigate(['/login']);
   }
 
   signup$(newUser: AuthRequest): Observable<any> {
@@ -84,7 +99,23 @@ register$(userInfo: UserInfo): Observable<any> {
     return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`, userInfo)
   }
 
+  private initializeCurrentUser(): void {
+    const decodedToken = this.tokenService.getTokenFromCookiesAndDecode();
+    if (decodedToken) {
+      const userInfo: UserToken = {
+        userId: decodedToken.userId,
+        loginId: decodedToken.loginId,
+        role: decodedToken.role,
+        picture: decodedToken.picture
+      };
+      this.setCurrentUser(userInfo);
+    }
+  }
+
   getCurrentUser(): Observable<UserToken | null> {
+    if (!this.currentUser.getValue()) {
+      this.initializeCurrentUser();
+    }
     return this.currentUser.asObservable();
   }
 

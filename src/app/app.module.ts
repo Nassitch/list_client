@@ -7,10 +7,14 @@ import { AppComponent } from './app.component';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ToastComponent } from './modules/shared-components/components/toast/toast.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { SettingWindowComponent } from './layout/setting-window/setting-window.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
+    SettingWindowComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,28 @@
+#header {
+  position: relative;
+  margin: 10px 15px 0px 15px;
+}
+
+#header > .nav-section {
+  width: 85%;
+}
+
+#header > .nav-section > button {
+  margin-right: 20px;
+}
+
+#header > #settings-section {
+  width: 15%;
+}
+
+#header > #settings-section > button {
+  height: 50px;
+  width: 50px;
+  border: none;
+  background: transparent;
+}
+
+#header > #settings-section > button > img {
+  border-radius: 50%;
+  border: 2px solid var(--main-color);
+}

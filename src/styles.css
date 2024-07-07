@@ -29,6 +29,17 @@
   margin-inline: 50px;
 }
 
+.ghost-btn {
+  height: 40px;
+  width: 40px;
+  border: none;
+  background: transparent;
+}
+
+.ghost-btn > img {
+  width: 100%;
+}
+
 .avatar-choice {
   width: 110%;
   margin-left: 65px;
