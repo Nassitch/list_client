@@ -40,11 +40,6 @@
   width: 100%;
 }
 
-.ghost-btn > .settings-btn {
-  border-radius: 50%;
-  border: 2px solid var(--main-color);
-}
-
 .avatar-choice {
   width: 110%;
   margin-left: 65px;
