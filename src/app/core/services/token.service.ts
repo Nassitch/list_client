@@ -58,7 +58,6 @@ export class TokenService implements OnInit {
   }
 
   private _getDecodedTokenResponse(token: string): any {
-    console.log(token);
     return jwtDecode(token);
   }
 
