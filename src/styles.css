@@ -24,9 +24,21 @@
   --background-input: #212128;
 }
 
+main {
+  height: 95vh;
+  margin-inline: 25px;
+  background-color: var(--background-color);
+}
+
 .auth {
   height: 96vh;
   margin-inline: 50px;
+}  
+
+.form {
+  height: 95vh;
+  margin-inline: 50px;
+  background-color: var(--second-color);
 }
 
 .ghost-btn {
@@ -42,7 +54,7 @@
 
 .avatar-choice {
   width: 110%;
-  margin-left: 65px;
+  margin-left: 20px;
 }
 
 .avatar-list {

@@ -8,6 +8,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { UserToken } from '../../../../models/user-token.interface';
+import { environment } from '../../../../../environments/environment.developpment';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,12 @@ export class RegisterComponent implements OnInit {
   textBtn: string = 'Enregistrer';
 
   avatars$!: Observable<string[]>;
-  protected _URL_IMG: string = 'http://localhost:8080/api/v1/public/upload/read/avatar/';
+  private _BASE_URL: string = environment._BASE_URL;
+  private _PUBLIC: string = environment._PUBLIC;
+  private _UPLOAD: string = environment._UPLOAD;
+  private _READ: string = environment._READ;
+  private _AVATAR: string = environment._AVATAR;
+  protected _URL_IMG: string = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._AVATAR}`;
 
   ngOnInit() {
     this.avatars$ = this.userService.getAvatars$();
@@ -52,7 +58,6 @@ export class RegisterComponent implements OnInit {
         Validators.maxLength(5),
       ]),
     });
-
   }
 
   getFormControl(name: string): FormControl {

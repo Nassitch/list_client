@@ -34,7 +34,7 @@
     [placeholder]="'***************'"
   ></app-input>
 
-  <app-submit-btn class="mt-6" [text]="textBtn" (click)="onSubmit()"></app-submit-btn>
+  <app-submit-btn [text]="textBtn" (click)="onSubmit()"></app-submit-btn>
 
   <p class="mt-4">Déjà un compte ? <a class="text-underline" [routerLink]="['/login']">Connectez-vous</a></p>
 </section>

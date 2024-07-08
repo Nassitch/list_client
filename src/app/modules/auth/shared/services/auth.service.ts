@@ -12,13 +12,12 @@ import { ToastService } from '../../../shared-components/services/toast.service'
 import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService implements OnInit {
-  
   private currentUser: BehaviorSubject<UserToken | null> = new BehaviorSubject<UserToken | null>(null);
-  
-  protected http = inject(HttpClient)
+
+  protected http = inject(HttpClient);
   private cookieService = inject(CookieService);
   private tokenService = inject(TokenService);
   private toastService = inject(ToastService);
@@ -35,36 +34,35 @@ export class AuthService implements OnInit {
   }
 
   login$(user: AuthRequest): Observable<any> {
-    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
-    .pipe(
-      tap((response: any) => {
-        this.cookieService.setCookie('authToken', response.token, 0.1);
+    return this.http
+      .post(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
+      .pipe(
+        tap((response: any) => {
+          this.cookieService.setCookie('authToken', response.token, 0.1);
 
-        const decodedToken = this.tokenService.getTokenFromCookiesAndDecode();
-        if (decodedToken) {
+          const decodedToken = this.tokenService.getTokenFromCookiesAndDecode();
+          if (decodedToken) {
+            const userInfo: UserToken = {
+              userId: decodedToken.userId,
+              loginId: decodedToken.loginId,
+              role: decodedToken.role,
+              picture: decodedToken.picture,
+            };
 
-          const userInfo: UserToken = {
-            userId: decodedToken.userId,
-            loginId: decodedToken.loginId,
-            role: decodedToken.role,
-            picture: decodedToken.picture
+            this.setCurrentUser(userInfo);
+            console.log('Current User after login:', userInfo);
           }
-
-          this.setCurrentUser(userInfo);
-          console.log('Current User after login:', userInfo);
-        }
-        
-      }),
-      map((response: TokenResponse) => ({
-        success: true,
-        token: response.token,
-        message: `Bienvenue `,
-      })),
-      catchError((error: HttpErrorResponse) => {
-        console.error('Erreur lors de la connexion:', error);
-        return of({ success: false, message: 'Identifiants invalides' });
-      })
-    )
+        }),
+        map((response: TokenResponse) => ({
+          success: true,
+          token: response.token,
+          message: `Bienvenue `,
+        })),
+        catchError((error: HttpErrorResponse) => {
+          console.error('Erreur lors de la connexion:', error);
+          return of({ success: false, message: 'Identifiants invalides' });
+        })
+      );
   }
 
   logout(): void {
@@ -74,29 +72,36 @@ export class AuthService implements OnInit {
   }
 
   signup$(newUser: AuthRequest): Observable<any> {
-    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
-    .pipe(
-      mergeMap((user: any) => this.login$(newUser)
+    return this.http
+      .post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
       .pipe(
-        catchError((authError) => {
-          console.error('Error while logging in:', authError);
-          return of(null);
-        }),
-        map(() => ({
-          success: true,
-          message: 'Inscription et connexion réussies'
-        }))
-      )
-    ),
-    catchError((error: HttpErrorResponse) => {
-      console.error('Erreur lors de l\'inscription:', error);
-      return of({ success: false, message: 'Erreur lors de l\'inscription' });
-    })
-  );
-}
+        mergeMap((user: any) =>
+          this.login$(newUser).pipe(
+            catchError((authError) => {
+              console.error('Error while logging in:', authError);
+              return of(null);
+            }),
+            map(() => ({
+              success: true,
+              message: 'Inscription et connexion réussies',
+            }))
+          )
+        ),
+        catchError((error: HttpErrorResponse) => {
+          console.error("Erreur lors de l'inscription:", error);
+          return of({
+            success: false,
+            message: "Erreur lors de l'inscription",
+          });
+        })
+      );
+  }
 
-register$(userInfo: UserInfo): Observable<any> {
-    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`, userInfo)
+  register$(userInfo: UserInfo): Observable<any> {
+    return this.http.post(
+      `${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`,
+      userInfo
+    );
   }
 
   private initializeCurrentUser(): void {
@@ -106,7 +111,7 @@ register$(userInfo: UserInfo): Observable<any> {
         userId: decodedToken.userId,
         loginId: decodedToken.loginId,
         role: decodedToken.role,
-        picture: decodedToken.picture
+        picture: decodedToken.picture,
       };
       this.setCurrentUser(userInfo);
     }

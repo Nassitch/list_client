@@ -8,5 +8,6 @@ export interface UserInfo {
     address: string;
     city: string;
     zipCode: number;
-    loginId: number;
+    loginId?: number;
+    lastLog?: string;
 }
