@@ -1,25 +1,25 @@
 /* Default. */
 .input-text {
-    height: 50px;
-    width: 100%;
-    padding: 5px 15px;
-    background-color: var(--background-color);
-    border-radius: 10px;
-  }
-  
-  .input-text > label {
-      font-size: 14px;
-  }
-  
-  .input-text > input {
-    width: 100%;
-    background-color: var(--background-color);
-    border: none;
-  }
+  height: 50px;
+  width: 100%;
+  padding: 5px 15px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+}
 
-  /* Password. */
-  .input-password {
-    width: 100%;
+.input-text > label {
+  font-size: 14px;
+}
+
+.input-text > input {
+  width: 100%;
+  background-color: var(--background-color);
+  border: none;
+}
+
+/* Password. */
+.input-password {
+  width: 100%;
 }
 
 .input-password > button {
@@ -34,14 +34,14 @@
 }
 
 .input-password > div {
-    height: 50px;
-    padding: 5px 15px;
-    background-color: var(--background-color);
-    border-radius: 10px;
+  height: 50px;
+  padding: 5px 15px;
+  background-color: var(--background-color);
+  border-radius: 10px;
 }
 
 .input-password > div > input {
-    width: 100%;
-    background-color: var(--background-color);
-    border: none;
-  }
+  width: 100%;
+  background-color: var(--background-color);
+  border: none;
+}

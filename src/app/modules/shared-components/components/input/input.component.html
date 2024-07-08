@@ -1,64 +1,71 @@
 @if (control) {
-    
-    <fieldset>
-        <ng-container [ngTemplateOutlet]="isPasswordField ? passwordTemplate : defaultTemplate"/>
-    </fieldset>
+
+<fieldset>
+  <ng-container
+    [ngTemplateOutlet]="isPasswordField ? passwordTemplate : defaultTemplate"
+  />
+</fieldset>
 }
 
 <ng-template #defaultTemplate>
-        <div class="input-text mb-4">
-            <label class="form-label {{ labelClass }}" for="form-{{ controlName }}-id">
-                {{ label }}</label
-                >
-                <input
-                [type]="type"
-                id="form-{{ controlName }}-id"
-                class="form-control {{ inputClass }}"
-                [formControl]="control"
-                [autocomplete]="autocomplete"
-                [placeholder]="placeholder"
-                />
-            </div>
-            <ng-container *ngTemplateOutlet="errorTemplate; context: { control: control }"/>
-        </ng-template>
-        
-        <ng-template #passwordTemplate>
-            <div class="d-flex input-password mb-4">
-                
-                <div>
-                <!-- <div class="input-text mb-4"> -->
-                    <label class="form-label {{ labelClass }}" for="form-{{ controlName }}-id">
-                        {{ label }}
-                    </label>
-                        <input
-                        [type]="isPasswordVisible ? 'text' : 'password'"
-                        id="form-{{ controlName }}-id"
-                        class="form-control input-password {{ inputClass }}"
-                        [formControl]="control"
-                        [autocomplete]="autocomplete"
-                        [placeholder]="placeholder"
-                        />
-                    </div>
-                    
-                    <button (click)="togglePasswordVisibility()">
-                        <img src="../../../../assets/icons/view.svg" />
-                    </button>
-                </div>
-            @if (showError) {
-                <ng-container
-                [ngTemplateOutlet]="errorTemplate"
-                [ngTemplateOutletContext]="{ control: control }"
-                />
-            }
-        </ng-template>
-        
-        <ng-template #errorTemplate let-control="control">
-            @if (showError) { 
-                @if(control.invalid && (control.dirty || control.touched) && errorMessage) {
-                    <span class="error">
-                        {{ errorMessage }}
-                    </span>
-                }
-            }
-        </ng-template>
-        
+  <div class="input-text mb-4" (click)="focusInput()">
+    <label class="form-label {{ labelClass }}" for="form-{{ controlName }}-id">
+      {{ label }}</label
+    >
+    <input
+    #inputField
+    [type]="type"
+    id="form-{{ controlName }}-id"
+      class="form-control {{ inputClass }}"
+      [formControl]="control"
+      [autocomplete]="autocomplete"
+      [placeholder]="placeholder"
+    />
+  </div>
+  <ng-container
+  *ngTemplateOutlet="errorTemplate; context: { control: control }"
+  />
+</ng-template>
+
+<ng-template #passwordTemplate>
+    <div class="d-flex input-password mb-4" (click)="focusInput()">
+        <div>
+            <!-- <div class="input-text mb-4"> -->
+                <label
+        class="form-label {{ labelClass }}"
+        for="form-{{ controlName }}-id"
+        >
+        {{ label }}
+    </label>
+    <input
+        #inputField
+        [type]="isPasswordVisible ? 'text' : 'password'"
+        id="form-{{ controlName }}-id"
+        class="form-control input-password {{ inputClass }}"
+        [formControl]="control"
+        [autocomplete]="autocomplete"
+        [placeholder]="placeholder"
+      />
+    </div>
+
+    <button (click)="togglePasswordVisibility()">
+      <img src="../../../../assets/icons/view.svg" />
+    </button>
+  </div>
+  @if (showError) {
+    <ng-container
+        [ngTemplateOutlet]="errorTemplate"
+        [ngTemplateOutletContext]="{ control: control }"
+    />
+  }
+</ng-template>
+
+<ng-template #errorTemplate let-control="control">
+  @if (showError) {
+    @if(control.invalid && (control.dirty || control.touched) && errorMessage) {
+    <span class="error">
+        {{ errorMessage }}
+    </span>
+  }
+}
+</ng-template>
