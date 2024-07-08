@@ -11,6 +11,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { SettingWindowComponent } from './layout/setting-window/setting-window.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { CreditPageComponent } from './components/credit-page/credit-page.component';
+import { DateFormatPipe } from './modules/user/shared/pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -19,13 +20,14 @@ import { CreditPageComponent } from './components/credit-page/credit-page.compon
     SettingWindowComponent,
     LandingPageComponent,
     CreditPageComponent,
+    DateFormatPipe
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    ToastComponent
+    ToastComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
