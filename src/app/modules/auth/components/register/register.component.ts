@@ -107,7 +107,7 @@ export class RegisterComponent implements OnInit {
     ).subscribe((response) => {
       if (response) {
         this.toastService.show('Vos données sont bien enregistrées.', 'Succès', 'success');
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
       }
     });
   }

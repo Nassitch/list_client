@@ -1,7 +1,7 @@
 <section class="form">
   @if (profile$ | async; as profile) {
   <div class="last-log">
-    <p>Dernière connexion le :</p>
+    <p>Dernière connexion :</p>
     <p>{{ profile.lastLog | dateFormat }}</p>
   </div>
 

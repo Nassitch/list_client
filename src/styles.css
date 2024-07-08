@@ -25,8 +25,8 @@
 }
 
 main {
-  height: 95vh;
-  margin-inline: 25px;
+  height: 90vh;
+  padding-inline: 25px;
   background-color: var(--background-color);
 }
 
@@ -42,8 +42,8 @@ main {
 }
 
 .ghost-btn {
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   border: none;
   background: transparent;
 }
@@ -77,4 +77,31 @@ main {
 
 .avatar-list > button > img.selected {
   border: 2px solid var(--main-color);
+}
+
+menu {
+  background-color: var(--second-color);
+  margin-block: 30px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+menu > article > .menu-img {
+  width: 10%;
+}
+
+menu > article > .menu-txt {
+  width: 75%;
+  margin-left: 10px;
+}
+
+menu > article > .menu-btn {
+  width: 10%;
+}
+
+.line {
+  height: 1px;
+  width: 100%;
+  background-color: var(--background-color);
+  margin-block: 15px;
 }

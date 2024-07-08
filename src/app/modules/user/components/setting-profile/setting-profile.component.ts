@@ -1,10 +1,5 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
-import {
-  FormControl,
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { catchError, Observable, of, Subscription, tap } from 'rxjs';
 import { UserService } from '../../shared/services/user.service';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
@@ -45,7 +40,6 @@ export class SettingProfileComponent implements OnInit {
         this.formGroup.patchValue({
           firstName: profile.firstName,
           lastName: profile.lastName,
-          email: profile.email,
           address: profile.address,
           city: profile.city,
           zipCode: profile.zipCode,

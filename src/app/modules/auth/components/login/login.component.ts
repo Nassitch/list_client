@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
         this.authService.getCurrentUser().subscribe((currentUser) => {
           if (currentUser) {
             if (currentUser.userId) {
-              this.router.navigate(['/']);
+              this.router.navigate(['/home']);
             } else {
               this.router.navigate(['/register']);
             }

@@ -1,1 +1,65 @@
-<p>landing-page works!</p>
+<main>
+    @if (profile$ | async; as profile) {
+        <div class="last-log">
+            <p>Dernière connexion :</p>
+            <p>{{ profile.lastLog | dateFormat }}</p>
+          </div>
+    }
+
+    @if (landingMsg) {
+        <div class="landing-msg">
+            <button class="ghost-btn close-landing-msg" (click)="closeLandingMsg()">
+                <img src="../../../assets/icons/close.svg" />
+            </button>
+            <h2>Bienvenue sur List.</h2>
+            <p>Vous pouvez desormais vous faire une liste, enregistrer une facture et vérifier vos statistiques, tout ça à l'infinis ! </p>
+        </div>
+    }
+
+    <menu>
+        <article class="d-flex">
+            <div class="menu-img">
+                <img src="../../../assets/icons/shop.svg" />
+            </div>
+            <div class="menu-txt">
+                <h4>Panier</h4>
+                <p>Historique de paniers.</p>
+            </div>
+            <div class="menu-btn">
+                <button class="ghost-btn" (click)="navigateTo('shop')">
+                    <img src="../../../assets/icons/arrow-right.svg" />
+                </button>
+            </div>
+        </article>
+        <div class="line"></div>
+        <article class="d-flex">
+            <div class="menu-img">
+                <img src="../../../assets/icons/invoice.svg" />
+            </div>
+            <div class="menu-txt">
+                <h4>Facture</h4>
+                <p>Historique de factures.</p>
+            </div>
+            <div class="menu-btn">
+                <button class="ghost-btn" (click)="navigateTo('invoice')">
+                    <img src="../../../assets/icons/arrow-right.svg" />
+                </button>
+            </div>
+        </article>
+        <div class="line"></div>
+        <article class="d-flex">
+            <div class="menu-img">
+                <img src="../../../assets/icons/market.svg" />
+            </div>
+            <div class="menu-txt">
+                <h4>Marché</h4>
+                <p>Historique de marchés.</p>
+            </div>
+            <div class="menu-btn">
+                <button class="ghost-btn" (click)="navigateTo('market')">
+                    <img src="../../../assets/icons/arrow-right.svg" />
+                </button>
+            </div>
+        </article>
+    </menu>
+</main>
