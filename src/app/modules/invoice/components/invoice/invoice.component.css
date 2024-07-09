@@ -1,0 +1,15 @@
+.title-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.title-card > h5 {
+  font-size: 18px;
+}
+
+.title-card > img {
+  height: 35px;
+  width: 35px;
+}

@@ -1,0 +1,51 @@
+<ng-container [ngTemplateOutlet]="isStatic ? staticTemplate : editTemplate" />
+
+<ng-template #staticTemplate>
+  <button class="card-static">
+    <article>
+      <section class="high-section">
+        @if (imgContent) {
+          <img [src]="imgContent" />
+        }
+        @if (count) {
+          <p>{{ count }}</p>
+        }
+        <img src="../../../../../assets/icons/check.svg" />
+      </section>
+      <section class="middle-section">
+        <h4>{{ name }}</h4>
+      </section>
+      <section class="low-section">
+        <p>{{ subName }}</p>
+      </section>
+    </article>
+  </button>
+</ng-template>
+
+<ng-template #editTemplate>
+  <button class="card-edit">
+    <article>
+      <section class="high-section">
+        @if (imgContent) {
+          <img [src]="imgContent" />
+        }
+        @if (count) {
+          <p>{{ count }}</p>
+        }
+        <img src="../../../../../assets/icons/check.svg" />
+      </section>
+      <section class="middle-section">
+        <p>{{ name }}</p>
+      </section>
+      <section class="low-section">
+        <button>
+          <img src="../../../../../assets/icons/pen.svg" />
+        </button>
+        <div></div>
+        <button>
+          <img src="../../../../../assets/icons/bin.svg" />
+        </button>
+      </section>
+    </article>
+  </button>
+</ng-template>

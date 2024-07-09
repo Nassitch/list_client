@@ -1,21 +1,22 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, OnInit, inject } from '@angular/core';
-import { environment } from '../../../../../environments/environment.developpment';
 import { BehaviorSubject, catchError, map, mergeMap, Observable, of, tap } from 'rxjs';
-import { CookieService } from '../../../../core/services/cookie.service';
-import { TokenService } from '../../../../core/services/token.service';
 import { UserToken } from '../../../../models/user-token.interface';
-import { TokenResponse } from '../../../../models/token-response.interface';
-import { AuthRequest } from '../../models/auth-request.interface';
 import { UserInfo } from '../../../user/models/user-info.interface';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AuthRequest } from '../../models/auth-request.interface';
+import { TokenResponse } from '../../../../models/token-response.interface';
+import { environment } from '../../../../../environments/environment.developpment';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { Router } from '@angular/router';
+import { CookieService } from '../../../../core/services/cookie.service';
+import { TokenService } from '../../../../core/services/token.service';
+import { inject, Injectable, OnInit } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService implements OnInit {
-  private currentUser: BehaviorSubject<UserToken | null> = new BehaviorSubject<UserToken | null>(null);
+  private currentUser: BehaviorSubject<UserToken | null> =
+    new BehaviorSubject<UserToken | null>(null);
 
   protected http = inject(HttpClient);
   private cookieService = inject(CookieService);
@@ -69,6 +70,7 @@ export class AuthService implements OnInit {
     this.tokenService.resetToken();
     this.toastService.show('Déconnexion réussie', 'Succès', 'success');
     this.router.navigate(['/login']);
+    this.currentUser.next(null);
   }
 
   signup$(newUser: AuthRequest): Observable<any> {

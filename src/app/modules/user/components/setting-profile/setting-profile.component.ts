@@ -33,9 +33,11 @@ export class SettingProfileComponent implements OnInit {
   formGroup!: FormGroup;
 
   ngOnInit(): void {
-    this.profile$ = this.userService.getUserProfile$();
+    this.userService.initialize();
 
-    this.profileSubscription$ = this.profile$.subscribe((profile) => {
+      this.profile$ = this.userService.getUserProfile$();
+      
+      this.profileSubscription$ = this.profile$.subscribe((profile) => {
       if (profile) {
         this.formGroup.patchValue({
           firstName: profile.firstName,
@@ -46,7 +48,7 @@ export class SettingProfileComponent implements OnInit {
         });
       }
     });
-
+    
     this.avatars$ = this.userService.getAvatars$();
 
     this.formGroup = this.fb.group({
