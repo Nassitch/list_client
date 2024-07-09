@@ -8,6 +8,7 @@ export const environment = {
     _AUTHENTIFICATE: "/authenticate",
     _REGISTER_LOG: "/register-log",
     _REGISTER_USER: "/register-user",
+    _CATEGORY: "/category",
     _UPLOAD: "/upload",
     _READ: "/read",
     _READ_ALL: "/read/all",

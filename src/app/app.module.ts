@@ -11,7 +11,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { SettingWindowComponent } from './layout/setting-window/setting-window.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { CreditPageComponent } from './components/credit-page/credit-page.component';
-import { DateFormatPipe } from './modules/user/shared/pipes/date-format.pipe';
+import { DateFormatPipe } from './modules/shared-components/pipes/date-format.pipe';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,6 @@ import { DateFormatPipe } from './modules/user/shared/pipes/date-format.pipe';
     SettingWindowComponent,
     LandingPageComponent,
     CreditPageComponent,
-    DateFormatPipe
   ],
   imports: [
     BrowserModule,
@@ -28,6 +27,7 @@ import { DateFormatPipe } from './modules/user/shared/pipes/date-format.pipe';
     AppRoutingModule,
     HttpClientModule,
     ToastComponent,
+    DateFormatPipe
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

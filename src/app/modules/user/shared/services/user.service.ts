@@ -24,6 +24,9 @@ export class UserService implements OnInit, OnDestroy {
   private _READ: string = environment._READ;
   private _READ_ALL: string = environment._READ_ALL;
   private _UPDATE: string = environment._UPDATE;
+  private _AVATAR: string = environment._AVATAR;
+
+  public readonly _BASE_URL_IMG: string = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._AVATAR}`;
 
   ngOnInit(): void {
     this.currentUserSubscription = this.authService

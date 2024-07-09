@@ -25,7 +25,8 @@
 }
 
 main {
-  height: 90vh;
+  height: 100vh;
+  /* height: 100%; */
   padding-inline: 25px;
   background-color: var(--background-color);
 }

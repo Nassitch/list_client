@@ -1,0 +1,26 @@
+<main>
+  <div class="search-bar">
+    <button class="ghost-btn" (click)="navigateTo('/product/', input)">
+        <img src="../../../../../assets/icons/search-bar.svg" />
+    </button>
+    <input [(ngModel)]="input" name="input" />
+    <button class="ghost-btn" (click)="reset()">
+      <img src="../../../../../assets/icons/close-bar.svg" />
+    </button>
+  </div>
+
+  <section class="categories mt-8">
+        @if (categories$ | async; as categories) {
+            @for (category of categories; track $index) {
+                <div class="category">
+                    <article>
+                        <button (click)="navigateTo('/category/', category.name)">
+                        <img [src]="categoryService._BASE_URL_IMG + category.picture" />
+                        </button>
+                        <p>{{ category.name }}</p>
+                    </article>
+                </div>
+            }
+        }
+  </section>
+</main>
