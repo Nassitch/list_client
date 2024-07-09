@@ -8,6 +8,7 @@ main {
   align-items: center;
   background-color: var(--second-color);
   padding: 5px 15px;
+  border-radius: 10px;
 }
 
 .search-bar > img {
@@ -19,4 +20,29 @@ main {
   border: none;
   color: var(--background-color);
   padding-left: 10px;
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.category {
+  height: 150px;
+  width: 100px;
+}
+
+.category > article > button {
+  height: 100px;
+  width: 100px;
+  padding: 10px;
+  background-color: var(--second-color);
+  border: none;
+  border-radius: 10px;
+}
+
+.category > article > p {
+  text-align: center;
+  margin-top: 5px;
 }
