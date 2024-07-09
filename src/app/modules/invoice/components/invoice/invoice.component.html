@@ -1,0 +1,25 @@
+<main>
+    
+  <div class="title-card">
+    <h5>Marchés</h5>
+    <img src="../../../../../assets/icons/market.svg" />
+  </div>
+  <app-card
+    [type]="'static'"
+    [count]="count"
+    [name]="name"
+    [subName]="subName"
+  ></app-card>
+
+  <div class="title-card mt-8">
+    <h5>Paniers</h5>
+    <img src="../../../../../assets/icons/shop.svg" />
+  </div>
+  <app-card
+    [type]="'edit'"
+    [imgContent]="imgContent"
+    [name]="name"
+    [subName]="subName"
+  ></app-card>
+
+</main>
