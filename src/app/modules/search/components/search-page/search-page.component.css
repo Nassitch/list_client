@@ -1,0 +1,22 @@
+main {
+  padding-top: 20px;
+}
+
+.search-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: var(--second-color);
+  padding: 5px 15px;
+}
+
+.search-bar > img {
+  height: 30px;
+}
+
+.search-bar > input {
+  width: 95%;
+  border: none;
+  color: var(--background-color);
+  padding-left: 10px;
+}

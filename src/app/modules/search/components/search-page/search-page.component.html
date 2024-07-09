@@ -1,0 +1,23 @@
+<main>
+  <div class="search-bar">
+    <img src="../../../../../assets/icons/search-bar.svg" />
+    <input />
+    <button class="ghost-btn">
+      <img src="../../../../../assets/icons/close-bar.svg" />
+    </button>
+  </div>
+  
+  @if (categories$ | async; as categories) {
+    @for (category of categories; track $index) {
+
+        <div class="category">
+            <article>
+                <button>
+                    <img [src]="categoryService._BASE_URL_IMG + category.picture" />
+                </button>
+                <p>{{ category.name }}</p>
+            </article>
+        </div>
+        }
+    }
+</main>
