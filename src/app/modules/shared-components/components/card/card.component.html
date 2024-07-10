@@ -1,7 +1,7 @@
 <ng-container [ngTemplateOutlet]="isStatic ? staticTemplate : editTemplate" />
 
 <ng-template #staticTemplate>
-  <button class="card-static">
+  <button class="card-static" (click)="onCardSelected()">
     <article>
       <section class="high-section">
         @if (imgContent) {
@@ -10,7 +10,7 @@
         @if (count) {
           <p>{{ count }}</p>
         }
-        <img src="../../../../../assets/icons/check.svg" />
+        <img [src]="isActive ? checked : unChecked" />
       </section>
       <section class="middle-section">
         <h4>{{ title }}</h4>
@@ -23,7 +23,7 @@
 </ng-template>
 
 <ng-template #editTemplate>
-  <button class="card-edit">
+  <button class="card-edit" (click)="onCardSelected()">
     <article>
       <section class="high-section">
         @if (imgContent) {
@@ -32,7 +32,7 @@
         @if (count) {
           <p>{{ count }}</p>
         }
-        <img src="../../../../../assets/icons/check.svg" />
+        <img [src]="isActive ? checked : unChecked" />
       </section>
       <section class="middle-section">
         <p>{{ title }}</p>
@@ -42,7 +42,7 @@
           <img src="../../../../../assets/icons/pen.svg" />
         </button>
         <div></div>
-        <button>
+        <button (click)="delete()">
           <img src="../../../../../assets/icons/bin.svg" />
         </button>
       </section>

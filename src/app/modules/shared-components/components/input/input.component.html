@@ -63,7 +63,7 @@
 <ng-template #errorTemplate let-control="control">
   @if (showError) {
     @if(control.invalid && (control.dirty || control.touched) && errorMessage) {
-    <span class="error">
+    <span class="error-input">
         {{ errorMessage }}
     </span>
   }

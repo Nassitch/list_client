@@ -111,5 +111,9 @@ menu > article > .menu-btn {
   height: 160px;
   display: flex;
   overflow: auto;
-  /* background-color: red; */
+}
+
+.submit-btn {
+  display: flex;
+  justify-content: center;
 }

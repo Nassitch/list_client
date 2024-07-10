@@ -14,6 +14,7 @@ export const environment = {
     _UPLOAD: "/upload",
     _READ: "/read",
     _READ_ALL: "/read/all",
+    _DELETE: "/delete",
     _UPDATE: "/update",
     _THIS_USER: "/this/user",
     _AVATAR: "/avatar/"
