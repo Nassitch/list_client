@@ -9,10 +9,13 @@
           @for (market of marketList; track $index) {
               <app-card
               [type]="'static'"
+              [id]="market.id"
+              [content]="marketContent"
               [imgContent]="marketService._BASE_URL_IMG + market .picture"
               [title]="market.name"
               [subTitle]="market.size"
-              (cardSelected)="onCardClick(market.id)"
+              [isActive]="market.id === activeMarket"
+              (cardSelected)="onCardClick(market.id, 'market')"
               ></app-card>
             }
         }
@@ -27,10 +30,13 @@
             @for (shop of shopList; track $index) {
                 <app-card
                 [type]="'edit'"
+                [id]="shop.id"
+                [content]="shopContent"
                 [count]="0"
                 [title]="shop.createdAt"
                 [onDelete]="onDelete.bind(this, shop.id)"
-                (cardSelected)="onCardClick(shop.id)"
+                [isActive]="shop.id === activeShop"
+                (cardSelected)="onCardClick(shop.id, 'shop')"
               ></app-card>
             }
         }

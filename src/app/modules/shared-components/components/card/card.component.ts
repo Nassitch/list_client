@@ -11,7 +11,9 @@ import { CardType } from '../../models/card.type';
 })
 export class CardComponent implements OnInit {
 
+  @Input() public id!: number;
   @Input() public type!: CardType;
+  @Input() public content!: string;
   @Input() public imgContent?: string;
   @Input() public count?: number;
   @Input() public check!: string;
@@ -19,7 +21,7 @@ export class CardComponent implements OnInit {
   @Input() public subTitle?: string;
   @Input() public onDelete?: () => void;
   @Input() public isActive: boolean = false;
-  @Output() public cardSelected = new EventEmitter<void>();
+  @Output() public cardSelected = new EventEmitter<{ id: number, content: string}>();
 
   checked: string = "../../../../../assets/icons/check.svg";
   unChecked: string = "../../../../../assets/icons/uncheck.svg";
@@ -31,9 +33,9 @@ export class CardComponent implements OnInit {
   }
 
   onCardSelected(): void {
-    console.log("State of this card : ", this.isActive);
     this.isActive = !this.isActive;
-    this.cardSelected.emit();
+    console.log("State of this card : ", this.isActive);
+    this.cardSelected.emit({ id: this.id, content: this.content });
   }
 
   edit(): void {}

@@ -23,6 +23,9 @@ export class InvoiceComponent implements OnInit {
   private refreshShops$ = new BehaviorSubject<void>(undefined);
   total!: number;
   textBtn: string = 'Valider ma Facture';
+  marketContent: string = "market";
+  activeMarket?: number;
+  shopContent: string = "shop";
   activeShop?: number;
 
   ngOnInit(): void {
@@ -32,13 +35,14 @@ export class InvoiceComponent implements OnInit {
     );
   }
 
-  onCardClick(id: number): void {
-    if (this.activeShop == id) {
-      this.activeShop = undefined;
-    } else {
-      this.activeShop = id;
+  onCardClick(id: number, type: 'market' | 'shop'): void {
+    if (type === 'market') {
+      this.activeMarket = (this.activeMarket === id) ? undefined : id;
+    } else if (type === 'shop') {
+      this.activeShop = (this.activeShop === id) ? undefined : id;
     }
-    console.log("The state is :", this.activeShop);
+    console.log("The state of market is :", this.activeMarket);
+    console.log("The state of shop is :", this.activeShop);
   }
 
   onDelete(id: number): void {
