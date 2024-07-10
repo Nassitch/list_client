@@ -45,13 +45,13 @@
     <div class="input-text mt-6">
         <label for="total">TOTAL</label>
         <div>
-            <input type="number" name="total" [(ngModel)]="total" />
+            <input type="number" name="total" [(ngModel)]="this.total" />
             <p>€</p>
         </div>
     </div>
 
     <div class="submit-btn mt-8">
-        <app-submit-btn [text]="textBtn" ></app-submit-btn>
+        <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()"></app-submit-btn>
     </div>
 
 </main>

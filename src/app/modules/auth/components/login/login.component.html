@@ -17,7 +17,7 @@
     [placeholder]="'***************'"
   ></app-input>
 
-  <app-submit-btn [text]="textBtn" [onClick]="onSubmit"></app-submit-btn>
+  <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()"></app-submit-btn>
 
   <p class="text-underline mt-4">Mot de passe oublié ?</p>
   <p class="mt-4">
