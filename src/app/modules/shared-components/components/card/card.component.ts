@@ -15,8 +15,8 @@ export class CardComponent implements OnInit {
   @Input() public imgContent?: string;
   @Input() public count?: number;
   @Input() public check!: string;
-  @Input() public name!: string;
-  @Input() public subName?: string;
+  @Input() public title!: string;
+  @Input() public subTitle?: string;
 
   protected isStatic: boolean = true;
 

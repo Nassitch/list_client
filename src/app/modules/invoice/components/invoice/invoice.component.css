@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 10px;
+  padding-block: 10px 5px;
 }
 
 .title-card > h5 {

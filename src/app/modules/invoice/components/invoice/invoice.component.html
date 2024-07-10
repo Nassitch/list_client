@@ -1,25 +1,36 @@
 <main>
-    
+
   <div class="title-card">
     <h5>Marchés</h5>
     <img src="../../../../../assets/icons/market.svg" />
   </div>
-  <app-card
-    [type]="'static'"
-    [count]="count"
-    [name]="name"
-    [subName]="subName"
-  ></app-card>
+  <div class="card-list">
+      @if (marketList$ | async; as marketList) {
+          @for (market of marketList; track $index) {
+              <app-card
+              [type]="'static'"
+              [imgContent]="marketService._BASE_URL_IMG + market .picture"
+              [title]="market.name"
+              [subTitle]="market.size"
+              ></app-card>
+            }
+        }
+    </div>
 
   <div class="title-card mt-8">
     <h5>Paniers</h5>
     <img src="../../../../../assets/icons/shop.svg" />
   </div>
-  <app-card
-    [type]="'edit'"
-    [imgContent]="imgContent"
-    [name]="name"
-    [subName]="subName"
-  ></app-card>
+  <div class="card-list">
+      @if (shopList$ | async; as shopList) {
+          @for (shop of shopList; track $index) {
+              <app-card
+              [type]="'edit'"
+              [count]="10"
+              [title]="shop.createdAt"
+              ></app-card>
+            }
+        }
+    </div>
 
 </main>

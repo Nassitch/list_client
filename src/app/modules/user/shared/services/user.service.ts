@@ -12,7 +12,7 @@ export class UserService implements OnDestroy {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
 
-  protected id!: number;
+  public id!: number;
   private currentUserSubscription: Subscription | null = null;
 
   private _BASE_URL: string = environment._BASE_URL;
