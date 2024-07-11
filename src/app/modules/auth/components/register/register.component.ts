@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { catchError, Observable, of, switchMap } from 'rxjs';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { catchError, Observable, of, Subscription, switchMap } from 'rxjs';
 import { UserService } from '../../../user/shared/services/user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
@@ -15,7 +15,7 @@ import { environment } from '../../../../../environments/environment.developpmen
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   private authService = inject(AuthService);
   private userService = inject(UserService);
   private fb = inject(FormBuilder);
@@ -28,6 +28,7 @@ export class RegisterComponent implements OnInit {
   textBtn: string = 'Enregistrer';
 
   avatars$!: Observable<string[]>;
+  registerSubscription$: Subscription = new Subscription();
   private _BASE_URL: string = environment._BASE_URL;
   private _PUBLIC: string = environment._PUBLIC;
   private _UPLOAD: string = environment._UPLOAD;
@@ -77,13 +78,6 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.authService.getCurrentUser().pipe(
-      switchMap((user: UserToken | null) => {
-        if (!user || !user.loginId) {
-          console.error('User not authenticated or loginId not found');
-          return of(null);
-        }
-
         const userInfo: UserInfo = {
           firstName: this.formGroup.get('firstName')?.value,
           lastName: this.formGroup.get('lastName')?.value,
@@ -91,24 +85,30 @@ export class RegisterComponent implements OnInit {
           address: this.formGroup.get('address')?.value,
           city: this.formGroup.get('city')?.value,
           zipCode: this.formGroup.get('zipCode')?.value,
-          loginId: user.loginId,
+          loginId: this.authService.currentUserId.getValue(),
         };
 
         console.log(userInfo);
 
-        return this.authService.register$(userInfo).pipe(
-          catchError((error) => {
-            this.toastService.show('Erreur lors de la création du compte.', 'Erreur', 'error')
-            console.error('Error registering user', error);
-            return of(null);
-          })
-        );
-      })
-    ).subscribe((response) => {
-      if (response) {
-        this.toastService.show('Vos données sont bien enregistrées.', 'Succès', 'success');
-        this.router.navigate(['/home']);
+        
+    this.registerSubscription$ = this.authService.register$(userInfo).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.toastService.show('Inscription réussie', 'Succès', 'success');
+          this.router.navigate(['/home']);
+        } else {
+          this.toastService.show('Erreur lors de l\'inscription', 'Erreur', 'error');
+        }
+      },
+      error: (error) => {
+        console.error('Erreur lors de l\'inscription:', error);
+        this.toastService.show('Erreur lors de l\'inscription', 'Erreur', 'error');
       }
     });
-  }
+      }
+
+      ngOnDestroy(): void {
+        this.registerSubscription$.unsubscribe();
+      }
+  
 }
