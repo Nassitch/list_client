@@ -46,7 +46,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       ]),
       lastName: new FormControl('', [
         Validators.required,
-        Validators.minLength(3),
+        Validators.minLength(2),
       ]),
       address: new FormControl('', [
         Validators.required,
@@ -94,15 +94,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerSubscription$ = this.authService.register$(userInfo).subscribe({
       next: (response) => {
         if (response.success) {
-          this.toastService.show('Inscription réussie', 'Succès', 'success');
+          this.toastService.show('Votre inscription à été validé avec succès.', 'Succès', 'success');
           this.router.navigate(['/home']);
         } else {
-          this.toastService.show('Erreur lors de l\'inscription', 'Erreur', 'error');
+          this.toastService.show("Erreur lors de l'inscription", 'Erreur', 'error');
         }
       },
       error: (error) => {
-        console.error('Erreur lors de l\'inscription:', error);
-        this.toastService.show('Erreur lors de l\'inscription', 'Erreur', 'error');
+        console.error("Erreur lors de l'inscription:", error);
+        this.toastService.show("Erreur lors de l'inscription", 'Erreur', 'error');
       }
     });
       }
