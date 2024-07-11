@@ -1,25 +1,57 @@
 <main>
-    
+
   <div class="title-card">
     <h5>Marchés</h5>
     <img src="../../../../../assets/icons/market.svg" />
   </div>
-  <app-card
-    [type]="'static'"
-    [count]="count"
-    [name]="name"
-    [subName]="subName"
-  ></app-card>
+  <div class="card-list">
+      @if (marketList$ | async; as marketList) {
+          @for (market of marketList; track $index) {
+              <app-card
+              [type]="'static'"
+              [id]="market.id"
+              [content]="marketContent"
+              [imgContent]="marketService._BASE_URL_IMG + market .picture"
+              [title]="market.name"
+              [subTitle]="market.size"
+              [isActive]="market.id === activeMarket"
+              (cardSelected)="onCardClick(market.id, 'market')"
+              ></app-card>
+            }
+        }
+    </div>
+    
+    <div class="title-card">
+        <h5>Paniers</h5>
+        <img src="../../../../../assets/icons/shop.svg" />
+    </div>
+    <div class="card-list">
+        @if (shopList$ | async; as shopList) {
+            @for (shop of shopList; track $index) {
+                <app-card
+                [type]="'edit'"
+                [id]="shop.id"
+                [content]="shopContent"
+                [count]="0"
+                [title]="shop.createdAt"
+                [onDelete]="onDelete.bind(this, shop.id)"
+                [isActive]="shop.id === activeShop"
+                (cardSelected)="onCardClick(shop.id, 'shop')"
+              ></app-card>
+            }
+        }
+    </div>
 
-  <div class="title-card mt-8">
-    <h5>Paniers</h5>
-    <img src="../../../../../assets/icons/shop.svg" />
-  </div>
-  <app-card
-    [type]="'edit'"
-    [imgContent]="imgContent"
-    [name]="name"
-    [subName]="subName"
-  ></app-card>
+    <div class="input-text mt-6">
+        <label for="total">TOTAL</label>
+        <div>
+            <input type="number" name="total" [(ngModel)]="this.total" />
+            <p>€</p>
+        </div>
+    </div>
+
+    <div class="submit-btn mt-8">
+        <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()"></app-submit-btn>
+    </div>
 
 </main>

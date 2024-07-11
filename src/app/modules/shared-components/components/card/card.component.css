@@ -2,6 +2,7 @@
 .card-static {
   height: 150px;
   width: 150px;
+  margin-right: 10px;
   padding: 10px;
   background-color: var(--second-color);
   border: none;
@@ -50,7 +51,7 @@
 }
 
 .card-static > article > .low-section > p {
-  max-width: 100px;
+  max-width: 75px;
 }
 
 /* EDIT. */
@@ -58,6 +59,7 @@
   height: 150px;
   width: 150px;
   padding: 10px;
+  margin-right: 10px;
   background-color: var(--second-color);
   border: none;
   border-radius: 10px;
@@ -97,24 +99,24 @@
 }
 
 .card-edit > article > .low-section {
-    min-height: 33%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+  min-height: 33%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
 }
 
 .card-edit > article > .low-section > button {
-    /* height: 33%;
+  /* height: 33%;
     width: 48%; */
-    height: 35px;
-    width: 35px;
-    border: none;
-    background: transparent;
+  height: 35px;
+  width: 35px;
+  border: none;
+  background: transparent;
 }
 
 .card-edit > article > .low-section > div {
-    height: 100%;
-    width: 2px;
-    background-color: var(--background-color);
+  height: 100%;
+  width: 2px;
+  background-color: var(--background-color);
 }

@@ -18,6 +18,7 @@ export class LandingPageComponent implements OnInit {
   landingMsg: boolean = true;
 
   ngOnInit(): void {
+    this.userService.initialize();
     this.profile$ = this.userService.getUserProfile$();
   }
 

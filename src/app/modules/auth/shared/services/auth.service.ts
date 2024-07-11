@@ -1,4 +1,4 @@
-import { BehaviorSubject, catchError, map, mergeMap, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, mergeMap, Observable, of, switchMap, tap } from 'rxjs';
 import { UserToken } from '../../../../models/user-token.interface';
 import { UserInfo } from '../../../user/models/user-info.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -17,6 +17,8 @@ import { inject, Injectable, OnInit } from '@angular/core';
 export class AuthService implements OnInit {
   private currentUser: BehaviorSubject<UserToken | null> =
     new BehaviorSubject<UserToken | null>(null);
+    private logInfoUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    public currentUserId: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
 
   protected http = inject(HttpClient);
   private cookieService = inject(CookieService);
@@ -74,35 +76,51 @@ export class AuthService implements OnInit {
   }
 
   signup$(newUser: AuthRequest): Observable<any> {
-    return this.http
-      .post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
-      .pipe(
-        mergeMap((user: any) =>
-          this.login$(newUser).pipe(
-            catchError((authError) => {
-              console.error('Error while logging in:', authError);
-              return of(null);
-            }),
-            map(() => ({
-              success: true,
-              message: 'Inscription et connexion réussies',
-            }))
-          )
-        ),
-        catchError((error: HttpErrorResponse) => {
-          console.error("Erreur lors de l'inscription:", error);
-          return of({
-            success: false,
-            message: "Erreur lors de l'inscription",
-          });
-        })
-      );
-  }
+    this.logInfoUser.next(newUser);
+      return this.http.post<{ id: number, message: string }>(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
+        .pipe(
+          tap(response => {
+            this.currentUserId.next(response.id);
+          }),
+          map(response => ({
+            success: true,
+            message: response.message,
+            id: response.id
+          })),
+          catchError((error: HttpErrorResponse) => {
+            console.error("Erreur lors de l'inscription:", error);
+            return of({
+              success: false,
+              message: "Erreur lors de l'inscription",
+            });
+          })
+        );
+    }
 
   register$(userInfo: UserInfo): Observable<any> {
     return this.http.post(
       `${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`,
       userInfo
+    ).pipe(
+      switchMap((user: any) =>
+        this.login$(this.logInfoUser.getValue()).pipe(
+          catchError((authError) => {
+            console.error('Error while logging in:', authError);
+            return of(null);
+          }),
+          map(() => ({
+            success: true,
+            message: 'Inscription et connexion réussies',
+          }))
+        )
+      ),
+      catchError((error: HttpErrorResponse) => {
+        console.error("Erreur lors de l'inscription:", error);
+        return of({
+          success: false,
+          message: "Erreur lors de l'inscription",
+        });
+      })
     );
   }
 

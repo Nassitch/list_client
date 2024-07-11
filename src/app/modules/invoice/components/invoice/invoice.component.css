@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 10px;
+  padding-block: 10px 10px;
 }
 
 .title-card > h5 {
@@ -12,4 +12,33 @@
 .title-card > img {
   height: 35px;
   width: 35px;
+}
+
+/* Input. */
+.input-text {
+  height: 50px;
+  width: 40%;
+  padding: 5px 15px;
+  background-color: var(--second-color);
+  border-radius: 10px;
+}
+
+.input-text > label {
+  font-size: 14px;
+}
+
+.input-text > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.input-text > div > input {
+    width: 80%;
+    background-color: var(--second-color);
+    border: none;
+}
+
+
+.input-text > div > p {
+    width: 10%;
 }

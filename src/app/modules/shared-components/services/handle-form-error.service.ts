@@ -5,7 +5,6 @@ import { FormArray, FormControl } from '@angular/forms';
   providedIn: 'root',
 })
 export class HandleFormErrorService {
-
   public getErrorMessage(
     control: FormControl | FormArray | null
   ): string | undefined {

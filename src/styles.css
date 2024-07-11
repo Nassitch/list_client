@@ -106,3 +106,14 @@ menu > article > .menu-btn {
   background-color: var(--background-color);
   margin-block: 15px;
 }
+
+.card-list {
+  height: 160px;
+  display: flex;
+  overflow: auto;
+}
+
+.submit-btn {
+  display: flex;
+  justify-content: center;
+}
