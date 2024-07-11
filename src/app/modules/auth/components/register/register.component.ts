@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { catchError, Observable, of, Subscription, switchMap } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from '../../../user/shared/services/user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
@@ -7,7 +7,6 @@ import { UserInfo } from '../../../user/models/user-info.interface';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared-components/services/toast.service';
-import { UserToken } from '../../../../models/user-token.interface';
 import { environment } from '../../../../../environments/environment.developpment';
 
 @Component({
@@ -78,37 +77,37 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
-        const userInfo: UserInfo = {
-          firstName: this.formGroup.get('firstName')?.value,
-          lastName: this.formGroup.get('lastName')?.value,
-          picture: this.picture,
-          address: this.formGroup.get('address')?.value,
-          city: this.formGroup.get('city')?.value,
-          zipCode: this.formGroup.get('zipCode')?.value,
-          loginId: this.authService.currentUserId.getValue(),
-        };
+    const userInfo: UserInfo = {
+      firstName: this.formGroup.get('firstName')?.value,
+      lastName: this.formGroup.get('lastName')?.value,
+      picture: this.picture,
+      address: this.formGroup.get('address')?.value,
+      city: this.formGroup.get('city')?.value,
+      zipCode: this.formGroup.get('zipCode')?.value,
+      loginId: this.authService.currentUserId.getValue(),
+    };
 
-        console.log(userInfo);
+    console.log(userInfo);
 
-        
-    this.registerSubscription$ = this.authService.register$(userInfo).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.toastService.show('Votre inscription à été validé avec succès.', 'Succès', 'success');
-          this.router.navigate(['/home']);
-        } else {
+    this.registerSubscription$ = this.authService
+      .register$(userInfo)
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            this.toastService.show('Votre inscription à été validé avec succès.', 'Succès', 'success');
+            this.router.navigate(['/home']);
+          } else {
+            this.toastService.show("Erreur lors de l'inscription", 'Erreur', 'error');
+          }
+        },
+        error: (error) => {
+          console.error("Erreur lors de l'inscription:", error);
           this.toastService.show("Erreur lors de l'inscription", 'Erreur', 'error');
-        }
-      },
-      error: (error) => {
-        console.error("Erreur lors de l'inscription:", error);
-        this.toastService.show("Erreur lors de l'inscription", 'Erreur', 'error');
-      }
-    });
-      }
+        },
+      });
+  }
 
-      ngOnDestroy(): void {
-        this.registerSubscription$.unsubscribe();
-      }
-  
+  ngOnDestroy(): void {
+    this.registerSubscription$.unsubscribe();
+  }
 }

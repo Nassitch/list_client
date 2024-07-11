@@ -17,8 +17,6 @@ import { inject, Injectable, OnInit } from '@angular/core';
 export class AuthService implements OnInit {
   private currentUser: BehaviorSubject<UserToken | null> =
     new BehaviorSubject<UserToken | null>(null);
-
-    // public logInfoUser: BehaviorSubject<AuthRequest | undefined> = new BehaviorSubject<AuthRequest | undefined>(undefined);
     private logInfoUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
     public currentUserId: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
 
