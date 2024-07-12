@@ -4,5 +4,6 @@ export interface Shop {
     id: number;
     createdAt: string;
     isCompleted: boolean;
+    count: number;
     categories: Category[];
 }
