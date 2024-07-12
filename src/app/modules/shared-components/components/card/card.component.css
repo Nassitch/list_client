@@ -42,6 +42,15 @@
   align-items: center;
 }
 
+.is-checked {
+  height: 15px;
+  font-size: 12px;
+}
+.is-checked > img {
+  height: 10px;
+  width: 10px;
+}
+
 .card-static > article > .low-section {
   min-height: 33%;
   width: 100%;

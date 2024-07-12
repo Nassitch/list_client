@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CardType } from '../../models/card.type';
+import { DateFormatPipe } from '../../pipes/date-format.pipe';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, DateFormatPipe],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
@@ -15,9 +16,11 @@ export class CardComponent implements OnInit {
   @Input() public type!: CardType;
   @Input() public content!: string;
   @Input() public imgContent?: string;
+  @Input() public isCompleted?: boolean;
   @Input() public count?: number;
   @Input() public check!: string;
-  @Input() public title!: string;
+  @Input() public title?: string;
+  @Input() public date?: string;
   @Input() public subTitle?: string;
   @Input() public onDelete?: () => void;
   @Input() public isActive: boolean = false;
