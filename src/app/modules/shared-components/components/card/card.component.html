@@ -35,7 +35,17 @@
         <img [src]="isActive ? checked : unChecked" />
       </section>
       <section class="middle-section">
-        <p>{{ title }}</p>
+        @if (date) {
+          <p>{{ date | dateFormat }}
+            @if (isCompleted) {
+              <br/>
+              <span class="is-checked"><img src="../../../../../assets/icons/is-check.svg" />Validé</span>
+            }
+          </p>
+        }
+        @if (title) {
+          <p>{{ title }}</p>
+        }
       </section>
       <section class="low-section">
         <button>
