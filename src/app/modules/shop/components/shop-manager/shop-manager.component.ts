@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ShopService } from '../../shared/services/shop.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, switchMap } from 'rxjs';
 import { Shop } from '../../models/shop.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
 
@@ -13,7 +13,7 @@ export class ShopManagerComponent implements OnInit {
 
   private refreshShops$ = new BehaviorSubject<void>(undefined);
   
-    shopList$!: Observable<Shop[]>;
+  shopList$!: Observable<Shop[]>;
 
   private shopService = inject(ShopService);
   private toastService = inject(ToastService);
@@ -25,11 +25,13 @@ export class ShopManagerComponent implements OnInit {
   activeShop?: number;
 
   ngOnInit(): void {
-    this.shopList$ = this.shopService.getShopFromUser$();
+    this.shopList$ = this.refreshShops$.pipe(
+      switchMap(() => this.shopService.getShopFromUser$())
+    );
   }
 
   onCardClick(id: number): void {
-      this.activeShop = (this.activeShop === id) ? undefined : id;
+    this.activeShop = (this.activeShop === id) ? undefined : id;
     console.log("The state of shop is :", this.activeShop);
   }
 
