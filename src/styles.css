@@ -25,7 +25,8 @@
 }
 
 main {
-  height: 100vh;
+  height: 110vh;
+  width: 100vw;
   /* height: 100%; */
   padding-inline: 25px;
   background-color: var(--background-color);
@@ -116,4 +117,25 @@ menu > article > .menu-btn {
 .submit-btn {
   display: flex;
   justify-content: center;
+}
+
+.manager-section {
+  display: flex;
+  flex-direction: column;
+  padding-block: 40px;
+}
+
+.manager-section > h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.manager-section > .cards {
+  height: 160px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
 }

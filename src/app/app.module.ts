@@ -12,6 +12,7 @@ import { SettingWindowComponent } from './layout/setting-window/setting-window.c
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { CreditPageComponent } from './components/credit-page/credit-page.component';
 import { DateFormatPipe } from './modules/shared-components/pipes/date-format.pipe';
+import { LandingMsgComponent } from './modules/shared-components/components/landing-msg/landing-msg.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { DateFormatPipe } from './modules/shared-components/pipes/date-format.pi
     AppRoutingModule,
     HttpClientModule,
     ToastComponent,
+    LandingMsgComponent,
     DateFormatPipe
   ],
   providers: [
