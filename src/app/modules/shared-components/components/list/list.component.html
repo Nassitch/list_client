@@ -1,0 +1,22 @@
+<section class="list">
+    <article class="list-category">
+        <div class="list-category-info">
+            <p>{{ count }}</p>
+            <img [src]="image" [alt]="name" />
+            <h5>{{ name }}</h5>
+        </div>
+        <div class="list-unroll">
+            <button (click)="toggleList()">
+                <img [src]="isUnroll ? unRoll : roll" />
+            </button>
+        </div>
+    </article>
+    @if (isUnroll) {
+        @for(item of items; track $index) {
+            <button class="list-items">
+                <p>{{ item.name }}</p>
+                <img src="../../../../../assets/icons/check.svg" />
+            </button>
+        }
+    }
+</section>

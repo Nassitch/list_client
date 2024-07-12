@@ -1,0 +1,14 @@
+<main>
+    @if (category$ | async; as category) {
+        
+        <app-list
+        [id]="category.id"
+        [count]="12"
+        [image]="this.categoryService._BASE_URL_IMG + category.picture"
+        [name]="category.name"
+        [items]="category.items"
+        ></app-list>
+    }
+
+    <app-submit-btn [text]="this.textBtn" ></app-submit-btn>
+</main>

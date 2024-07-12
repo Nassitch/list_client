@@ -23,4 +23,8 @@ export class CategoryService {
   getAllCategories$(): Observable<Category[]> {
     return this.http.get<Category[]>(`${this._BASE_URL}${this._PUBLIC}${this._CATEGORY}${this._READ_ALL}`);
   }
+
+  getCategory$(id: number): Observable<Category> {
+    return this.http.get<Category>(`${this._BASE_URL}${this._PUBLIC}${this._CATEGORY}${this._READ}/${id}`);
+  }
 }

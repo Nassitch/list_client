@@ -24,8 +24,8 @@ export class SearchPageComponent implements OnInit {
     this.input = '';
   }
 
-  navigateTo(type: string, path: string): void {
-    console.log(type + path.trim());
-    this.router.navigate([type + path.trim()]);
+  navigateTo(type: string, path: number | string): void {
+    console.log(type + path);
+    this.router.navigate([type + path]);
   }
 }

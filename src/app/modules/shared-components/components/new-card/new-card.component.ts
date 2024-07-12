@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 })
 export class NewCardComponent {
 
-  @Input() path!: string;
-  @Input() wordMale: boolean = true;
-  @Input() word!: string;
+  @Input() public path!: string;
+  @Input() public wordMale: boolean = true;
+  @Input() public word!: string;
 
   private router = inject(Router);
 

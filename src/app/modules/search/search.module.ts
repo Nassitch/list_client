@@ -4,16 +4,22 @@ import { CommonModule } from '@angular/common';
 import { SearchRoutingModule } from './search-routing.module';
 import { SearchPageComponent } from './components/search-page/search-page.component';
 import { FormsModule } from '@angular/forms';
+import { SearchCategoryComponent } from './components/search-category/search-category.component';
+import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
+import { ListComponent } from '../shared-components/components/list/list.component';
 
 
 @NgModule({
   declarations: [
-    SearchPageComponent
+    SearchPageComponent,
+    SearchCategoryComponent
   ],
   imports: [
     CommonModule,
     SearchRoutingModule,
-    FormsModule
+    FormsModule,
+    ListComponent,
+    SubmitBtnComponent
   ]
 })
 export class SearchModule { }
