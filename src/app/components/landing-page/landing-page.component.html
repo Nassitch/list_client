@@ -6,15 +6,7 @@
           </div>
     }
 
-    @if (landingMsg) {
-        <div class="landing-msg">
-            <button class="ghost-btn close-landing-msg" (click)="closeLandingMsg()">
-                <img src="../../../assets/icons/close.svg" />
-            </button>
-            <h2>Bienvenue sur List.</h2>
-            <p>Vous pouvez desormais vous faire une liste, enregistrer une facture et vérifier vos statistiques, tout ça à l'infinis ! </p>
-        </div>
-    }
+    <app-landing-msg [title]="this.titleLandingMsg" [description]="this.descriptionLandingMsg" ></app-landing-msg>
 
     <menu>
         <article class="d-flex">

@@ -15,7 +15,9 @@ export class LandingPageComponent implements OnInit {
 
   profile$!: Observable<any>;
 
-  landingMsg: boolean = true;
+  titleLandingMsg: string = "Bienvenue sur List.";
+  descriptionLandingMsg: string = "Vous pouvez desormais vous faire une liste, enregistrer une facture et vérifier vos statistiques, tout ça à l'infinis !";
+
 
   ngOnInit(): void {
     this.userService.initialize();
@@ -24,10 +26,6 @@ export class LandingPageComponent implements OnInit {
 
   navigateTo(path: string): void {
     this.router.navigate([path]);
-  }
-
-  closeLandingMsg(): boolean {
-    return this.landingMsg = !this.landingMsg;
   }
 
 }
