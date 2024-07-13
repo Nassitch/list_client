@@ -9,8 +9,10 @@ import { Component, Input } from '@angular/core';
 })
 export class LandingMsgComponent {
 
-  @Input() title!: string;
-  @Input() description!: string;
+  @Input() public title!: string;
+  @Input() public description!: string;
+  @Input() public additionalOne?: string;
+  @Input() public additionalTwo?: string;
 
   display: boolean = true;
 
