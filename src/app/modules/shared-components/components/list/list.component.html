@@ -13,9 +13,9 @@
     </article>
     @if (isUnroll) {
         @for(item of items; track $index) {
-            <button class="list-items">
+            <button class="list-items" (click)="toggleSelection(item.id)">
                 <p>{{ item.name }}</p>
-                <img src="../../../../../assets/icons/check.svg" />
+                <img [src]="isSelected(item.id) ? check : unCheck" />
             </button>
         }
     }
