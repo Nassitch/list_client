@@ -1,5 +1,5 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from '../../../category/shared/services/category.service';
 import { Observable, Subscription } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
@@ -18,6 +18,7 @@ export class SearchCategoryComponent implements OnInit, OnDestroy {
   protected categoryService = inject(CategoryService);
   private shopService = inject(ShopService);
   private toastService = inject(ToastService);
+  private router = inject(Router);
   
   category$!: Observable<Category>;
   categorySubsription$: Subscription = new Subscription();
@@ -44,6 +45,7 @@ export class SearchCategoryComponent implements OnInit, OnDestroy {
         this.shopService.saveItems(updatedCategory);
         this.toastService.show('Votre Panier à bien été mis à jour.', 'Succès', 'success');
         console.log('Éléments soumis:', updatedCategory);
+        this.router.navigate(["/search"]);
       });
     } else {
       this.toastService.show('Vous devez ajouter au moins un article.', 'Erreur', 'error');
