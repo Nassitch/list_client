@@ -15,12 +15,12 @@ export class ListComponent {
   @Input() public image!: string;
   @Input() public name!: string;
   @Input() public items!: Item[];
+  @Input() public isUnroll: boolean = true;
 
   @Output() public selectedItemsChange = new EventEmitter<Item[]>();
 
   selectedItems: { [id: number]: boolean } = {};
 
-  isUnroll: boolean = true;
   unRoll: string = '../../../../../assets/icons/unroll.svg';
   roll: string = '../../../../../assets/icons/roll.svg';
   isChecked: boolean = false;
