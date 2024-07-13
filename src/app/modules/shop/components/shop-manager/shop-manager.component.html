@@ -3,7 +3,21 @@
     <h2>Panier.</h2>
 
     <div class="cards">
-      <app-new-card [path]="'/shop/new'" [word]="'Panier'"></app-new-card>
+      <app-new-card
+      [path]="'/search'"
+      [word]="'Panier'"
+      (newShopEvent)="newShop()"
+      />
+
+      @if (currentShop) {
+        <button class="edit-card" (click)="navigateTo('/shop/current')">
+          <article>
+            <img src="../../../../../assets/icons/pen.svg" />
+            <p>Panier<br/>Actuel</p>
+          </article>
+        </button>
+      }
+
         @if (shopList$ | async; as shopList) {
             @for (shop of shopList; track $index) {
                 <app-card
