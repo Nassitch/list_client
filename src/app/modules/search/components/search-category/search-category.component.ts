@@ -32,6 +32,9 @@ export class SearchCategoryComponent implements OnInit, OnDestroy {
 
   onSelectedItemsChange(items: Item[]): void {
     this.selectedItems = items;
+    for (let i = 0; i <= this.selectedItems.length; i += 1) {
+      this.total = i;
+    }
   }
 
   onSubmit(): void {
