@@ -1,6 +1,7 @@
 .landing-msg {
   position: relative;
   background-color: var(--second-color);
+  margin-block: 20px;
   padding: 30px 45px;
   border-radius: 10px;
 }
@@ -21,4 +22,14 @@
   text-align: center;
   font-size: 15px;
   margin-top: 20px;
+}
+
+.landing-msg > ol {
+  list-style-type: decimal;
+}
+
+.landing-msg > ol > li {
+  
+  font-size: 15px;
+  margin: 20px 0px 0px 20px;
 }

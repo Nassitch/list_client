@@ -14,7 +14,7 @@
             @for (category of categories; track $index) {
                 <div class="category">
                     <article>
-                        <button (click)="navigateTo('/category/', category.name)">
+                        <button (click)="navigateTo('/search/category/', category.id)">
                         <img [src]="categoryService._BASE_URL_IMG + category.picture" />
                         </button>
                         <p>{{ category.name }}</p>

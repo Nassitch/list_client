@@ -1,0 +1,22 @@
+<main>
+    @if (category$ | async; as category) {
+        
+        <app-list
+        [id]="category.id"
+        [count]="category.count"
+        [image]="this.categoryService._BASE_URL_IMG + category.picture"
+        [name]="category.name"
+        [items]="category.items"
+        (selectedItemsChange)="onSelectedItemsChange($event)"
+        ></app-list>
+    }
+
+    <div class="total-count">
+        <p>{{ total <= 1 ? "Produit Total :" : "Produits Total :"}}</p>
+        <span>{{ total }}</span>
+    </div>
+
+    <div class="submit-btn">
+        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" ></app-submit-btn>
+    </div>
+</main>

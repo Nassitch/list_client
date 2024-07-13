@@ -1,7 +1,6 @@
 .last-log {
     display: flex;
     justify-content: space-between;
-    padding: 20px 0px;
 }
 
 .last-log > p {
