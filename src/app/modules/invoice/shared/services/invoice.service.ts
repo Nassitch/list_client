@@ -21,7 +21,6 @@ export class InvoiceService {
   postInvoice$(total: number, marketId: number, shopId: number): Observable<Invoice> {
     this.userService.initialize();
     const invoice: Invoice = new Invoice(total, marketId, shopId, this.userService.id);
-    console.log(2020, invoice);
     return this.http.post<Invoice>(`${this._BASE_URL}${this._USER}${this._INVOICE}${this._CREATE}`, invoice);
   }
 }

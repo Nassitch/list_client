@@ -53,7 +53,6 @@ export class AuthService implements OnInit {
             };
 
             this.setCurrentUser(userInfo);
-            console.log('Current User after login:', userInfo);
           }
         }),
         map((response: TokenResponse) => ({

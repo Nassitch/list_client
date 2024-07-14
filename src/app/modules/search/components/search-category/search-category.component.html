@@ -3,7 +3,6 @@
         
         <app-list
         [id]="category.id"
-        [count]="category.count"
         [image]="this.categoryService._BASE_URL_IMG + category.picture"
         [name]="category.name"
         [items]="category.items"
@@ -11,10 +10,7 @@
         ></app-list>
     }
 
-    <div class="total-count">
-        <p>{{ total <= 1 ? "Produit Total :" : "Produits Total :"}}</p>
-        <span>{{ total }}</span>
-    </div>
+    <app-total [items]="this.selectedItems" />
 
     <div class="submit-btn">
         <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" ></app-submit-btn>
