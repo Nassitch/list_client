@@ -23,6 +23,7 @@ export class ShopService {
   private _BASE_URL: string = environment._BASE_URL;
   private _USER: string = environment._USER;
   private _SHOP: string = environment._SHOP;
+  private _READ: string = environment._READ;
   private _READ_ALL: string = environment._READ_ALL;
   private _CREATE: string = environment._CREATE;
   private _DELETE: string = environment._DELETE;
@@ -41,6 +42,10 @@ export class ShopService {
     } else {
       return of([]);
     }
+  }
+
+  getShopById$(id: number): Observable<Shop> {
+    return this.http.get<Shop>(`${this._BASE_URL}${this._USER}${this._SHOP}${this._READ}/${id}`);
   }
 
   saveShop(category: Category): void {
@@ -66,23 +71,28 @@ export class ShopService {
     });
     const shopToSave = new ShopClass(itemIds, this.userService.id);
     this.storageService.removeItem('shop');
-
+    
     return this.http
-      .post(
-        `${this._BASE_URL}${this._USER}${this._SHOP}${this._CREATE}`,
-        shopToSave
-      )
-      .pipe(
-        map((response) => {
-          this.toastService.show('Votre Panier à bien été validé.', 'Succès', 'success');
-          this.router.navigate(['/invoice']);
-          return response;
-        }),
-        catchError((error) => {
-          this.toastService.show("Une erreu s'est produite lors de la validation du Panier.", 'Erreur', 'error');
-          return error;
-        })
-      );
+    .post(
+      `${this._BASE_URL}${this._USER}${this._SHOP}${this._CREATE}`,
+      shopToSave
+    )
+    .pipe(
+      map((response) => {
+        this.toastService.show('Votre Panier à bien été validé.', 'Succès', 'success');
+        this.router.navigate(['/invoice']);
+        return response;
+      }),
+      catchError((error) => {
+        this.toastService.show("Une erreu s'est produite lors de la validation du Panier.", 'Erreur', 'error');
+        return error;
+      })
+    );
+  }
+  
+  editShop$(): void {
+    this.userService.initialize();
+
   }
 
   deleteShop$(id: number): Observable<{ id: number }> {

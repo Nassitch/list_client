@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { CardType } from '../../models/card.type';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card',
@@ -26,6 +27,8 @@ export class CardComponent implements OnInit {
   @Input() public isActive: boolean = false;
   @Output() public cardSelected = new EventEmitter<{ id: number, content: string}>();
 
+  private router = inject(Router);
+
   checked: string = "../../../../../assets/icons/check.svg";
   unChecked: string = "../../../../../assets/icons/uncheck.svg";
 
@@ -40,7 +43,9 @@ export class CardComponent implements OnInit {
     this.cardSelected.emit({ id: this.id, content: this.content });
   }
 
-  edit(): void {}
+  edit(id: number): void {
+    this.router.navigate(['/shop/' + id])
+  }
 
   delete(): void {
     if (this.onDelete) {
