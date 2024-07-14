@@ -111,8 +111,6 @@ export class SettingProfileComponent implements OnInit {
       zipCode: this.formGroup.get('zipCode')?.value,
     };
 
-    console.log(userInfo);
-
     this.userService.putUserProfile$(userInfo).pipe(
       catchError((error) => {
         this.toastService.show('Erreur lors de la modification de votre compte.', 'Erreur', 'error');

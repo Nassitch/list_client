@@ -42,9 +42,8 @@ export class SearchCategoryComponent implements OnInit, OnDestroy {
     if (this.selectedItems.length > 0) {
       this.categorySubsription$ = this.category$.subscribe(category => {
         const updatedCategory: Category = {...category, items: this.selectedItems};
-        this.shopService.saveItems(updatedCategory);
+        this.shopService.saveShop(updatedCategory);
         this.toastService.show('Votre Panier à bien été mis à jour.', 'Succès', 'success');
-        console.log('Éléments soumis:', updatedCategory);
         this.router.navigate(["/search"]);
       });
     } else {

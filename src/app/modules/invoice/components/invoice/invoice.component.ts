@@ -47,8 +47,6 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     } else if (type === 'shop') {
       this.activeShop = (this.activeShop === id) ? undefined : id;
     }
-    console.log("The state of market is :", this.activeMarket);
-    console.log("The state of shop is :", this.activeShop);
   }
 
   onDelete(id: number): void {
@@ -63,10 +61,8 @@ export class InvoiceComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.total === undefined || this.activeMarket === undefined || this.activeShop === undefined) {
-      console.log("total: " + this.total + ", market_id: " + this.activeMarket + ", shop_id: " + this.activeShop);
       this.toastService.show('Tous les champs ne sont pas remplis.', 'Erreur', 'error');
     } else {
-      console.log("total: " + this.total + " market_id: " + this.activeMarket + " shop_id: " + this.activeShop);
      this.postSubscribtion$ = this.invoiceService.postInvoice$(this.total, this.activeMarket, this.activeShop).subscribe({
         next: (response) => {
           this.toastService.show('Facture validée avec succès.', 'Succès', 'success');

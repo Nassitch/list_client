@@ -37,7 +37,6 @@ export class CardComponent implements OnInit {
 
   onCardSelected(): void {
     this.isActive = !this.isActive;
-    console.log("State of this card : ", this.isActive);
     this.cardSelected.emit({ id: this.id, content: this.content });
   }
 

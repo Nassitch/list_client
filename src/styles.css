@@ -28,7 +28,7 @@ main {
   height: 110vh;
   width: 100vw;
   /* height: 100%; */
-  padding: 30px 25px 0px 25px;
+  padding: 30px 25px;
   background-color: var(--background-color);
 }
 

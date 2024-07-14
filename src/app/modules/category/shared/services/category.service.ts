@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment.developpment';
 import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { Category } from '../../models/category.interface';
+import { StorageService } from '../../../../core/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +33,6 @@ export class CategoryService {
         tap((categories: Category[]) => this.categoryList$.next(categories))
       );
     }
-
   }
 
   getCategory$(id: number): Observable<Category> {

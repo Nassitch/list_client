@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.currentUserSubscription = this.authService
       .getCurrentUser()
       .subscribe((user) => {
-        console.log('Picture :', user);
         if (user && user.picture) {
           const getImage = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._AVATAR}`;
           this.profile = getImage + user.picture;

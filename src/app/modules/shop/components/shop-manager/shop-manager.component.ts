@@ -47,7 +47,6 @@ export class ShopManagerComponent implements OnInit {
 
   onCardClick(id: number): void {
     this.activeShop = (this.activeShop === id) ? undefined : id;
-    console.log("The state of shop is :", this.activeShop);
   }
 
   navigateTo(path: string): void {

@@ -24,7 +24,6 @@ export class MarketService {
 
   getAllMarket$(): Observable<Market[]> {
     this.userService.initialize();
-    console.log("The user id is :", this.userService.id);
     return this.http.get<Market[]>(`${this._BASE_URL}${this._PUBLIC}${this._MARKET}${this._READ_ALL}`);
   }
 }

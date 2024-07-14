@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { UserService } from '../../../user/shared/services/user.service';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Shop } from '../../models/shop.interface';
 import { environment } from '../../../../../environments/environment.developpment';
 import { Category } from '../../../category/models/category.interface';
@@ -27,7 +27,16 @@ export class ShopService {
     return this.http.get<Shop[]>(`${this._BASE_URL}${this._USER}${this._SHOP}${this._READ_ALL}/${this.userService.id}`);
   }
 
-  saveItems(category: Category): void {
+  getShop$(): Observable<Category[]> {
+    const shopSave = this.storageService.getItem("shop");
+    if (shopSave) {
+      return of(JSON.parse(shopSave));
+    } else {
+      return of([]);
+    }
+  }
+
+  saveShop(category: Category): void {
     const existShop: Category[] = JSON.parse(this.storageService.getItem('shop')) || [];
     
     const updatedShop = existShop.map(cat => cat.id === category.id ? category : cat);

@@ -1,0 +1,21 @@
+<main>
+
+  @if (shopList$ | async; as shopList) {
+    @for (shop of shopList; track $index) {
+        <app-list
+            [id]="shop.id"
+            [image]="this.categoryService._BASE_URL_IMG + shop.picture"
+            [name]="shop.name"
+            [items]="shop.items"
+            [allSelected]="true"
+            (selectedItemsChange)="onSelectedItemsChange($event)"
+            ></app-list>
+        }
+    }
+    
+    <app-total [items]="this.selectedItems" />
+
+    <div class="submit-btn">
+        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" ></app-submit-btn>
+    </div>
+</main>

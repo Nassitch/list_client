@@ -87,8 +87,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       loginId: this.authService.currentUserId.getValue(),
     };
 
-    console.log(userInfo);
-
     this.registerSubscription$ = this.authService
       .register$(userInfo)
       .subscribe({
