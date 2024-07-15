@@ -57,6 +57,8 @@ export class LoginComponent implements OnInit {
           if (currentUser) {
             if (currentUser.userId) {
               this.router.navigate(['/home']);
+            } else if (currentUser.role === 'ROLE_ADMIN') {
+              this.router.navigate(['/admin/dash-board']);
             } else {
               this.router.navigate(['/register']);
             }

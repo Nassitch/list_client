@@ -5,6 +5,5 @@ export interface Category {
     name: string;
     createdAt: string;
     picture: string,
-    count: number;
     items: Item[]
 }
