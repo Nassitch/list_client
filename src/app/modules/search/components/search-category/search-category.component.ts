@@ -21,7 +21,7 @@ export class SearchCategoryComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   
   category$!: Observable<Category>;
-  categorySubsription$: Subscription = new Subscription();
+  categorySubscription$: Subscription = new Subscription();
   selectedItems: Item[] = [];
   total: number = 0;
   textBtn: string = "Ajouter au Panier";
@@ -40,18 +40,31 @@ export class SearchCategoryComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.selectedItems.length > 0) {
-      this.categorySubsription$ = this.category$.subscribe(category => {
-        const updatedCategory: Category = {...category, items: this.selectedItems};
-        this.shopService.saveShop(updatedCategory);
-        this.toastService.show('Votre Panier à bien été mis à jour.', 'Succès', 'success');
-        this.router.navigate(["/search"]);
-      });
+        this.categorySubscription$ = this.category$.subscribe(category => {
+            const existingCategories: Category[] = this.shopService.getShopIntoLS() || [];
+            const existingCategory = existingCategories.find(cat => cat.id === category.id);
+
+            if (existingCategory) {
+                const updatedItems = [...existingCategory.items, ...this.selectedItems]
+                    .filter((item, index, self) => self.findIndex(i => i.id === item.id) === index);
+                const updatedCategory: Category = { ...existingCategory, items: updatedItems };
+                const updatedCategories = existingCategories.map(cat => cat.id === category.id ? updatedCategory : cat);
+                this.shopService.saveShop(updatedCategories);
+            } else {
+                const updatedCategory: Category = { ...category, items: this.selectedItems };
+                existingCategories.push(updatedCategory);
+                this.shopService.saveShop(existingCategories);
+            }
+
+            this.toastService.show('Votre Panier à bien été mis à jour.', 'Succès', 'success');
+            this.router.navigate(["/search"]);
+        });
     } else {
-      this.toastService.show('Vous devez ajouter au moins un article.', 'Erreur', 'error');
+        this.toastService.show('Vous devez ajouter au moins un article.', 'Erreur', 'error');
     }
   }
 
   ngOnDestroy(): void {
-    this.categorySubsription$.unsubscribe();
+    this.categorySubscription$.unsubscribe();
   }
 }

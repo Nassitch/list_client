@@ -1,0 +1,43 @@
+<main>
+
+    @if (edit) {
+        @if (shop$ | async; as shop) {
+
+            <div class="created-at">
+                <p>Créer le :</p>
+                <p>{{ shop.createdAt | fullDateFormat }}</p>
+            </div>
+
+                @for (shop of shop.categories; track $index) {
+                    <app-list
+                    [id]="shop.id"
+                    [image]="this.categoryService._BASE_URL_IMG + shop.picture"
+                    [name]="shop.name"
+                    [items]="shop.items"
+                    [allSelected]="true"
+                    (selectedItemsChange)="onSelectedItemsChange(shop.id, $event.items)"
+                    ></app-list>
+                }
+            }
+        }
+        @else {
+        @if (shopList$ | async; as shopList) {
+                @for (shop of shopList; track $index) {
+                    <app-list
+                    [id]="shop.id"
+                    [image]="this.categoryService._BASE_URL_IMG + shop.picture"
+                    [name]="shop.name"
+                    [items]="shop.items"
+                    [allSelected]="true"
+                    (selectedItemsChange)="onSelectedItemsChange(shop.id, $event.items)"
+                    ></app-list>
+                }
+            }
+    }
+    
+    <app-total [items]="this.getAllSelectedItems()" />
+
+    <div class="submit-btn">
+        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" ></app-submit-btn>
+    </div>
+</main>
