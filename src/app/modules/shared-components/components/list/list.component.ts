@@ -17,7 +17,7 @@ export class ListComponent implements OnInit {
   @Input() public isUnroll: boolean = true;
   @Input() public allSelected: boolean = false;
   
-  @Output() public selectedItemsChange = new EventEmitter<Item[]>();
+  @Output() public selectedItemsChange = new EventEmitter<{ categoryId: number, items: Item[] }>();
   
   selectedItems: { [id: number]: boolean } = {};
   
@@ -61,6 +61,6 @@ export class ListComponent implements OnInit {
 
   emitSelectItems(): void {
     const selectedItemsArray = this.items.filter(item => this.selectedItems[item.id]);
-    this.selectedItemsChange.emit(selectedItemsArray);
+    this.selectedItemsChange.emit({ categoryId: this.id, items: selectedItemsArray });
   }
 }

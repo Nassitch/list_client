@@ -6,9 +6,11 @@ import { Shop } from '../../models/shop.interface';
 import { environment } from '../../../../../environments/environment.developpment';
 import { Category } from '../../../category/models/category.interface';
 import { StorageService } from '../../../../core/services/storage.service';
-import { ShopClass } from '../../models/shop.class';
+import { ShopSave } from '../../models/shop-save.class';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { Router } from '@angular/router';
+import { Item } from '../../../item/models/item.interface';
+import { ShopEdit } from '../../models/shop-edit.class';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +28,7 @@ export class ShopService {
   private _READ: string = environment._READ;
   private _READ_ALL: string = environment._READ_ALL;
   private _CREATE: string = environment._CREATE;
+  private _UPDATE: string = environment._UPDATE;
   private _DELETE: string = environment._DELETE;
 
   getShopFromUser$(): Observable<Shop[]> {
@@ -48,35 +51,23 @@ export class ShopService {
     return this.http.get<Shop>(`${this._BASE_URL}${this._USER}${this._SHOP}${this._READ}/${id}`);
   }
 
-  saveShop(category: Category): void {
-    const existShop: Category[] =
-      JSON.parse(this.storageService.getItem('shop')) || [];
+  getShopIntoLS(): Category[] {
+    const shopSave = this.storageService.getItem("shop");
+    return shopSave ? JSON.parse(shopSave) : [];
+}
 
-    const updatedShop = existShop.map((cat) =>
-      cat.id === category.id ? category : cat
-    );
-    if (!updatedShop.some((cat) => cat.id === category.id)) {
-      updatedShop.push(category);
-    }
+saveShop(categories: Category[]): void {
+  this.storageService.setItem('shop', JSON.stringify(categories));
+}
 
-    this.storageService.setItem('shop', JSON.stringify(updatedShop));
-  }
-
-  addShop$() {
+  addShop$(items: Item[]) {
     this.userService.initialize();
-    const categories: Category[] = JSON.parse(this.storageService.getItem('shop')) || [];
-    let itemIds: number[] = [];
-    categories.forEach((category) => {
-      itemIds = itemIds.concat(category.items.map((item) => item.id));
-    });
-    const shopToSave = new ShopClass(itemIds, this.userService.id);
+    const itemIds = items.map(item => item.id);
+    const shopToSave = new ShopSave(itemIds, this.userService.id);
     this.storageService.removeItem('shop');
     
     return this.http
-    .post(
-      `${this._BASE_URL}${this._USER}${this._SHOP}${this._CREATE}`,
-      shopToSave
-    )
+    .post(`${this._BASE_URL}${this._USER}${this._SHOP}${this._CREATE}`, shopToSave)
     .pipe(
       map((response) => {
         this.toastService.show('Votre Panier à bien été validé.', 'Succès', 'success');
@@ -84,15 +75,31 @@ export class ShopService {
         return response;
       }),
       catchError((error) => {
-        this.toastService.show("Une erreu s'est produite lors de la validation du Panier.", 'Erreur', 'error');
-        return error;
+        this.toastService.show("Une erreur s'est produite lors de la validation du Panier.", 'Erreur', 'error');
+        return of(error);
       })
     );
   }
   
-  editShop$(): void {
+  editShop$(items: Item[], id: number): Observable<any> {
     this.userService.initialize();
+    const itemIds = items.map(item => item.id);
+    const shopToSave = new ShopEdit(itemIds, this.userService.id);
+    this.storageService.removeItem('shop');
 
+    return this.http
+    .put(`${this._BASE_URL}${this._USER}${this._SHOP}${this._UPDATE}/${id}`, shopToSave)
+    .pipe(
+      map((response) => {
+        this.toastService.show('Votre Panier à bien été modifier.', 'Succès', 'success');
+        this.router.navigate(['/invoice']);
+        return response;
+      }),
+      catchError((error) => {
+        this.toastService.show("Une erreur s'est produite lors de la modifiaction de votre Panier.", 'Erreur', 'error');
+        return of(error);
+      })
+    );
   }
 
   deleteShop$(id: number): Observable<{ id: number }> {

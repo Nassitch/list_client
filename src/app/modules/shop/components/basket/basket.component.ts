@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { map, Observable, Subscription, switchMap } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
 import { ShopService } from '../../shared/services/shop.service';
 import { CategoryService } from '../../../category/shared/services/category.service';
@@ -24,7 +24,7 @@ export class BasketComponent implements OnInit, OnDestroy {
   responseSubscription$: Subscription = new Subscription();
 
   edit: boolean = false;
-  selectedItems: Item[] = [];
+  selectedItems: { [categoryId: number]: Item[] } = {};
   total: number = 0;
   textBtn: string = "Valider mon Panier";
   
@@ -41,20 +41,27 @@ export class BasketComponent implements OnInit, OnDestroy {
 
   }
 
-  onSelectedItemsChange(items: Item[]): void {
-    this.selectedItems = items;
-    for (let i = 0; i <= this.selectedItems.length; i += 1) {
-      this.total = i;
-    }
+  onSelectedItemsChange(categoryId: number, items: Item[]): void {
+    this.selectedItems[categoryId] = items;
+    this.total = Object.values(this.selectedItems).reduce((acc, items) => acc + items.length, 0);
+  }
+
+  getAllSelectedItems(): Item[] {
+    return Object.values(this.selectedItems).flat();
   }
 
   onSubmit(): void {
-    // if (this.edit) {
-    //   this.responseSubscription$ = this.shopService.editShop$();
-    // } else {
-    //   this.responseSubscription$ = this.shopService.addShop$().subscribe();
-    // }
-    console.log(this.selectedItems);
+    const allSelectedItems = this.getAllSelectedItems();
+    if (this.edit) {
+
+      this.responseSubscription$ = this.shop$
+        .pipe(
+          switchMap(shop => this.shopService.editShop$(allSelectedItems, shop.id))
+        )
+        .subscribe();
+    } else {
+      this.responseSubscription$ = this.shopService.addShop$(allSelectedItems).subscribe();
+    }
   }
 
   ngOnDestroy(): void {

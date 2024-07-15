@@ -15,7 +15,7 @@
                     [name]="shop.name"
                     [items]="shop.items"
                     [allSelected]="true"
-                    (selectedItemsChange)="onSelectedItemsChange($event)"
+                    (selectedItemsChange)="onSelectedItemsChange(shop.id, $event.items)"
                     ></app-list>
                 }
             }
@@ -29,13 +29,13 @@
                     [name]="shop.name"
                     [items]="shop.items"
                     [allSelected]="true"
-                    (selectedItemsChange)="onSelectedItemsChange($event)"
+                    (selectedItemsChange)="onSelectedItemsChange(shop.id, $event.items)"
                     ></app-list>
                 }
             }
     }
     
-    <app-total [items]="this.selectedItems" />
+    <app-total [items]="this.getAllSelectedItems()" />
 
     <div class="submit-btn">
         <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" ></app-submit-btn>

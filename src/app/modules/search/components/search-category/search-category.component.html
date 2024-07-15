@@ -6,7 +6,7 @@
         [image]="this.categoryService._BASE_URL_IMG + category.picture"
         [name]="category.name"
         [items]="category.items"
-        (selectedItemsChange)="onSelectedItemsChange($event)"
+        (selectedItemsChange)="onSelectedItemsChange($event.items)"
         ></app-list>
     }
 
