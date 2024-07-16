@@ -23,6 +23,7 @@ export class CardComponent implements OnInit {
   @Input() public title?: string;
   @Input() public date?: string;
   @Input() public subTitle?: string;
+  @Input() public editPath: string = "/";
   @Input() public onDelete?: () => void;
   @Input() public isActive: boolean = false;
   @Output() public cardSelected = new EventEmitter<{ id: number, content: string}>();
@@ -44,7 +45,7 @@ export class CardComponent implements OnInit {
   }
 
   edit(id: number): void {
-    this.router.navigate(['/shop/' + id])
+    this.router.navigate([this.editPath + id])
   }
 
   delete(): void {

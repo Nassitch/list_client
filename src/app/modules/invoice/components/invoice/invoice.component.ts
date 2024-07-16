@@ -25,12 +25,14 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   marketList$!: Observable<Market[]>;
   shopList$!: Observable<Shop[]>;
 
-  postSubscribtion$: Subscription = new Subscription;
+  postSubscription$: Subscription = new Subscription();
+  deleteSubscription$: Subscription = new Subscription();
 
   marketContent: string = "market";
   activeMarket?: number;
   shopContent: string = "shop";
   activeShop?: number;
+  editPath: string = "/shop/";
   total!: number;
   textBtn: string = 'Valider ma Facture';
 
@@ -50,31 +52,32 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: number): void {
-    this.shopService.deleteShop$(id).subscribe({
+    this.deleteSubscription$ = this.shopService.deleteShop$(id).subscribe({
       next: () => {
-        this.toastService.show("Panier supprimé avec Succès", 'Succès', 'success'),
+        this.toastService.success("Panier supprimé avec Succès"),
         this.refreshShops$.next()
       },
-      error: (error) => this.toastService.show("Une erreur s'est produite lors de la suppression", 'Erreur', 'error')
+      error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression")
     });
   }
 
   onSubmit(): void {
     if (this.total === undefined || this.activeMarket === undefined || this.activeShop === undefined) {
-      this.toastService.show('Tous les champs ne sont pas remplis.', 'Erreur', 'error');
+      this.toastService.error('Tous les champs ne sont pas remplis.');
     } else {
-     this.postSubscribtion$ = this.invoiceService.addInvoice$(this.total, this.activeMarket, this.activeShop).subscribe({
+     this.postSubscription$ = this.invoiceService.addInvoice$(this.total, this.activeMarket, this.activeShop).subscribe({
         next: (response) => {
-          this.toastService.show('Facture validée avec succès.', 'Succès', 'success');
+          this.toastService.success('Facture validée avec succès.');
         },
         error: (error) => {
-          this.toastService.show('La facture est déjà existante.', 'Erreur', 'error');
+          this.toastService.error('La facture est déjà existante.');
         }
       });
     }
   }
 
   ngOnDestroy(): void {
-    this.postSubscribtion$.unsubscribe();
+    this.postSubscription$.unsubscribe();
+    this.deleteSubscription$.unsubscribe();
   }
 }

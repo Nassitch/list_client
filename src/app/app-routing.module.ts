@@ -4,6 +4,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 
 const routes: Routes = [
   {path: '', loadChildren: () => import("./modules/auth/auth.module").then((m) => m.AuthModule)},
+  {path: 'admin', loadChildren: () => import("./modules/admin/admin.module").then((m) => m.AdminModule)},
   {path: 'user', loadChildren: () => import("./modules/user/user.module").then((m) => m.UserModule)},
   {path: 'search', loadChildren: () => import("./modules/search/search.module").then((m) => m.SearchModule)},
   {path: 'shop', loadChildren: () => import("./modules/shop/shop.module").then((m) => m.ShopModule)},

@@ -35,6 +35,7 @@
                 [isCompleted]="shop.isCompleted"
                 [count]="shop.count"
                 [date]="shop.createdAt"
+                [editPath]="editPath"
                 [onDelete]="onDelete.bind(this, shop.id)"
                 [isActive]="shop.id === activeShop"
                 (cardSelected)="onCardClick(shop.id, 'shop')"

@@ -92,15 +92,15 @@ export class RegisterComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response) => {
           if (response.success) {
-            this.toastService.show('Votre inscription à été validé avec succès.', 'Succès', 'success');
+            this.toastService.success('Votre inscription à été validé avec succès.');
             this.router.navigate(['/home']);
           } else {
-            this.toastService.show("Erreur lors de l'inscription", 'Erreur', 'error');
+            this.toastService.error("Erreur lors de l'inscription");
           }
         },
         error: (error) => {
           console.error("Erreur lors de l'inscription:", error);
-          this.toastService.show("Erreur lors de l'inscription", 'Erreur', 'error');
+          this.toastService.error("Erreur lors de l'inscription");
         },
       });
   }

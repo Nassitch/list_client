@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ShopService } from '../../shared/services/shop.service';
-import { BehaviorSubject, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { Shop } from '../../models/shop.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { Router } from '@angular/router';
@@ -11,11 +11,13 @@ import { StorageService } from '../../../../core/services/storage.service';
   templateUrl: './shop-manager.component.html',
   styleUrl: './shop-manager.component.css'
 })
-export class ShopManagerComponent implements OnInit {
+export class ShopManagerComponent implements OnInit, OnDestroy {
 
   private refreshShops$ = new BehaviorSubject<void>(undefined);
   
   shopList$!: Observable<Shop[]>;
+
+  deleteSubscription$: Subscription = new Subscription();
 
   private shopService = inject(ShopService);
   private toastService = inject(ToastService);
@@ -30,6 +32,7 @@ export class ShopManagerComponent implements OnInit {
   currentShop!: any;
   shopContent: string = "shop";
   activeShop?: number;
+  editPath: string = "/shop/";
 
   ngOnInit(): void {
     this.shopList$ = this.refreshShops$.pipe(
@@ -39,7 +42,7 @@ export class ShopManagerComponent implements OnInit {
   }
 
   newShop(): void {
-    this.toastService.show('Vous avez ouvert un nouveau panier.', 'Succcès', 'success');
+    this.toastService.success('Vous avez ouvert un nouveau panier.');
     if (this.currentShop) {
       this.storageService.removeItem(this.shopContent);
     }
@@ -54,12 +57,16 @@ export class ShopManagerComponent implements OnInit {
   }
 
   onDelete(id: number): void {
-    this.shopService.deleteShop$(id).subscribe({
+    this.deleteSubscription$ = this.shopService.deleteShop$(id).subscribe({
       next: () => {
-        this.toastService.show("Panier supprimé avec Succès", 'Succès', 'success'),
+        this.toastService.success("Panier supprimé avec Succès"),
         this.refreshShops$.next()
       },
-      error: (error) => this.toastService.show("Une erreur s'est produite lors de la suppression", 'Erreur', 'error')
+      error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression")
     });
+  }
+
+  ngOnDestroy(): void {
+    this.deleteSubscription$.unsubscribe();
   }
 }

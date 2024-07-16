@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 })
 export class NewCardComponent {
 
-  @Input() public path!: string;
   @Input() public wordMale: boolean = true;
   @Input() public word!: string;
+  @Input() public path?: string;
 
   @Output() public newShopEvent = new EventEmitter();
 
@@ -21,5 +21,9 @@ export class NewCardComponent {
   navigateTo(path: string): void {
     this.newShopEvent.emit();
     this.router.navigate([path]);
+  }
+
+  newShop(): void {
+    this.newShopEvent.emit();
   }
 }

@@ -86,7 +86,7 @@ export class SettingProfileComponent implements OnInit {
 
   private validateAvatar(): boolean {
     if (!this.picture) {
-      this.toastService.show('Veuillez sélectionner un avatar.', 'Erreur', 'error');
+      this.toastService.error('Veuillez sélectionner un avatar.');
       return false;
     }
     return true;
@@ -113,13 +113,13 @@ export class SettingProfileComponent implements OnInit {
 
     this.userService.putUserProfile$(userInfo).pipe(
       catchError((error) => {
-        this.toastService.show('Erreur lors de la modification de votre compte.', 'Erreur', 'error');
+        this.toastService.error('Erreur lors de la modification de votre compte.');
         console.error('Error updating user profile', error);
         return of(null);
       })
     ).subscribe((response) => {
       if (response) {
-        this.toastService.show('Vos données sont bien enregistrées.', 'Succès', 'success');
+        this.toastService.success('Vos données sont bien enregistrées.');
       }
     });
   }

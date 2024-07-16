@@ -72,14 +72,14 @@ export class SignupComponent implements OnInit {
     this.newUser$.subscribe({
       next: (user) => {
         if (user) {
-          this.toastService.show('Votre compte à bien été créer.', 'Succès', 'success');
+          this.toastService.success('Votre compte à bien été créer.');
           this.router.navigate(['/register']);
         } else {
           console.error('User ID is undefined');
         }
       },
       error: (error) => {
-        this.toastService.show('Erreur lors de la création du compte.', 'Erreur', 'error')
+        this.toastService.error('Erreur lors de la création du compte.')
         console.error("Erreur lors de la création de l'utilisateur", error);
       },
     });
