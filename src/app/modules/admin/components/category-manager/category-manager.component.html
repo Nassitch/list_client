@@ -1,0 +1,45 @@
+<main>
+
+    <section class="manager-section">
+        <h2>Categorie.</h2>
+
+        <div class="cards">
+            <app-new-card [wordMale]="false" [word]="'Categorie'" />
+
+            @if (categoryList$ | async; as categoryList) {
+                @for (category of categoryList; track $index) {
+                    <app-card 
+                    [type]="'edit'"
+                    [id]="category.id"
+                    [imgContent]="this.categoryService._BASE_URL_IMG + category.picture"
+                    [content]="categoryContent"
+                    [title]="category.name"
+                    [editPath]="'/admin/category/'"
+                    [onDelete]="onDelete.bind(this, category.id)"
+                    [isActive]="category.id === activeCategory"
+                    (cardSelected)="onCardClick(category.id)"
+                    />
+                }
+            }
+
+        </div>
+        </section>
+
+        <form>
+
+            <div class="manager-input-text" (click)="focusInput()">
+                <label for="name">NOM *</label>
+                <input #inputField type="text" name="name" [(ngModel)]="this.name" />
+            </div>
+            
+            <div class="manager-input-file" >
+                <label for="name">Séléctionner une image *</label>
+                <input type="file" [(ngModel)]="this.picture" name="picture" accept="image/*" />
+            </div>
+        </form>
+
+        <div class="submit-btn mt-8">
+            <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()" />
+        </div>
+            
+</main>

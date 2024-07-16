@@ -25,12 +25,14 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   marketList$!: Observable<Market[]>;
   shopList$!: Observable<Shop[]>;
 
-  postSubscribtion$: Subscription = new Subscription;
+  postSubscription$: Subscription = new Subscription();
+  deleteSubscription$: Subscription = new Subscription();
 
   marketContent: string = "market";
   activeMarket?: number;
   shopContent: string = "shop";
   activeShop?: number;
+  editPath: string = "/shop/";
   total!: number;
   textBtn: string = 'Valider ma Facture';
 
@@ -50,7 +52,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: number): void {
-    this.shopService.deleteShop$(id).subscribe({
+    this.deleteSubscription$ = this.shopService.deleteShop$(id).subscribe({
       next: () => {
         this.toastService.success("Panier supprimé avec Succès"),
         this.refreshShops$.next()
@@ -63,7 +65,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
     if (this.total === undefined || this.activeMarket === undefined || this.activeShop === undefined) {
       this.toastService.error('Tous les champs ne sont pas remplis.');
     } else {
-     this.postSubscribtion$ = this.invoiceService.addInvoice$(this.total, this.activeMarket, this.activeShop).subscribe({
+     this.postSubscription$ = this.invoiceService.addInvoice$(this.total, this.activeMarket, this.activeShop).subscribe({
         next: (response) => {
           this.toastService.success('Facture validée avec succès.');
         },
@@ -75,6 +77,7 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.postSubscribtion$.unsubscribe();
+    this.postSubscription$.unsubscribe();
+    this.deleteSubscription$.unsubscribe();
   }
 }

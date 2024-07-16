@@ -12,6 +12,6 @@ export class DashBoardComponent {
 
 
   navigateTo(path: string): void {
-    this.router.navigate([path]);  
+    this.router.navigate(['/admin/' + path]);  
   }
 }

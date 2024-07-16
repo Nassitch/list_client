@@ -103,11 +103,7 @@ saveShop(categories: Category[]): void {
   }
 
   deleteShop$(id: number): Observable<{ id: number }> {
-    return this.http
-      .delete(
-        `${this._BASE_URL}${this._USER}${this._SHOP}${this._DELETE}/${id}`,
-        { responseType: 'text' }
-      )
+    return this.http.delete(`${this._BASE_URL}${this._USER}${this._SHOP}${this._DELETE}/${id}`, { responseType: 'text' })
       .pipe(map((response: string) => ({ id: Number(response) })));
   }
 }
