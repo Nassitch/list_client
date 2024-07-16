@@ -1,4 +1,4 @@
-<section>
+<main>
     <div class="welcome-msg-dash-board">
         <h1>Tableau de bord.</h1>
         <h2>Content de vous revoir Grand Chef ! 💖</h2>
@@ -7,11 +7,11 @@
     <menu>
         <article class="d-flex">
             <div class="menu-img">
-                <img src="../../../assets/icons/shop.svg" />
+                <img src="../../../assets/icons/user.svg" />
             </div>
             <div class="menu-txt">
-                <h4>Panier</h4>
-                <p>Historique de paniers.</p>
+                <h4>Utilisateurs</h4>
+                <p>Liste d'utilisateurs.</p>
             </div>
             <div class="menu-btn">
                 <button class="ghost-btn" (click)="navigateTo('shop')">
@@ -22,11 +22,11 @@
         <div class="line"></div>
         <article class="d-flex">
             <div class="menu-img">
-                <img src="../../../assets/icons/invoice.svg" />
+                <img src="../../../assets/icons/category.svg" />
             </div>
             <div class="menu-txt">
-                <h4>Facture</h4>
-                <p>Historique de factures.</p>
+                <h4>Categories</h4>
+                <p>Modelez les categories.</p>
             </div>
             <div class="menu-btn">
                 <button class="ghost-btn" (click)="navigateTo('invoice')">
@@ -37,11 +37,26 @@
         <div class="line"></div>
         <article class="d-flex">
             <div class="menu-img">
+                <img src="../../../assets/icons/item.svg" />
+            </div>
+            <div class="menu-txt">
+                <h4>Produits</h4>
+                <p>Modelez les produits.</p>
+            </div>
+            <div class="menu-btn">
+                <button class="ghost-btn" (click)="navigateTo('market')">
+                    <img src="../../../assets/icons/arrow-right.svg" />
+                </button>
+            </div>
+        </article>
+        <div class="line"></div>
+        <article class="d-flex">
+            <div class="menu-img">
                 <img src="../../../assets/icons/market.svg" />
             </div>
             <div class="menu-txt">
-                <h4>Marché</h4>
-                <p>Historique de marchés.</p>
+                <h4>Marchés</h4>
+                <p>Contrôllez les marchés.</p>
             </div>
             <div class="menu-btn">
                 <button class="ghost-btn" (click)="navigateTo('market')">
@@ -51,4 +66,4 @@
         </article>
     </menu>
 
-</section>
+</main>
