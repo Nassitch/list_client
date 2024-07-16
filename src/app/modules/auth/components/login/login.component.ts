@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
 
     this.loginResult$.subscribe((result) => {
       if (result.success) {
-        this.toastService.show('Connexion réussie', 'Succès', 'success');
+        this.toastService.success('Connexion réussie');
         this.authService.getCurrentUser().subscribe((currentUser) => {
           if (currentUser) {
             if (currentUser.userId) {
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
           }
         });
       } else {
-        this.toastService.show(result.message, 'Erreur', 'error');
+        this.toastService.error(result.message);
         console.error(result.message);
       }
     });

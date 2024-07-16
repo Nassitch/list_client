@@ -32,7 +32,7 @@ export class TokenService implements OnInit {
     if (tokenId) {
       const decodedToken = this._decodeToken({ token: tokenId });
       if (this._isTokenExpired(decodedToken)) {
-        this.toastService.show('Votre session à expirée', 'Erreur', 'error');
+        this.toastService.error('Votre session à expirée');
         this.resetToken();
         this.router.navigate(['/login']);
         return null;

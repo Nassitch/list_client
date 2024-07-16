@@ -8,13 +8,15 @@ export class ToastService {
 
   private toastComponent!: ToastComponent;
 
-  constructor() { }
-
   setToastComponent(toastComponent: ToastComponent) {
     this.toastComponent = toastComponent;
   }
 
-  show(message: string, title: string, type: string) {
-    this.toastComponent.showToast(message, title, type);
+  success(message: string) {
+    this.toastComponent.showToast(message, 'Succès', 'success');
+  }
+
+  error(message: string) {
+    this.toastComponent.showToast(message, 'Erreur', 'error');
   }
 }

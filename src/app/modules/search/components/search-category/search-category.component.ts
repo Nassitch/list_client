@@ -56,11 +56,11 @@ export class SearchCategoryComponent implements OnInit, OnDestroy {
                 this.shopService.saveShop(existingCategories);
             }
 
-            this.toastService.show('Votre Panier à bien été mis à jour.', 'Succès', 'success');
+            this.toastService.success('Votre Panier à bien été mis à jour.');
             this.router.navigate(["/search"]);
         });
     } else {
-        this.toastService.show('Vous devez ajouter au moins un article.', 'Erreur', 'error');
+        this.toastService.error('Vous devez ajouter au moins un article.');
     }
   }
 

@@ -39,7 +39,7 @@ export class ShopManagerComponent implements OnInit {
   }
 
   newShop(): void {
-    this.toastService.show('Vous avez ouvert un nouveau panier.', 'Succcès', 'success');
+    this.toastService.success('Vous avez ouvert un nouveau panier.');
     if (this.currentShop) {
       this.storageService.removeItem(this.shopContent);
     }
@@ -56,10 +56,10 @@ export class ShopManagerComponent implements OnInit {
   onDelete(id: number): void {
     this.shopService.deleteShop$(id).subscribe({
       next: () => {
-        this.toastService.show("Panier supprimé avec Succès", 'Succès', 'success'),
+        this.toastService.success("Panier supprimé avec Succès"),
         this.refreshShops$.next()
       },
-      error: (error) => this.toastService.show("Une erreur s'est produite lors de la suppression", 'Erreur', 'error')
+      error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression")
     });
   }
 }

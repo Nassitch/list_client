@@ -69,7 +69,7 @@ export class AuthService implements OnInit {
 
   logout(): void {
     this.tokenService.resetToken();
-    this.toastService.show('Déconnexion réussie', 'Succès', 'success');
+    this.toastService.success('Déconnexion réussie');
     this.router.navigate(['/login']);
     this.currentUser.next(null);
   }

@@ -70,12 +70,12 @@ saveShop(categories: Category[]): void {
     .post(`${this._BASE_URL}${this._USER}${this._SHOP}${this._CREATE}`, shopToSave)
     .pipe(
       map((response) => {
-        this.toastService.show('Votre Panier à bien été validé.', 'Succès', 'success');
+        this.toastService.success('Votre Panier à bien été validé.');
         this.router.navigate(['/invoice']);
         return response;
       }),
       catchError((error) => {
-        this.toastService.show("Une erreur s'est produite lors de la validation du Panier.", 'Erreur', 'error');
+        this.toastService.error("Une erreur s'est produite lors de la validation du Panier.");
         return of(error);
       })
     );
@@ -91,12 +91,12 @@ saveShop(categories: Category[]): void {
     .put(`${this._BASE_URL}${this._USER}${this._SHOP}${this._UPDATE}/${id}`, shopToSave)
     .pipe(
       map((response) => {
-        this.toastService.show('Votre Panier à bien été modifier.', 'Succès', 'success');
+        this.toastService.success('Votre Panier à bien été modifier.');
         this.router.navigate(['/invoice']);
         return response;
       }),
       catchError((error) => {
-        this.toastService.show("Une erreur s'est produite lors de la modifiaction de votre Panier.", 'Erreur', 'error');
+        this.toastService.error("Une erreur s'est produite lors de la modifiaction de votre Panier.");
         return of(error);
       })
     );
