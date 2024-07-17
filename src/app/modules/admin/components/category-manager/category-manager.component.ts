@@ -24,12 +24,13 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
 
   categoryList$!: Observable<Category[]>;
 
+  postSubscription$: Subscription = new Subscription();
   deleteSubscription$: Subscription = new Subscription();
 
   activeCategory?: number;
   categoryContent: string = "category";
   name: string = "";
-  picture: string = "";
+  picture?: File;
   textBtn: string = "Enregistrer";
 
   ngOnInit(): void {
@@ -50,14 +51,14 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
   focusInput():void {
     this.inputField.nativeElement.focus();
   }
-
-  getPicturePath(path: string): string {
-    const startIndex = path.lastIndexOf('\\') + 1;
-    const fileName = path.substring(startIndex);
-
-    return fileName;
-  }
-
+  
+    onFile(event: Event): void {
+      const target = event.target as HTMLInputElement;
+      if (target.files && target.files.length > 0) {
+        this.picture = target.files[0];
+      }
+    }
+  
   onDelete(id: number): void {
     this.deleteSubscription$ = this.categoryService.deleteCategory$(id).subscribe({
       next: () => {
@@ -69,14 +70,26 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    if (this.picture) {
+      const formData = new FormData();
+      formData.append('file', this.picture);
 
-    this.picture = this.getPicturePath(this.picture);
-    console.log(this.picture);
-
-    this.imageService.addImage$(this.picture, "category");
+      this.postSubscription$ = this.imageService.addImage$(formData, "category").pipe(
+        switchMap(picture => this.categoryService.addCategory$(this.name, picture.file))
+      ).subscribe({
+        next: () => {
+          this.toastService.success("Catégorie ajoutée avec succès.");
+          this.refreshCategory$.next();
+        },
+        error: (error) => this.toastService.error("Une erreur s'est produite lors de l'ajout de la catégorie.")
+      });
+    } else {
+      this.toastService.error("Veuillez sélectionner une image.");
+    }
   }
 
   ngOnDestroy(): void {
+    this.postSubscription$.unsubscribe();
     this.deleteSubscription$.unsubscribe();
   }
 }

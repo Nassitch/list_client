@@ -21,6 +21,7 @@ export class CategoryService {
   private _UPLOAD: string = environment._UPLOAD;
   private _READ_ALL: string = environment._READ_ALL;
   private _READ: string = environment._READ;
+  private _CREATE: string = environment._CREATE;
   private _DELETE: string = environment._DELETE;
 
   public readonly _BASE_URL_IMG: string = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._CATEGORY}/`;
@@ -39,6 +40,14 @@ export class CategoryService {
 
   getCategory$(id: number): Observable<Category> {
     return this.http.get<Category>(`${this._BASE_URL}${this._PUBLIC}${this._CATEGORY}${this._READ}/${id}`);
+  }
+
+  addCategory$(name: string, picture: string): Observable<any> {
+    const category = {
+      name: name,
+      picture: picture,
+    }
+    return this.http.post(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._CREATE}`,  category);
   }
 
   deleteCategory$(id: number): Observable<{ id: number }> {
