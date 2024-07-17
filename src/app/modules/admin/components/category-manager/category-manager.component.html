@@ -4,7 +4,7 @@
         <h2>Categorie.</h2>
 
         <div class="cards">
-            <app-new-card [wordMale]="false" [word]="'Categorie'" />
+            <app-new-card [wordMale]="false" [word]="'Categorie'" (newShopEvent)="newShop()" />
 
             @if (categoryList$ | async; as categoryList) {
                 @for (category of categoryList; track $index) {
@@ -17,7 +17,7 @@
                     [editPath]="'/admin/category/'"
                     [onDelete]="onDelete.bind(this, category.id)"
                     [isActive]="category.id === activeCategory"
-                    (cardSelected)="onCardClick(category.id)"
+                    (cardSelected)="onCardClick(category.id, category.name)"
                     />
                 }
             }
@@ -34,7 +34,7 @@
             
             <div class="manager-input-file" >
                 <label for="name">Séléctionner une image *</label>
-                <input type="file" [(ngModel)]="this.picture" name="picture" accept="image/*" />
+                <input type="file" (change)="onFile($event)" name="picture" accept="image/*" />
             </div>
         </form>
 

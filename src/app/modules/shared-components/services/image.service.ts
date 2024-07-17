@@ -19,8 +19,8 @@ export class ImageService {
   private _CREATE: string = environment._CREATE;
   private _DELETE: string = environment._DELETE;
 
-  addImage$(image: string, directory: string): Observable<any> {
-    return this.http.post(`${this._BASE_URL}${this._ADMIN}${this._UPLOAD}${this._CREATE}/${directory}`, image);
+  addImage$(formData: FormData, directory: string): Observable<any> {
+    return this.http.post(`${this._BASE_URL}${this._ADMIN}${this._UPLOAD}${this._CREATE}/${directory}`, formData);
   }
 
   deleteImage$(image: string, directory: string): Observable<any> {
