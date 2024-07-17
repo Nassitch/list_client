@@ -4,7 +4,7 @@
         <h2>Categorie.</h2>
 
         <div class="cards">
-            <app-new-card [wordMale]="false" [word]="'Categorie'" />
+            <app-new-card [wordMale]="false" [word]="'Categorie'" (newShopEvent)="newShop()" />
 
             @if (categoryList$ | async; as categoryList) {
                 @for (category of categoryList; track $index) {
@@ -17,7 +17,7 @@
                     [editPath]="'/admin/category/'"
                     [onDelete]="onDelete.bind(this, category.id)"
                     [isActive]="category.id === activeCategory"
-                    (cardSelected)="onCardClick(category.id)"
+                    (cardSelected)="onCardClick(category.id, category.name)"
                     />
                 }
             }
