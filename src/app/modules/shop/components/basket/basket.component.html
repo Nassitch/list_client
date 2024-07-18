@@ -11,7 +11,7 @@
                 @for (shop of shop.categories; track $index) {
                     <app-list
                     [id]="shop.id"
-                    [image]="this.categoryService._BASE_URL_IMG + shop.picture"
+                    [image]="this.imageService._BASE_URL_MARKET_IMG + shop.picture"
                     [name]="shop.name"
                     [items]="shop.items"
                     [allSelected]="true"
@@ -25,7 +25,7 @@
                 @for (shop of shopList; track $index) {
                     <app-list
                     [id]="shop.id"
-                    [image]="this.categoryService._BASE_URL_IMG + shop.picture"
+                    [image]="this.imageService._BASE_URL_MARKET_IMG + shop.picture"
                     [name]="shop.name"
                     [items]="shop.items"
                     [allSelected]="true"

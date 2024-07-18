@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
 import { CategoryService } from '../../../category/shared/services/category.service';
 import { Router } from '@angular/router';
+import { ImageService } from '../../../shared-components/services/image.service';
 
 @Component({
   selector: 'app-search-page',
@@ -10,8 +11,9 @@ import { Router } from '@angular/router';
   styleUrl: './search-page.component.css',
 })
 export class SearchPageComponent implements OnInit {
-  protected categoryService = inject(CategoryService);
   private router = inject(Router);
+  protected categoryService = inject(CategoryService);
+  public imageService = inject(ImageService);
 
   categories$!: Observable<Category[]>;
   input: string = '';

@@ -1,0 +1,25 @@
+<main>
+
+    <section class="manager-section">
+        <h2>Marché.</h2>
+
+        <div class="cards">
+            <app-new-card [word]="'Marché'" />
+
+            @if (marketList$ | async; as marketList) {
+                @for (market of marketList; track $index) {
+                    <app-card
+                    [type]="'edit'"
+                    [id]="market.id"
+                    [imgContent]="market.picture"
+                    [content]="marketContent"
+                    [title]="market.name"
+                    [onDelete]="onDelete.bind(this, market.id)"
+                    [isActive]="market.id === activeMarket"
+                    (cardSelected)="onCardClick(market.id, market.name, market. picture)"
+                    />
+                }
+            }
+        </div>
+    </section>
+</main>
