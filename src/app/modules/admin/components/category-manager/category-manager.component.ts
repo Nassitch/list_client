@@ -10,13 +10,6 @@ import { CategoryService } from '../../../category/shared/services/category.serv
 import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
 import { ImageService } from '../../../shared-components/services/image.service';
 
 @Component({
@@ -30,7 +23,7 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
   private refreshCategory$ = new BehaviorSubject<void>(undefined);
 
   private toastService = inject(ToastService);
-  private imageService = inject(ImageService);
+  public imageService = inject(ImageService);
   protected categoryService = inject(CategoryService);
 
   categoryList$!: Observable<Category[]>;
@@ -43,7 +36,8 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
   activeCategory?: number;
   categoryContent: string = 'category';
   name: string = '';
-  picture?: File;
+  picture!: File;
+  picturePath!: string;
   textBtn: string = 'Enregistrer';
 
   ngOnInit(): void {
@@ -61,11 +55,12 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
     this.name = '';
   }
 
-  onCardClick(id: number, name: string): void {
+  onCardClick(id: number, name: string, picture: string): void {
     this.activeCategory = this.activeCategory === id ? undefined : id;
     this.name = name;
+    this.picturePath = picture;
     this.edit = true;
-    this.textBtn = 'Modifier la categorie.';
+    this.textBtn = 'Modifier la categorie';
   }
 
   focusInput(): void {
@@ -93,30 +88,57 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    if (this.picture && this.name) {
-      
+    if (this.name) {
       const formData = new FormData();
       formData.append('file', this.picture);
-      
+
       if (this.edit) {
-        this.editSubscription$ = this.categoryService.editCategory$(this.name, "picture").subscribe();
-        
+        if (this.activeCategory !== undefined) {
+          if (this.picture) {
+            this.editSubscription$ = this.imageService
+              .addImage$(formData, 'category')
+              .pipe(
+                switchMap((picture) =>
+                  this.categoryService.editCategory$(this.name, picture.file, this.activeCategory!)
+                )
+              )
+              .subscribe({
+                next: () => {
+                  this.toastService.success('Catégorie modifiée avec succès.');
+                  this.refreshCategory$.next();
+                },
+                error: (error) =>
+                  this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
+              });
+          } else {
+            this.editSubscription$ = this.categoryService
+              .editCategory$(this.name, this.picturePath, this.activeCategory!)
+              .subscribe({
+                next: () => {
+                  this.toastService.success('Catégorie modifiée avec succès.');
+                  this.refreshCategory$.next();
+                },
+                error: (error) =>
+                  this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
+              });
+          }
+        }
       } else {
-      this.postSubscription$ = this.imageService
-        .addImage$(formData, 'category')
-        .pipe(
-          switchMap((picture) =>
-            this.categoryService.addCategory$(this.name, picture.file)
-        )
-      )
-        .subscribe({
-          next: () => {
-            this.toastService.success('Catégorie ajoutée avec succès.');
-            this.refreshCategory$.next();
-          },
-          error: (error) =>
-            this.toastService.error("Une erreur s'est produite lors de l'ajout de la catégorie."),
-        });
+        this.postSubscription$ = this.imageService
+          .addImage$(formData, 'category')
+          .pipe(
+            switchMap((picture) =>
+              this.categoryService.addCategory$(this.name, picture.file)
+            )
+          )
+          .subscribe({
+            next: () => {
+              this.toastService.success('Catégorie ajoutée avec succès.');
+              this.refreshCategory$.next();
+            },
+            error: (error) =>
+              this.toastService.error("Une erreur s'est produite lors de l'ajout de la catégorie."),
+          });
       }
     } else {
       this.toastService.error('Veuillez remplir les champs.');

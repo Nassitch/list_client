@@ -15,7 +15,7 @@
                 <div class="category">
                     <article>
                         <button (click)="navigateTo('/search/category/', category.id)">
-                        <img [src]="categoryService._BASE_URL_IMG + category.picture" />
+                        <img [src]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture" />
                         </button>
                         <p>{{ category.name }}</p>
                     </article>

@@ -3,7 +3,7 @@
         
         <app-list
         [id]="category.id"
-        [image]="this.categoryService._BASE_URL_IMG + category.picture"
+        [image]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture"
         [name]="category.name"
         [items]="category.items"
         (selectedItemsChange)="onSelectedItemsChange($event.items)"

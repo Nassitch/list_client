@@ -9,12 +9,14 @@ import { CardComponent } from '../shared-components/components/card/card.compone
 import { InputComponent } from '../shared-components/components/input/input.component';
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
 import { FormsModule } from '@angular/forms';
+import { MarketManagerComponent } from './components/market-manager/market-manager.component';
 
 
 @NgModule({
   declarations: [
     DashBoardComponent,
-    CategoryManagerComponent
+    CategoryManagerComponent,
+    MarketManagerComponent
   ],
   imports: [
     CommonModule,

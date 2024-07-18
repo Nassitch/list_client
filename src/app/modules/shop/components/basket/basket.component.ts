@@ -6,6 +6,7 @@ import { CategoryService } from '../../../category/shared/services/category.serv
 import { Item } from '../../../item/models/item.interface';
 import { ActivatedRoute } from '@angular/router';
 import { Shop } from '../../models/shop.interface';
+import { ImageService } from '../../../shared-components/services/image.service';
 
 @Component({
   selector: 'app-basket',
@@ -16,8 +17,9 @@ export class BasketComponent implements OnInit, OnDestroy {
 
   private shopService = inject(ShopService);
   private cdr = inject(ChangeDetectorRef);
-  protected categoryService = inject(CategoryService);
   private route = inject(ActivatedRoute);
+  protected categoryService = inject(CategoryService);
+  public imageService = inject(ImageService);
 
   shopList$!: Observable<Category[]>;
   shop$!: Observable<Shop>;

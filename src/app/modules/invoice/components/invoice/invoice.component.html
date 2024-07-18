@@ -11,7 +11,7 @@
               [type]="'static'"
               [id]="market.id"
               [content]="marketContent"
-              [imgContent]="marketService._BASE_URL_IMG + market .picture"
+              [imgContent]="this.imageService._BASE_URL_MARKET_IMG + market .picture"
               [title]="market.name"
               [subTitle]="market.size"
               [isActive]="market.id === activeMarket"

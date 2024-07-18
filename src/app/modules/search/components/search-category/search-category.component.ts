@@ -6,6 +6,7 @@ import { Category } from '../../../category/models/category.interface';
 import { Item } from '../../../item/models/item.interface';
 import { ShopService } from '../../../shop/shared/services/shop.service';
 import { ToastService } from '../../../shared-components/services/toast.service';
+import { ImageService } from '../../../shared-components/services/image.service';
 
 @Component({
   selector: 'app-search-category',
@@ -15,10 +16,11 @@ import { ToastService } from '../../../shared-components/services/toast.service'
 export class SearchCategoryComponent implements OnInit, OnDestroy {
 
   private route = inject(ActivatedRoute);
-  protected categoryService = inject(CategoryService);
   private shopService = inject(ShopService);
   private toastService = inject(ToastService);
   private router = inject(Router);
+  protected categoryService = inject(CategoryService);
+  public imageService = inject(ImageService);
   
   category$!: Observable<Category>;
   categorySubscription$: Subscription = new Subscription();

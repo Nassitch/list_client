@@ -11,13 +11,13 @@
                     <app-card 
                     [type]="'edit'"
                     [id]="category.id"
-                    [imgContent]="this.categoryService._BASE_URL_IMG + category.picture"
+                    [imgContent]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture"
                     [content]="categoryContent"
                     [title]="category.name"
                     [editPath]="'/admin/category/'"
                     [onDelete]="onDelete.bind(this, category.id)"
                     [isActive]="category.id === activeCategory"
-                    (cardSelected)="onCardClick(category.id, category.name)"
+                    (cardSelected)="onCardClick(category.id, category.name, category.picture)"
                     />
                 }
             }

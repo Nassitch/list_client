@@ -6,6 +6,7 @@ import { Shop } from '../../../shop/models/shop.interface';
 import { ShopService } from '../../../shop/shared/services/shop.service';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { InvoiceService } from '../../shared/services/invoice.service';
+import { ImageService } from '../../../shared-components/services/image.service';
 
 @Component({
   selector: 'app-invoice',
@@ -18,9 +19,10 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   private refreshShops$ = new BehaviorSubject<void>(undefined);
 
   private invoiceService = inject(InvoiceService);
-  protected marketService = inject(MarketService);
   private shopService = inject(ShopService);
   private toastService = inject(ToastService);
+  protected marketService = inject(MarketService);
+  public imageService = inject(ImageService);
 
   marketList$!: Observable<Market[]>;
   shopList$!: Observable<Shop[]>;

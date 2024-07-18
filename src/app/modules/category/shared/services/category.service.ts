@@ -26,8 +26,6 @@ export class CategoryService {
   private _UPDATE: string = environment._UPDATE;
   private _DELETE: string = environment._DELETE;
 
-  public readonly _BASE_URL_IMG: string = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._CATEGORY}/`;
-
   getAllCategories$(): Observable<Category[]> {
     const storedCategories = this.categoryList$.getValue();
     if (storedCategories.length > 0) {
@@ -52,12 +50,12 @@ export class CategoryService {
     return this.http.post(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._CREATE}`,  category);
   }
   
-  editCategory$(name: string, picture: string): Observable<any> {
-    const category: CategoryRequest = {
-      name: name,
-      picture: picture,
-    }
-    return this.http.put(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._UPDATE}`, category);
+  editCategory$(name: string, picture: string, id: number): Observable<any> {
+      const category: CategoryRequest = {
+        name: name,
+        picture: picture,
+      }
+      return this.http.put(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._UPDATE}/${id}`, category);
   }
 
   deleteCategory$(id: number): Observable<{ id: number }> {

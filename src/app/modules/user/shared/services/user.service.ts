@@ -25,8 +25,6 @@ export class UserService implements OnDestroy {
   private _UPDATE: string = environment._UPDATE;
   private _AVATAR: string = environment._AVATAR;
 
-  public readonly _BASE_URL_IMG: string = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._AVATAR}`;
-
   initialize(): void {
     this.currentUserSubscription = this.authService.getCurrentUser().subscribe((user) => {
       if (user) {
