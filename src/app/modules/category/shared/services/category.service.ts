@@ -20,7 +20,6 @@ export class CategoryService {
   private _ADMIN: string = environment._ADMIN;
   private _PUBLIC: string = environment._PUBLIC;
   private _CATEGORY: string = environment._CATEGORY;
-  private _UPLOAD: string = environment._UPLOAD;
   private _READ_ALL: string = environment._READ_ALL;
   private _READ: string = environment._READ;
   private _CREATE: string = environment._CREATE;

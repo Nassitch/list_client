@@ -10,6 +10,7 @@ export const environment = {
     _REGISTER_USER: "/register-user",
     _CATEGORY: "/category",
     _INVOICE: "/invoice",
+    _ITEM: "/item",
     _MARKET: "/market",
     _SHOP: "/shop",
     _UPLOAD: "/upload",
