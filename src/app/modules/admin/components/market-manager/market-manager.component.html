@@ -4,22 +4,50 @@
         <h2>Marché.</h2>
 
         <div class="cards">
-            <app-new-card [word]="'Marché'" />
+            <app-new-card [word]="'Marché'" (newShopEvent)="newMarket()"/>
 
             @if (marketList$ | async; as marketList) {
                 @for (market of marketList; track $index) {
                     <app-card
                     [type]="'edit'"
                     [id]="market.id"
-                    [imgContent]="market.picture"
+                    [imgContent]="this.imageService._BASE_URL_MARKET_IMG + market.picture"
                     [content]="marketContent"
                     [title]="market.name"
                     [onDelete]="onDelete.bind(this, market.id)"
                     [isActive]="market.id === activeMarket"
-                    (cardSelected)="onCardClick(market.id, market.name, market. picture)"
+                    (cardSelected)="onCardClick(market.id, market.name, market.size, market.place, market.picture)"
                     />
                 }
             }
         </div>
     </section>
+        
+    <form>
+
+        <div class="manager-input-text" (click)="focusInput(inputFieldName)">
+          <label for="name">NOM *</label>
+          <input #inputFieldName type="text" [(ngModel)]="name" name="name" />
+        </div>
+    
+        <div class="manager-input-text" (click)="focusInput(inputFieldSize)">
+          <label for="size">TAILLE *</label>
+          <input #inputFieldSize type="text" [(ngModel)]="size" name="size" />
+        </div>
+    
+        <div class="manager-input-text" (click)="focusInput(inputFieldPlace)">
+          <label for="place">LIEU *</label>
+          <input #inputFieldPlace type="text" [(ngModel)]="place" name="place" />
+        </div>
+
+        <div class="manager-input-file" >
+            <label for="name">Séléctionner une image</label>
+            <input type="file" (change)="onFile($event)" name="picture" accept="image/*" />
+        </div>
+      </form>
+
+        <div class="submit-btn mt-8">
+            <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()" />
+        </div>
+
 </main>

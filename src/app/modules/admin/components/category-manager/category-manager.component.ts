@@ -42,10 +42,7 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.categoryList$ = this.refreshCategory$.pipe(
-      switchMap(() => {
-        console.log('Refreshing category list...');
-        return this.categoryService.getAllCategories$();
-      })
+      switchMap(() => this.categoryService.getAllCategories$())
     );
   }
 

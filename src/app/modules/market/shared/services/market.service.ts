@@ -4,6 +4,7 @@ import { environment } from '../../../../../environments/environment.developpmen
 import { Observable } from 'rxjs';
 import { Market } from '../../models/market.interface';
 import { HttpClient } from '@angular/common/http';
+import { DeleteMsg } from '../../../shared-components/models/delete-msg.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,8 @@ export class MarketService {
   private _UPLOAD: string = environment._UPLOAD;
   private _READ: string = environment._READ;
   private _READ_ALL: string = environment._READ_ALL;
+  private _CREATE: string = environment._CREATE;
+  private _UPDATE: string = environment._UPDATE;
   private _DELETE: string = environment._DELETE;
 
   getAllMarket$(): Observable<Market[]> {
@@ -27,7 +30,27 @@ export class MarketService {
     return this.http.get<Market[]>(`${this._BASE_URL}${this._PUBLIC}${this._MARKET}${this._READ_ALL}`);
   }
 
-  deleteMarket$(id: number): Observable<any> {
-    return this.http.delete(`${this._BASE_URL}${this._ADMIN}${this._MARKET}${this._DELETE}/${id}`);
+  addMarket$(name: string, size: string, place: string, picture: string): Observable<any> {
+    const market = {
+      name: name,
+      size: size,
+      place: place,
+      picture: picture,
+    }
+    return this.http.post(`${this._BASE_URL}${this._ADMIN}${this._MARKET}${this._CREATE}`, market);
+  }
+
+  editMarket$(name: string, size: string, place: string, picture: string, id: number): Observable<any> {
+    const market = {
+      name: name,
+      size: size,
+      place: place,
+      picture: picture,
+    }
+    return this.http.put(`${this._BASE_URL}${this._ADMIN}${this._MARKET}${this._UPDATE}/${id}`, market);
+  }
+
+  deleteMarket$(id: number): Observable<DeleteMsg> {
+    return this.http.delete<DeleteMsg>(`${this._BASE_URL}${this._ADMIN}${this._MARKET}${this._DELETE}/${id}`);
   }
 }
