@@ -5,6 +5,7 @@ import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
 import { Category } from '../../models/category.interface';
 import { StorageService } from '../../../../core/services/storage.service';
 import { CategoryRequest } from '../../models/category-request.interface';
+import { DeleteMsg } from '../../../shared-components/models/delete-msg.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -58,8 +59,7 @@ export class CategoryService {
       return this.http.put(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._UPDATE}/${id}`, category);
   }
 
-  deleteCategory$(id: number): Observable<{ id: number }> {
-    return this.http.delete(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._DELETE}/${id}`, { responseType: 'text' })
-    .pipe(map((response: string) => ({ id: Number(response) })));
+  deleteCategory$(id: number): Observable<DeleteMsg> {
+    return this.http.delete<DeleteMsg>(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._DELETE}/${id}`);
   }
 }
