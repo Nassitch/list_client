@@ -1,0 +1,50 @@
+<main>
+
+    <section class="manager-section">
+        <h2>Produit.</h2>
+        
+        <div class="cards">
+            @if (categoryList$ | async; as categoryList) {
+                @for (category of categoryList; track $index) {
+                    <app-card 
+                    [type]="'static'"
+                    [id]="category.id"
+                    [imgContent]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture"
+                    [content]="this.categoryContent"
+                    [title]="category.name"
+                    [subTitle]="'ID: ' + category.id"
+                    [isActive]="category.id === activeCategory"
+                    (cardSelected)="onCardClick(category.id)"
+                    />
+                }
+            }
+        </div>
+
+        <div class="cards mt-6" >
+            <app-new-card [word]="'Produit'" />
+            @if (itemList$ | async; as itemList) {
+                @for (item of itemList; track $index) {
+                    <app-card
+                    [type]="'edit'"
+                    [id]="item.id"
+                    [title]="item.name"
+
+                    />
+                }
+            }
+        </div>
+    </section>
+
+    <form>
+        
+        <div class="manager-input-text" (click)="focusInput()">
+            <label for="name">NOM *</label>
+            <input #inputField type="text" name="name" [(ngModel)]="this.name" />
+        </div>
+    </form>
+
+    <div class="submit-btn mt-8">
+        <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()" />
+    </div>
+
+</main>
