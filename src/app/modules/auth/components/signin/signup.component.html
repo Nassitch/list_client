@@ -8,7 +8,7 @@
     [type]="'text'"
     [label]="'PSEUDO *'"
     [placeholder]="'user01'"
-  ></app-input>
+  />
 
   <app-input
     [control]="getFormControl('email')"
@@ -16,7 +16,7 @@
     [type]="'email'"
     [label]="'EMAIL *'"
     [placeholder]="'user@list.com'"
-  ></app-input>
+  />
 
   <app-input
     [control]="getFormControl('password')"
@@ -24,7 +24,7 @@
     [type]="'password'"
     [label]="'MOT DE PASSE *'"
     [placeholder]="'***************'"
-  ></app-input>
+  />
 
   <app-input
     [control]="getFormControl('confirmPassword')"
@@ -32,9 +32,9 @@
     [type]="'password'"
     [label]="'CONFIRMER *'"
     [placeholder]="'***************'"
-  ></app-input>
+  />
 
-  <app-submit-btn [text]="textBtn" (click)="onSubmit()"></app-submit-btn>
+  <app-submit-btn [text]="textBtn" (click)="onSubmit()" />
 
   <p class="mt-4">Déjà un compte ? <a class="text-underline" [routerLink]="['/login']">Connectez-vous</a></p>
 </section>

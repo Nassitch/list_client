@@ -4,9 +4,11 @@ import { DashBoardComponent } from './components/dash-board/dash-board.component
 import { CategoryManagerComponent } from './components/category-manager/category-manager.component';
 import { MarketManagerComponent } from './components/market-manager/market-manager.component';
 import { ItemManagerComponent } from './components/item-manager/item-manager.component';
+import { UserPanelComponent } from './components/user-panel/user-panel.component';
 
 const routes: Routes = [
   {path: 'dash-board', component: DashBoardComponent},
+  {path: 'user-panel', component: UserPanelComponent},
   {path: 'category', component: CategoryManagerComponent},
   {path: 'item', component: ItemManagerComponent},
   {path: 'market', component: MarketManagerComponent},

@@ -16,6 +16,7 @@ export class UserService implements OnDestroy {
   private currentUserSubscription: Subscription | null = null;
 
   private _BASE_URL: string = environment._BASE_URL;
+  private _ADMIN: string = environment._ADMIN;
   private _PUBLIC: string = environment._PUBLIC;
   private _USER: string = environment._USER;
   private _UPLOAD: string = environment._UPLOAD;
@@ -32,6 +33,10 @@ export class UserService implements OnDestroy {
       } else {
       }
     });
+  }
+
+  getAllUserProfile$(): Observable<UserInfo[]> {
+    return this.http.get<UserInfo[]>(`${this._BASE_URL}${this._ADMIN}${this._USER}${this._READ_ALL}`);
   }
   
   getUserProfile$(): Observable<UserInfo> {

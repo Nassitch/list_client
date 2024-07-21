@@ -11,6 +11,8 @@ import { SubmitBtnComponent } from '../shared-components/components/submit-btn/s
 import { FormsModule } from '@angular/forms';
 import { MarketManagerComponent } from './components/market-manager/market-manager.component';
 import { ItemManagerComponent } from './components/item-manager/item-manager.component';
+import { UserPanelComponent } from './components/user-panel/user-panel.component';
+import { LastLogComponent } from '../shared-components/components/last-log/last-log.component';
 
 
 @NgModule({
@@ -18,11 +20,13 @@ import { ItemManagerComponent } from './components/item-manager/item-manager.com
     DashBoardComponent,
     CategoryManagerComponent,
     MarketManagerComponent,
-    ItemManagerComponent
+    ItemManagerComponent,
+    UserPanelComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
+    LastLogComponent,
     NewCardComponent,
     CardComponent,
     InputComponent,

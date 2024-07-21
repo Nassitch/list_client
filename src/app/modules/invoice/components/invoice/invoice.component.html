@@ -16,7 +16,7 @@
               [subTitle]="market.size"
               [isActive]="market.id === activeMarket"
               (cardSelected)="onCardClick(market.id, 'market')"
-              ></app-card>
+              />
             }
         }
     </div>
@@ -39,7 +39,7 @@
                 [onDelete]="onDelete.bind(this, shop.id)"
                 [isActive]="shop.id === activeShop"
                 (cardSelected)="onCardClick(shop.id, 'shop')"
-              ></app-card>
+              />
             }
         }
     </div>
@@ -53,7 +53,7 @@
     </div>
 
     <div class="submit-btn mt-8">
-        <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()"></app-submit-btn>
+        <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()" />
     </div>
 
 </main>
