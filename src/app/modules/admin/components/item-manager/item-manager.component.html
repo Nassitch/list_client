@@ -14,21 +14,23 @@
                     [title]="category.name"
                     [subTitle]="'ID: ' + category.id"
                     [isActive]="category.id === activeCategory"
-                    (cardSelected)="onCardClick(category.id)"
+                    (cardSelected)="onCardClick(category.id, 'category')"
                     />
                 }
             }
         </div>
 
         <div class="cards mt-6" >
-            <app-new-card [word]="'Produit'" />
+            <app-new-card [word]="'Produit'" (newShopEvent)="newItem()" />
             @if (itemList$ | async; as itemList) {
                 @for (item of itemList; track $index) {
                     <app-card
                     [type]="'edit'"
                     [id]="item.id"
                     [title]="item.name"
-
+                    [onDelete]="onDelete.bind(this, item.id)"
+                    [isActive]="item.id === activeItem"
+                    (cardSelected)="onCardClick(item.id, 'item', item.name)"
                     />
                 }
             }
