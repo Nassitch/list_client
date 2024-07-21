@@ -54,7 +54,7 @@ export class ItemManagerComponent implements OnInit {
     }
     if (type === 'item') {
       this.activeItem = this.activeItem === id ? undefined : id;
-      this.textBtn = "Modifier le produit";
+      this.textBtn = "Modifier";
       name ? this.name = name : "";
       this.edit = true;
     }

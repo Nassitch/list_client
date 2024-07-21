@@ -54,7 +54,7 @@ export class MarketManagerComponent implements OnInit {
     this.size = size;
     this.place = place;
     this.picturePath = picturePath;
-    this.textBtn = 'Modifier le marché';
+    this.textBtn = 'Modifier';
   }
 
   focusInput(inputField: HTMLInputElement): void {
