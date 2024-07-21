@@ -6,6 +6,7 @@ import { assertFormControl } from '../../../shared-components/utils/assert-form-
 import { environment } from '../../../../../environments/environment.developpment';
 import { UserInfo } from '../../models/user-info.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
+import { ImageService } from '../../../shared-components/services/image.service';
 
 @Component({
   selector: 'app-setting-profile',
@@ -16,19 +17,13 @@ export class SettingProfileComponent implements OnInit {
   private userService = inject(UserService);
   private fb = inject(FormBuilder);
   private toastService = inject(ToastService);
+  public imageService = inject(ImageService);
 
   private profileSubscription$: Subscription | null = null;
   profile$!: Observable<any>;
   avatars$!: Observable<string[]>;
   picture: string = '';
   textBtn: string = 'Enregistrer';
-
-  private _BASE_URL: string = environment._BASE_URL;
-  private _PUBLIC: string = environment._PUBLIC;
-  private _UPLOAD: string = environment._UPLOAD;
-  private _READ: string = environment._READ;
-  private _AVATAR: string = environment._AVATAR;
-  protected _URL_IMG: string = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._AVATAR}`;
 
   formGroup!: FormGroup;
 

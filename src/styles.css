@@ -43,6 +43,22 @@ main {
   background-color: var(--second-color);
 }
 
+.form-user-panel {
+  margin-inline: 30px;
+}
+
+.bckgrnd-clr-main {
+  background-color: var(--second-color);
+}
+
+.bckgrnd-clr-second {
+  background-color: var(--background-color);
+}
+
+.bckgrnd-clr-third {
+  background-color: var(--main-color);
+}
+
 .ghost-btn {
   height: 35px;
   width: 35px;
@@ -82,14 +98,41 @@ main {
 }
 
 menu {
-  background-color: var(--second-color);
   margin-block: 30px;
   padding: 20px;
   border-radius: 10px;
 }
 
+menu > .visble {
+  opacity: 1;
+}
+
+menu > .unvisble {
+  opacity: 0.5;
+}
+
+.user-ticket:not(:last-child) {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--second-color);
+}
+
+.user-ticket:last-child {
+  padding-top: 10px;
+}
+
 menu > article > .menu-img {
   width: 10%;
+}
+
+menu > article > .menu-picture {
+  width: 15%;
+  border: 1px solid var(--main-color);
+  border-radius: 50%;
+}
+
+menu > article > .menu-txt {
+  width: 80%;
+  margin-left: 10px;
 }
 
 menu > article > .menu-txt {
@@ -101,10 +144,13 @@ menu > article > .menu-btn {
   width: 10%;
 }
 
+menu > article > .see-user-btn {
+  width: 10%;
+}
+
 .line {
   height: 1px;
   width: 100%;
-  background-color: var(--background-color);
   margin-block: 15px;
 }
 

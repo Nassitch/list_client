@@ -1,0 +1,85 @@
+
+<main class="bckgrnd-clr-main">
+
+    <app-last-log />
+
+    @if (userList$ | async; as userList) {
+        <menu class="bckgrnd-clr-second user-list">
+            @for (user of userList; track $index) {
+                    <article class="d-flex user-ticket unvisble">
+                        <div class="menu-picture">
+                            <img [src]="this.imageService._BASE_URL_USER_IMG + user.picture" [alt]="user.firstName" />
+                        </div>
+                        <div class="menu-txt">
+                            <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+                            <p>loginId = {{ user.loginId }} | userId = {{ user.id }}</p>
+                        </div>
+                        <div class="see-user-btn">
+                            <button class="ghost-btn">
+                                <img src="../../../../../assets/icons/view.svg" alt="voir" />
+                            </button>
+                        </div>
+                    </article>
+                }
+        </menu>
+    }
+
+    <section class="form-user-panel" >
+
+            <app-input
+            [control]="getFormControl('firstName')"
+            [controlName]="'lastName'"
+            [type]="'text'"
+            [label]="'PRÉNOM *'"
+            />
+            
+            <app-input
+            [control]="getFormControl('lastName')"
+            [controlName]="'lastName'"
+            [type]="'text'"
+            [label]="'NOM *'"
+            />
+            
+            <div class="d-flex flex-column mb-4 avatar-choice">
+                <label for="email">AVATAR *</label>
+                <div class="avatar-list mt-4">
+                    @if (avatars$ | async; as avatars) { @for (avatar of avatars; track
+                        $index) {
+                            <button (click)="takeAvatar(avatar)">
+                                <img
+                                [src]="this.imageService._BASE_URL_USER_IMG + avatar"
+                                [ngClass]="{ selected: avatar === picture }"
+                                alt="avatar"
+                                />
+                            </button>
+                        } }
+                    </div>
+                </div>
+                
+                <app-input
+                [control]="getFormControl('address')"
+                [controlName]="'address'"
+                [type]="'text'"
+                [label]="'ADRESSE *'"
+                />
+                
+                <app-input
+                [control]="getFormControl('city')"
+                [controlName]="'city'"
+                [type]="'text'"
+                [label]="'VILLE *'"
+                />
+                
+                <app-input
+                [control]="getFormControl('zipCode')"
+                [controlName]="'zipCode'"
+                [type]="'number'"
+                [label]="'CODE POSTALE *'"
+                />
+                
+                <div class="submit-btn">
+                    <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" />
+                </div>
+        </section>
+
+</main>

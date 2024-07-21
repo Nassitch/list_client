@@ -7,7 +7,7 @@
     [type]="'text'"
     [label]="'PRÉNOM *'"
     [placeholder]="'John'"
-  ></app-input>
+  />
 
   <app-input
     [control]="getFormControl('lastName')"
@@ -15,7 +15,7 @@
     [type]="'text'"
     [label]="'NOM *'"
     [placeholder]="'Doe'"
-  ></app-input>
+  />
 
   <div class="d-flex flex-column mb-4 avatar-choice">
     <label for="email">AVATAR *</label>
@@ -40,7 +40,7 @@
     [type]="'text'"
     [label]="'ADRESSE *'"
     [placeholder]="'15 Rue Bel-Air'"
-  ></app-input>
+  />
 
   <app-input
     [control]="getFormControl('city')"
@@ -48,7 +48,7 @@
     [type]="'text'"
     [label]="'VILLE *'"
     [placeholder]="'Bordeaux'"
-  ></app-input>
+  />
 
   <app-input
     [control]="getFormControl('zipCode')"
@@ -56,12 +56,12 @@
     [type]="'text'"
     [label]="'CODE POSTAL *'"
     [placeholder]="'33100'"
-  ></app-input>
+  />
 
   <app-submit-btn
     [text]="textBtn"
     (click)="onSubmit()"
-  ></app-submit-btn>
+  />btn>
 
   <p class="mt-4">
     Déjà un compte ?

@@ -11,14 +11,14 @@
       [controlName]="'lastName'"
       [type]="'text'"
       [label]="'PRÉNOM *'"
-    ></app-input>
+    />
 
     <app-input
       [control]="getFormControl('lastName')"
       [controlName]="'lastName'"
       [type]="'text'"
       [label]="'NOM *'"
-    ></app-input>
+    />
 
     <div class="d-flex flex-column mb-4 avatar-choice">
       <label for="email">AVATAR *</label>
@@ -27,7 +27,7 @@
         $index) {
         <button (click)="takeAvatar(avatar)">
           <img
-            [src]="_URL_IMG + avatar"
+            [src]="this.imageService._BASE_URL_USER_IMG + avatar"
             [ngClass]="{ selected: avatar === picture }"
             alt="avatar"
           />
@@ -41,26 +41,26 @@
       [controlName]="'address'"
       [type]="'text'"
       [label]="'ADRESSE *'"
-    ></app-input>
+    />
 
     <app-input
       [control]="getFormControl('city')"
       [controlName]="'city'"
       [type]="'text'"
       [label]="'VILLE *'"
-    ></app-input>
+    />
 
     <app-input
       [control]="getFormControl('zipCode')"
       [controlName]="'zipCode'"
       [type]="'number'"
       [label]="'CODE POSTALE *'"
-    ></app-input>
+    />
     
     <app-submit-btn
       [text]="textBtn"
       (click)="onSubmit()"
-    ></app-submit-btn>
+    />
   </div>
 }
 </section>

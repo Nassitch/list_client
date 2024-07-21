@@ -16,7 +16,7 @@
                     [items]="shop.items"
                     [allSelected]="true"
                     (selectedItemsChange)="onSelectedItemsChange(shop.id, $event.items)"
-                    ></app-list>
+                    />
                 }
             }
         }
@@ -30,7 +30,7 @@
                     [items]="shop.items"
                     [allSelected]="true"
                     (selectedItemsChange)="onSelectedItemsChange(shop.id, $event.items)"
-                    ></app-list>
+                    />
                 }
             }
     }
@@ -38,6 +38,6 @@
     <app-total [items]="this.getAllSelectedItems()" />
 
     <div class="submit-btn">
-        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" ></app-submit-btn>
+        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" />
     </div>
 </main>

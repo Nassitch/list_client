@@ -1,14 +1,11 @@
 <main>
     @if (profile$ | async; as profile) {
-        <div class="last-log">
-            <p>Dernière connexion :</p>
-            <p>{{ profile.lastLog | dateFormat }}</p>
-          </div>
+        <app-last-log [lastLog]="profile.lastLog"  />
     }
 
-    <app-landing-msg [title]="this.titleLandingMsg" [description]="this.descriptionLandingMsg" ></app-landing-msg>
+    <app-landing-msg [title]="this.titleLandingMsg" [description]="this.descriptionLandingMsg" />
 
-    <menu>
+    <menu class="bckgrnd-clr-main">
         <article class="d-flex">
             <div class="menu-img">
                 <img src="../../../assets/icons/shop.svg" />
@@ -23,7 +20,7 @@
                 </button>
             </div>
         </article>
-        <div class="line"></div>
+        <div class="line bckgrnd-clr-second"></div>
         <article class="d-flex">
             <div class="menu-img">
                 <img src="../../../assets/icons/invoice.svg" />
@@ -38,7 +35,7 @@
                 </button>
             </div>
         </article>
-        <div class="line"></div>
+        <div class="line bckgrnd-clr-second"></div>
         <article class="d-flex">
             <div class="menu-img">
                 <img src="../../../assets/icons/market.svg" />

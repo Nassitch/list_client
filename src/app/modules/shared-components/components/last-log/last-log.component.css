@@ -1,0 +1,8 @@
+.last-log {
+    display: flex;
+    justify-content: space-between;
+}
+
+.last-log > p {
+    font-size: 12px;
+}

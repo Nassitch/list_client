@@ -13,6 +13,7 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { CreditPageComponent } from './components/credit-page/credit-page.component';
 import { DateFormatPipe } from './modules/shared-components/pipes/date-format.pipe';
 import { LandingMsgComponent } from './modules/shared-components/components/landing-msg/landing-msg.component';
+import { LastLogComponent } from './modules/shared-components/components/last-log/last-log.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { LandingMsgComponent } from './modules/shared-components/components/land
     HttpClientModule,
     ToastComponent,
     LandingMsgComponent,
+    LastLogComponent,
     DateFormatPipe
   ],
   providers: [

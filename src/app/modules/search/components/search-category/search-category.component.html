@@ -7,12 +7,12 @@
         [name]="category.name"
         [items]="category.items"
         (selectedItemsChange)="onSelectedItemsChange($event.items)"
-        ></app-list>
+        />
     }
 
     <app-total [items]="this.selectedItems" />
 
     <div class="submit-btn">
-        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" ></app-submit-btn>
+        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" />
     </div>
 </main>

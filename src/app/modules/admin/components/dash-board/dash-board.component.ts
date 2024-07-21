@@ -10,7 +10,6 @@ export class DashBoardComponent {
 
   private router = inject(Router);
 
-
   navigateTo(path: string): void {
     this.router.navigate(['/admin/' + path]);  
   }

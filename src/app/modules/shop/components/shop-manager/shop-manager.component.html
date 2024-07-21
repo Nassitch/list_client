@@ -31,7 +31,7 @@
                     [onDelete]="onDelete.bind(this, shop.id)"
                     [isActive]="shop.id === activeShop"
                     (cardSelected)="onCardClick(shop.id)"
-                ></app-card>
+                />
             }
         }
     </div>
@@ -42,5 +42,5 @@
     [description]="this.descriptionLandingMsg"
     [additionalOne]="addtitonalOneLandingMsg"
     [additionalTwo]="addtitonalTwoLandingMsg"
-  ></app-landing-msg>
+  />
 </main>
