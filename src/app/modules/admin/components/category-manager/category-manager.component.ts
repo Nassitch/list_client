@@ -57,7 +57,7 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
     this.name = name;
     this.picturePath = picture;
     this.edit = true;
-    this.textBtn = 'Modifier la categorie';
+    this.textBtn = 'Modifier';
   }
 
   focusInput(): void {
