@@ -1,0 +1,31 @@
+article {
+  height: 100px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color);
+  border-radius: 10px;
+}
+
+article > img {
+  height: 35px;
+  width: 35px;
+  background-color: var(--background-color);
+}
+
+article > h5 {
+  font-size: 14px;
+  margin-block: 5px;
+}
+
+article > p {
+  font-size: 12px;
+}
+
+article > div {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}

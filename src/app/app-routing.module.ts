@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { HowItWorksPageComponent } from './components/how-it-works-page/how-it-works-page.component';
+import { CreditPageComponent } from './components/credit-page/credit-page.component';
 
 const routes: Routes = [
   {path: '', loadChildren: () => import("./modules/auth/auth.module").then((m) => m.AuthModule)},
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'invoice', loadChildren: () => import("./modules/invoice/invoice.module").then((m) => m.InvoiceModule)},
   {path: 'home', component: LandingPageComponent},
   {path: 'how-it-works', component: HowItWorksPageComponent},
+  {path: 'credits', component: CreditPageComponent},
 ];
 
 @NgModule({
