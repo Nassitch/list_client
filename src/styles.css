@@ -103,12 +103,13 @@ menu {
   border-radius: 10px;
 }
 
-menu > .visble {
-  opacity: 1;
+menu > .user-ticket {
+  opacity: 0.5;
+  transition: opacity 0.3s;
 }
 
-menu > .unvisble {
-  opacity: 0.5;
+menu > .user-ticket.active {
+  opacity: 1;
 }
 
 .user-ticket:not(:last-child) {
