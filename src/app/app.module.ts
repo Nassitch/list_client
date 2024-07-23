@@ -14,6 +14,8 @@ import { CreditPageComponent } from './components/credit-page/credit-page.compon
 import { DateFormatPipe } from './modules/shared-components/pipes/date-format.pipe';
 import { LandingMsgComponent } from './modules/shared-components/components/landing-msg/landing-msg.component';
 import { LastLogComponent } from './modules/shared-components/components/last-log/last-log.component';
+import { HowItWorksPageComponent } from './components/how-it-works-page/how-it-works-page.component';
+import { HowItWorksCardComponent } from './modules/shared-components/components/how-it-works-card/how-it-works-card.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { LastLogComponent } from './modules/shared-components/components/last-lo
     SettingWindowComponent,
     LandingPageComponent,
     CreditPageComponent,
+    HowItWorksPageComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { LastLogComponent } from './modules/shared-components/components/last-lo
     ToastComponent,
     LandingMsgComponent,
     LastLogComponent,
-    DateFormatPipe
+    DateFormatPipe,
+    HowItWorksCardComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

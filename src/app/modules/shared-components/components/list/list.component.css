@@ -21,17 +21,6 @@
   align-items: center;
 }
 
-.list > .list-category > .list-category-info > p {
-  min-height: 35px;
-  min-width: 35px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: var(--second-color);
-  background-color: var(--main-color);
-  border-radius: 50%;
-}
-
 .list > .list-category > .list-category-info > img {
   height: 35px;
   width: 35px;
