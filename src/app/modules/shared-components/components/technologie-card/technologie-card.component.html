@@ -1,0 +1,15 @@
+<article>
+    <img [src]="picture" [alt]="title" />
+    <h5>{{ title }}</h5>
+    @if (version) {
+        <p>v {{ version }}</p>
+    }
+    @if (link) {
+        <div>
+            <a [href]="link" target="_blank">⎋</a>
+            @if (secondLink) {
+                <a [href]="secondLink" target="_blank">⎋</a>
+            }
+        </div>
+    }
+</article>

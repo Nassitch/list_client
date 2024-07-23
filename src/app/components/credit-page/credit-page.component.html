@@ -1,1 +1,37 @@
-<p>credit-page works!</p>
+<main class="bckgrnd-clr-main">
+
+    <div class="legal-page-head">
+        <h3>Crédits</h3>
+        <p>Bienvenu sur la page crédit. Trouvez toutes les informations liées à  la création, au développement et à la maintenance de l'application.</p>
+    </div>
+
+    <h3 class="title-section">Application</h3>
+    <div class="app-card">
+        <div class="app-card-logo">
+            <img src="../../../assets/manifest/logo.png" alt="logo application" />
+        </div>
+        <div class="app-card-info">
+            <h5>Développement :</h5>
+            <p>HARMACH Nassime</p>
+            <h5>Édition :</h5>
+            <p>3A1D</p>
+            <p class="app-version">v 1.01</p>
+        </div>
+    </div>
+
+    <h3 class="title-section mt-10">Caractéristiques technique</h3>
+    <div class="cards">
+        @for (technologieCard of technologiesCardList; track $index) {
+            <app-technologie-card
+            [picture]="technologieCard.picture"
+            [title]="technologieCard.title"
+            [version]="technologieCard.version"
+            [link]="technologieCard.link"
+            [secondLink]="technologieCard.secondLink"
+            />
+        }
+    </div>
+
+    <p class="copyright">&copy;2024 · 3A1D. Tous drois réservés.</p>
+    
+</main>
