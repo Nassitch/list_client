@@ -1,0 +1,15 @@
+
+.delete-btn {
+    height: 50px;
+    width: 100%;
+    color: var(--background-input);
+    background: transparent;
+    margin-block: 20px -10px;
+    border: 1px solid var(--background-input);
+    border-radius: 10px;
+}
+
+.delete-btn.active {
+    color: var(--error-msg);
+    background-color: var(--error-background);
+}

@@ -6,7 +6,7 @@
     @if (userList$ | async; as userList) {
         <menu class="bckgrnd-clr-second user-list">
             @for (user of userList; track $index) {
-                    <article class="d-flex user-ticket unvisble">
+                    <article class="d-flex user-ticket un-active" [ngClass]="{ active: profileId === user.id }" >
                         <div class="menu-picture">
                             <img [src]="this.imageService._BASE_URL_USER_IMG + user.picture" [alt]="user.firstName" />
                         </div>
@@ -15,7 +15,7 @@
                             <p>loginId = {{ user.loginId }} | userId = {{ user.id }}</p>
                         </div>
                         <div class="see-user-btn">
-                            <button class="ghost-btn">
+                            <button class="ghost-btn" (click)="getProfile(user.id!)">
                                 <img src="../../../../../assets/icons/view.svg" alt="voir" />
                             </button>
                         </div>
@@ -77,7 +77,9 @@
                 [label]="'CODE POSTALE *'"
                 />
                 
-                <div class="submit-btn">
+                <button class="delete-btn" [ngClass]="{ 'active' : profileLoginId !== 0 }" (click)="onDelete(this.profileLoginId)" >Supprimer l'utilisateur</button>
+
+                <div class="submit-btn mb-8">
                     <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" />
                 </div>
         </section>
