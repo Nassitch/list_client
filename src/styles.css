@@ -121,6 +121,12 @@ menu > .user-ticket.active {
   padding-top: 10px;
 }
 
+menu > article {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 menu > article > .menu-img {
   width: 10%;
 }
@@ -186,6 +192,17 @@ menu > article > .see-user-btn {
   overflow: auto;
 }
 
+.number-bubble {
+  height: 35px;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--second-color);
+  background-color: var(--main-color);
+  border-radius: 50%;
+}
+
 /* Form admin. */
 form {
   display: flex;
@@ -240,4 +257,23 @@ form {
   opacity: 0;
   width: 100%;
   height: 100%;
+}
+
+/* Legal page. */
+.legal-page-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-block: 40px;
+}
+
+.legal-page-head > h3 {
+  font-size: 21px;
+}
+
+.legal-page-head > p {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
 }
