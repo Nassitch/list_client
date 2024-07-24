@@ -23,16 +23,18 @@
     <div class="d-flex flex-column mb-4 avatar-choice">
       <label for="email">AVATAR *</label>
       <div class="avatar-list mt-4">
-        @if (avatars$ | async; as avatars) { @for (avatar of avatars; track
-        $index) {
-        <button (click)="takeAvatar(avatar)">
-          <img
-            [src]="this.imageService._BASE_URL_USER_IMG + avatar"
-            [ngClass]="{ selected: avatar === picture }"
-            alt="avatar"
-          />
-        </button>
-        } }
+        @if (avatars$ | async; as avatars) {
+          @for (avatar of avatars; track
+            $index) {
+            <button (click)="takeAvatar(avatar)">
+              <img
+                [src]="this.imageService._BASE_URL_USER_IMG + avatar"
+                [ngClass]="{ selected: avatar === picture }"
+                alt="avatar"
+              />
+            </button>
+        }
+      }
       </div>
     </div>
 
@@ -56,11 +58,10 @@
       [type]="'number'"
       [label]="'CODE POSTALE *'"
     />
-    
-    <app-submit-btn
-      [text]="textBtn"
-      (click)="onSubmit()"
-    />
+
+    <app-submit-btn [text]="textBtn" (click)="onSubmit()" />
   </div>
-}
+  }
+
+  <app-confirm-modal (response)="handleConfirmSubmission($event)" />
 </section>

@@ -6,6 +6,7 @@ import { SettingProfileComponent } from './components/setting-profile/setting-pr
 import { InputComponent } from '../shared-components/components/input/input.component';
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
 import { DateFormatPipe } from '../shared-components/pipes/date-format.pipe';
+import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { DateFormatPipe } from '../shared-components/pipes/date-format.pipe';
     UserRoutingModule,
     InputComponent,
     SubmitBtnComponent,
-    DateFormatPipe
+    DateFormatPipe,
+    ConfirmModalComponent
   ]
 })
 export class UserModule { }

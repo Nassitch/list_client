@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
-import { Observable, of, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription, switchMap } from 'rxjs';
 import { environment } from '../../../../../environments/environment.developpment';
 import { UserInfo } from '../../models/user-info.interface';
 import { AuthService } from '../../../auth/shared/services/auth.service';
@@ -9,6 +9,10 @@ import { AuthService } from '../../../auth/shared/services/auth.service';
   providedIn: 'root',
 })
 export class UserService implements OnDestroy {
+  
+  private profileSubject = new BehaviorSubject<UserInfo | null>(null);
+  profile$ = this.profileSubject.asObservable();
+
   private http = inject(HttpClient);
   private authService = inject(AuthService);
 
@@ -32,6 +36,10 @@ export class UserService implements OnDestroy {
       } else {
       }
     });
+  }
+
+  upToDateProfile(profile: UserInfo): void {
+    this.profileSubject.next(profile);
   }
 
   getAllUserProfile$(): Observable<UserInfo[]> {

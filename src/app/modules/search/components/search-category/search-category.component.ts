@@ -57,7 +57,7 @@ export class SearchCategoryComponent implements OnInit, OnDestroy, AfterViewInit
     }
   }
 
-  onConfirmSubmission(response: boolean): void {
+  handleConfirmSubmission(response: boolean): void {
     if (response) {
       this.categorySubscription$ = this.category$.subscribe((category) => {
         const existingCategories: Category[] = this.shopService.getShopIntoLS() || [];

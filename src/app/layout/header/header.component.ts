@@ -3,6 +3,8 @@ import { AuthService } from '../../modules/auth/shared/services/auth.service';
 import { Subscription } from 'rxjs';
 import { environment } from '../../../environments/environment.developpment';
 import { Router } from '@angular/router';
+import { ImageService } from '../../modules/shared-components/services/image.service';
+import { UserService } from '../../modules/user/shared/services/user.service';
 
 @Component({
   selector: 'app-header',
@@ -10,27 +12,33 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent implements OnInit, OnDestroy {
+  
   currentUserSubscription!: Subscription;
+  profileSubscription!: Subscription;
+
+  private userService = inject(UserService);
   private authService = inject(AuthService);
   private router = inject(Router);
+  public imageService = inject(ImageService);
 
-  private readonly _BASE_URL: string = environment._BASE_URL;
-  private readonly _PUBLIC: string = environment._PUBLIC;
-  private readonly _UPLOAD: string = environment._UPLOAD;
-  private readonly _READ: string = environment._READ;
-  private readonly _AVATAR: string = environment._AVATAR;
   protected profile: string = '../../../assets/icons/default-person.svg';
   protected isSettingWindowActive: boolean = false;
 
   ngOnInit(): void {
-    this.currentUserSubscription = this.authService
-      .getCurrentUser()
+    this.currentUserSubscription = this.authService.getCurrentUser()
       .subscribe((user) => {
         if (user && user.picture) {
-          const getImage = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._AVATAR}`;
+          const getImage = this.imageService._BASE_URL_USER_IMG;
           this.profile = getImage + user.picture;
         }
       });
+
+    this.profileSubscription = this.userService.profile$.subscribe((profile) => {
+      if (profile && profile.picture) {
+        const getImage = this.imageService._BASE_URL_USER_IMG;
+        this.profile = getImage + profile.picture;
+      }
+    });
   }
 
   navigateTo(path: string): void {
