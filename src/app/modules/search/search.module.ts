@@ -8,6 +8,7 @@ import { SearchCategoryComponent } from './components/search-category/search-cat
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
 import { ListComponent } from '../shared-components/components/list/list.component';
 import { TotalComponent } from '../shared-components/components/total/total.component';
+import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { TotalComponent } from '../shared-components/components/total/total.comp
     FormsModule,
     ListComponent,
     SubmitBtnComponent,
-    TotalComponent
+    TotalComponent,
+    ConfirmModalComponent
   ]
 })
 export class SearchModule { }

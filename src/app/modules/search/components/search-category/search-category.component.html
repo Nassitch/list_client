@@ -1,18 +1,20 @@
 <main>
-    @if (category$ | async; as category) {
-        
-        <app-list
-        [id]="category.id"
-        [image]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture"
-        [name]="category.name"
-        [items]="category.items"
-        (selectedItemsChange)="onSelectedItemsChange($event.items)"
-        />
-    }
+  @if (category$ | async; as category) {
 
-    <app-total [items]="this.selectedItems" />
+  <app-list
+    [id]="category.id"
+    [image]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture"
+    [name]="category.name"
+    [items]="category.items"
+    (selectedItemsChange)="onSelectedItemsChange($event.items)"
+  />
+  }
 
-    <div class="submit-btn">
-        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" />
-    </div>
+  <app-total [items]="this.selectedItems" />
+
+  <div class="submit-btn">
+    <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" />
+  </div>
+
+  <app-confirm-modal (response)="onConfirmSubmission($event)" />
 </main>

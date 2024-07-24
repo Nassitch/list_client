@@ -15,6 +15,11 @@ export class CreditPageComponent {
       version: "17.1"
     },
     {
+      picture: "../../../../../assets/technologies/ionic.svg",
+      title: "Ionic",
+      version: "7.1.3"
+    },
+    {
       picture: "../../../../../assets/technologies/spring.svg",
       title: "Spring",
       version: "3.2"

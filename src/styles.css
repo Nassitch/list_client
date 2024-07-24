@@ -28,8 +28,7 @@ main {
   position: relative;
   height: 110vh;
   width: 100vw;
-  /* height: 100%; */
-  padding: 30px 25px;
+  padding: 30px 25px 40px 25px;
   background-color: var(--background-color);
 }
 
@@ -169,7 +168,10 @@ menu > article > .see-user-btn {
 }
 
 .submit-btn {
+  position: fixed;
+  bottom: 10px;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 

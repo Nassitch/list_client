@@ -1,0 +1,69 @@
+section {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+section > .modal-window {
+  width: 80%;
+  z-index: 11;
+  padding: 25px 20px;
+  background-color: var(--second-color);
+  border-radius: 10px;
+}
+
+section > .modal-window > .confirm-title {
+  text-align: center;
+  width: 100%;
+}
+
+section > .modal-window > .confirm-title > h2 {
+  font-size: 18px;
+}
+
+section > .modal-window > .confirm-description {
+  width: 100%;
+  display: flex;
+  margin-block: 20px;
+}
+
+section > .modal-window > .confirm-description > img {
+  height: 35px;
+  width: 35px;
+}
+
+section > .modal-window > .confirm-description > p {
+  font-size: 14px;
+  margin-left: 5px;
+}
+
+section > .modal-window > .action-btn {
+  display: flex;
+  float: right;
+  justify-content: space-between;
+  width: 125px;
+}
+
+section > .modal-window > .action-btn > button {
+  padding: 5px 15px;
+  border: none;
+  border-radius: 10px;
+}
+
+section > .modal-window > .action-btn > .cancel-modal {
+  color: var(--error-msg);
+  background-color: var(--error-background);
+}
+
+section > .modal-window > .action-btn > .confirm-modal {
+  color: var(--succes-msg);
+  background-color: var(--succes-background);
+}
