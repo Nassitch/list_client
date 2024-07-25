@@ -5,6 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { TokenResponse } from '../../models/token-response.interface';
 import { ToastService } from '../../modules/shared-components/services/toast.service';
 import { Router } from '@angular/router';
+import { TokenDecrypted } from '../../models/token-decrypted.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,7 @@ export class TokenService implements OnInit {
 
   updateToken(tokenFromDB: TokenResponse) {
     this._clearCookiesAndThenPutNewToken(tokenFromDB);
-    const decodedToken = this._decodeToken(tokenFromDB);
+    const decodedToken: TokenDecrypted = this._decodeToken(tokenFromDB);
     this._setTokenDetailsSubject$(decodedToken);
   }
 
