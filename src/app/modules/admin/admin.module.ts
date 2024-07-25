@@ -13,6 +13,7 @@ import { MarketManagerComponent } from './components/market-manager/market-manag
 import { ItemManagerComponent } from './components/item-manager/item-manager.component';
 import { UserPanelComponent } from './components/user-panel/user-panel.component';
 import { LastLogComponent } from '../shared-components/components/last-log/last-log.component';
+import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { LastLogComponent } from '../shared-components/components/last-log/last-
     CardComponent,
     InputComponent,
     FormsModule,
-    SubmitBtnComponent
+    SubmitBtnComponent,
+    ConfirmModalComponent
   ]
 })
 export class AdminModule { }

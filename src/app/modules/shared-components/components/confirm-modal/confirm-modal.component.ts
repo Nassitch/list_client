@@ -33,20 +33,14 @@ export class ConfirmModalComponent {
 
   visibility: boolean = false;
   action!: 'save' | 'delete';
-  save: boolean = false;
-  delete: boolean = false;
 
   public saveAction(): void {
     this.visibility = true;
-    // this.save = true;
-    // this.delete = false;
     this.action = 'save';
   }
   
   public deleteAction(): void {
     this.visibility = true;
-    // this.save = false;
-    // this.delete = true;
     this.action = 'delete';
   }
   

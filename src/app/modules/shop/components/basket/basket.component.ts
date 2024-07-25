@@ -59,7 +59,7 @@ export class BasketComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   
   handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
-    if (response) {
+    if (response.confirmed) {
     const allSelectedItems = this.getAllSelectedItems();
     if (this.edit) {
       this.responseSubscription$ = this.shop$

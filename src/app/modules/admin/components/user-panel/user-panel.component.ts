@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../../user/shared/services/user.service';
 import { BehaviorSubject, Observable, Subscription, switchMap, tap } from 'rxjs';
 import { UserInfo } from '../../../user/models/user-info.interface';
@@ -7,19 +7,24 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { AdminService } from '../../shared/services/admin.service';
+import { ConfirmModalComponent } from '../../../shared-components/components/confirm-modal/confirm-modal.component';
+import { ConfirmModalService } from '../../../shared-components/services/confirm-modal.service';
 
 @Component({
   selector: 'app-user-panel',
   templateUrl: './user-panel.component.html',
   styleUrl: './user-panel.component.css'
 })
-export class UserPanelComponent implements OnInit, OnDestroy {
+export class UserPanelComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
+
   private refreshUserProfile$ = new BehaviorSubject<void>(undefined);
 
   private adminService = inject(AdminService);
   private userService = inject(UserService);
   private fb = inject(FormBuilder);
   private toastService = inject(ToastService);
+  private confirmModalService = inject(ConfirmModalService);
   public imageService = inject(ImageService);
 
   userList$!: Observable<UserInfo[]>;
@@ -31,6 +36,7 @@ export class UserPanelComponent implements OnInit, OnDestroy {
   
   profileId: number = 0;
   profileLoginId: number = 0;
+  idToDeleted?: number;
   picture!: string;
   textBtn: string = "Enregistrer";
   
@@ -95,48 +101,57 @@ export class UserPanelComponent implements OnInit, OnDestroy {
     })
   }
 
-  private validateAvatar(): boolean {
-    if (!this.picture) {
-      this.toastService.error('Veuillez sélectionner un avatar.');
-      return false;
-    }
-    return true;
+  ngAfterViewInit(): void {
+    this.confirmModalService.setModalComponent(this.confirmModal);
   }
 
   onDelete(id: number): void {
-    if (this.profileId !== 0) {
-      this.deleteUserProfile$ = this.adminService.deleteUser$(id).subscribe({
-        next: () => {
-          this.toastService.success("L'utilisateur à bien été supprimé.");
-          this.profileId = 0;
-          this.refreshUserProfile$.next();
-        },
-        error: (error) => this.toastService.error("Un erreur est survenue lors de la suppression.")
-      })
-    } else {
-      this.toastService.error("Vous devez séléctionner un utilisateur.");
-    }
+    this.confirmModalService.delete();
+    this.idToDeleted = id;
   }
+  
+  handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
+    if (response.action === 'save') {
+      if (response.confirmed) {
+        const userProfile: UserInfo = {
+          firstName: this.formGroup.get('firstName')?.value,
+          lastName: this.formGroup.get('lastName')?.value,
+          picture: this.picture,
+          address: this.formGroup.get('address')?.value,
+          city: this.formGroup.get('city')?.value,
+          zipCode: this.formGroup.get('zipCode')?.value,
+        };
+        this.putUserProfile$ = this.adminService.editUserProfile$(this.profileId, userProfile)
+        .subscribe({
+          next: () => {
+            this.toastService.success("Le profile d'utilisateur à bien été modifié.");
+            this.profileId = 0;
+            this.refreshUserProfile$.next();
+          },
+          error: (error) => 
+            this.toastService.error("Une erreur est survenue lors de la modification du profile.")
+        })
+      }
+    } else if (response.action === 'delete') {
+      if (response.confirmed) {
+      if (this.profileId !== 0) {
+        this.deleteUserProfile$ = this.adminService.deleteUser$(this.idToDeleted!).subscribe({
+          next: () => {
+            this.toastService.success("L'utilisateur à bien été supprimé.");
+            this.profileId = 0;
+            this.refreshUserProfile$.next();
+          },
+          error: (error) => this.toastService.error("Un erreur est survenue lors de la suppression.")
+        })
+      } else {
+        this.toastService.error("Vous devez séléctionner un utilisateur.");
+      }
+    }
+    }
+}
 
   onSubmit(): void {
-    const userProfile: UserInfo = {
-      firstName: this.formGroup.get('firstName')?.value,
-      lastName: this.formGroup.get('lastName')?.value,
-      picture: this.picture,
-      address: this.formGroup.get('address')?.value,
-      city: this.formGroup.get('city')?.value,
-      zipCode: this.formGroup.get('zipCode')?.value,
-    };
-    this.putUserProfile$ = this.adminService.editUserProfile$(this.profileId, userProfile)
-    .subscribe({
-      next: () => {
-        this.toastService.success("Le profile d'utilisateur à bien été modifié.");
-        this.profileId = 0;
-        this.refreshUserProfile$.next();
-      },
-      error: (error) => 
-        this.toastService.error("Une erreur est survenue lors de la modification du profile.")
-    })
+    this.confirmModalService.save();
   }
 
   ngOnDestroy(): void {

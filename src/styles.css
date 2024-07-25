@@ -168,8 +168,6 @@ menu > article > .see-user-btn {
 }
 
 .submit-btn {
-  position: fixed;
-  bottom: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -280,7 +278,7 @@ form {
   text-align: center;
   margin-top: 10px;
 }
-  
+
 .copyright {
   position: absolute;
   text-align: center;

@@ -72,7 +72,7 @@ export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.total === undefined || this.activeMarket === undefined || this.activeShop === undefined) {
         this.toastService.error('Tous les champs ne sont pas remplis.');
     } else {
-      if (response) {
+      if (response.confirmed) {
         this.postSubscription$ = this.invoiceService.addInvoice$(this.total, this.activeMarket, this.activeShop).subscribe({
           next: (response) => {
             this.toastService.success('Facture validée avec succès.');

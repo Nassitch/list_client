@@ -66,7 +66,7 @@ export class ShopManagerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
-  if (response) {
+  if (response.confirmed) {
     this.deleteSubscription$ = this.shopService.deleteShop$(this.idToDeleted!).subscribe({
       next: () => {
         this.toastService.success("Panier supprimé avec Succès"),
