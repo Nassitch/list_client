@@ -22,15 +22,21 @@ main {
   padding-left: 10px;
 }
 
-.categories {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+.container-category > .categories {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .category {
-  height: 150px;
-  width: 100px;
+  min-height: 150px;
+  width: 100%;
+  display: flex;
+  flex: 0 1 calc(33.333% - 50px);
+  align-items: center;
+  justify-content: center;
+  margin-block: 5px;
 }
 
 .category > article > button {
@@ -43,6 +49,7 @@ main {
 }
 
 .category > article > p {
+  max-height: 20px;
   text-align: center;
   margin-top: 5px;
 }

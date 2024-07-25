@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { catchError, Observable, of, Subscription, tap } from 'rxjs';
 import { UserService } from '../../shared/services/user.service';
@@ -7,6 +7,8 @@ import { environment } from '../../../../../environments/environment.developpmen
 import { UserInfo } from '../../models/user-info.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { ImageService } from '../../../shared-components/services/image.service';
+import { ConfirmModalComponent } from '../../../shared-components/components/confirm-modal/confirm-modal.component';
+import { ConfirmModalService } from '../../../shared-components/services/confirm-modal.service';
 
 @Component({
   selector: 'app-setting-profile',
@@ -14,9 +16,12 @@ import { ImageService } from '../../../shared-components/services/image.service'
   styleUrls: ['./setting-profile.component.css'],
 })
 export class SettingProfileComponent implements OnInit {
+  @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
+
   private userService = inject(UserService);
   private fb = inject(FormBuilder);
   private toastService = inject(ToastService);
+  private confirmModalService = inject(ConfirmModalService);
   public imageService = inject(ImageService);
 
   private profileSubscription$: Subscription | null = null;
@@ -30,10 +35,11 @@ export class SettingProfileComponent implements OnInit {
   ngOnInit(): void {
     this.userService.initialize();
 
-      this.profile$ = this.userService.getUserProfile$();
-      
-      this.profileSubscription$ = this.profile$.subscribe((profile) => {
+    this.profile$ = this.userService.getUserProfile$();
+
+    this.profileSubscription$ = this.profile$.subscribe((profile) => {
       if (profile) {
+        this.picture = profile.picture,
         this.formGroup.patchValue({
           firstName: profile.firstName,
           lastName: profile.lastName,
@@ -43,7 +49,7 @@ export class SettingProfileComponent implements OnInit {
         });
       }
     });
-    
+
     this.avatars$ = this.userService.getAvatars$();
 
     this.formGroup = this.fb.group({
@@ -70,7 +76,7 @@ export class SettingProfileComponent implements OnInit {
       ]),
     });
   }
-  
+
   getFormControl(name: string): FormControl {
     return assertFormControl(this.formGroup.get(name), name);
   }
@@ -79,24 +85,21 @@ export class SettingProfileComponent implements OnInit {
     this.picture = avatar;
   }
 
-  private validateAvatar(): boolean {
-    if (!this.picture) {
-      this.toastService.error('Veuillez sélectionner un avatar.');
-      return false;
-    }
-    return true;
+  ngAfterViewInit(): void {
+    this.confirmModalService.setModalComponent(this.confirmModal);
   }
-  
-  onSubmit(): void {
-    if (this.formGroup.invalid || !this.validateAvatar()) {
-      Object.keys(this.formGroup.controls).forEach((key) => {
+
+  handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
+    if (response.action === 'save') {
+
+      if (this.formGroup.invalid) {
+        Object.keys(this.formGroup.controls).forEach((key) => {
         const control = this.formGroup.get(key);
         control?.markAsTouched();
       });
       return;
     }
-  
-
+    
     const userInfo: UserInfo = {
       firstName: this.formGroup.get('firstName')?.value,
       lastName: this.formGroup.get('lastName')?.value,
@@ -105,24 +108,31 @@ export class SettingProfileComponent implements OnInit {
       city: this.formGroup.get('city')?.value,
       zipCode: this.formGroup.get('zipCode')?.value,
     };
-
-    this.userService.putUserProfile$(userInfo).pipe(
-      catchError((error) => {
-        this.toastService.error('Erreur lors de la modification de votre compte.');
-        console.error('Error updating user profile', error);
-        return of(null);
-      })
-    ).subscribe((response) => {
-      if (response) {
-        this.toastService.success('Vos données sont bien enregistrées.');
-      }
-    });
+    
+    if (response.confirmed) {
+      this.userService.putUserProfile$(userInfo).pipe(
+        catchError((error) => {
+          this.toastService.error('Erreur lors de la modification de votre compte.');
+          console.error('Error updating user profile', error);
+          return of(null);
+        })
+      ).subscribe((response) => {
+        if (response) {
+          this.toastService.success('Vos données sont bien enregistrées.');
+          this.userService.upToDateProfile(userInfo);
+        }
+      });
+    }
   }
-  
+  }
+
+  onSubmit(): void {
+    this.confirmModalService.save();
+  }
+
   ngOnDestroy(): void {
     if (this.profileSubscription$) {
       this.profileSubscription$.unsubscribe();
     }
   }
-
 }

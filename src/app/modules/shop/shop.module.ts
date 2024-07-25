@@ -11,6 +11,7 @@ import { ListComponent } from '../shared-components/components/list/list.compone
 import { TotalComponent } from '../shared-components/components/total/total.component';
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
 import { FullDateFormatPipe } from '../shared-components/pipes/full-date-format.pipe';
+import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FullDateFormatPipe } from '../shared-components/pipes/full-date-format.
     ListComponent,
     TotalComponent,
     SubmitBtnComponent,
-    FullDateFormatPipe
+    FullDateFormatPipe,
+    ConfirmModalComponent
 ]
 })
 export class ShopModule { }

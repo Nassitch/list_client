@@ -40,4 +40,6 @@
     <div class="submit-btn">
         <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" />
     </div>
+
+    <app-confirm-modal (response)="handleConfirmSubmission($event)" />
 </main>

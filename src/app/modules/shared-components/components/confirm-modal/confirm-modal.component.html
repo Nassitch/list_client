@@ -1,0 +1,36 @@
+@if (visibility) {
+    @if (action === 'save') {
+        <section>
+            <div class="modal-window" @modalAnimation>
+                <div class="confirm-title">
+                    <h2>Confirmation de la sauvegarde</h2>
+                </div>
+                <div class="confirm-description">
+                    <img src="../../../../../assets/icons/save-modal.svg" alt="confirmation" />
+                    <p>Etes-vous sûr de procéder à la sauvegarde ?</p>
+                </div>
+                <div class="action-btn">
+                    <button class="cancel-modal" (click)="onCancel()">Non</button>
+                    <button class="confirm-modal" (click)="onConfirm()">Oui</button>
+                </div>
+            </div>
+        </section>
+    }
+    @if (action === 'delete') {
+        <section>
+            <div class="modal-window" @modalAnimation>
+                <div class="confirm-title">
+                    <h2>Confirmation de la suppression</h2>
+                </div>
+                <div class="confirm-description">
+                    <img src="../../../../../assets/icons/delete-modal.svg" alt="suppression" />
+                    <p>Etes-vous sûr de procéder à la suppression ?</p>
+                </div>
+                <div class="action-btn">
+                    <button class="cancel-modal" (click)="onCancel()">Non</button>
+                    <button class="confirm-modal" (click)="onConfirm()">Oui</button>
+                </div>
+            </div>
+        </section>
+    }
+}

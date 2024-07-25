@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   inject,
@@ -11,20 +12,26 @@ import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { ImageService } from '../../../shared-components/services/image.service';
+import { ConfirmModalComponent } from '../../../shared-components/components/confirm-modal/confirm-modal.component';
+import { ConfirmModalService } from '../../../shared-components/services/confirm-modal.service';
 
 @Component({
   selector: 'app-category-manager',
   templateUrl: './category-manager.component.html',
   styleUrl: './category-manager.component.css',
 })
-export class CategoryManagerComponent implements OnInit, OnDestroy {
+export class CategoryManagerComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   @ViewChild('inputField') inputField!: ElementRef;
+  @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
   private refreshCategory$ = new BehaviorSubject<void>(undefined);
 
   private toastService = inject(ToastService);
-  public imageService = inject(ImageService);
+  private confirmModalService = inject(ConfirmModalService);
   protected categoryService = inject(CategoryService);
+  public imageService = inject(ImageService);
 
   categoryList$!: Observable<Category[]>;
 
@@ -35,6 +42,7 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
   edit: boolean = false;
   activeCategory?: number;
   categoryContent: string = 'category';
+  idToDelete?: number;
   name: string = '';
   picture!: File;
   picturePath!: string;
@@ -71,75 +79,88 @@ export class CategoryManagerComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDelete(id: number): void {
-    this.deleteSubscription$ = this.categoryService
-      .deleteCategory$(id)
-      .subscribe({
-        next: () => {
-          this.toastService.success('Panier supprimé avec Succès'),
-            this.refreshCategory$.next();
-        },
-        error: (error) =>
-          this.toastService.error("Une erreur s'est produite lors de la suppression"),
-      });
+  ngAfterViewInit(): void {
+    this.confirmModalService.setModalComponent(this.confirmModal);
   }
 
-  onSubmit(): void {
-    if (this.name) {
-      const formData = new FormData();
-      formData.append('file', this.picture);
+  handleConfirmSubmission(response: {
+    confirmed: boolean;
+    action: 'save' | 'delete';
+  }): void {
+    if (response.action === 'save') {
+      if (response.confirmed) {
+        if (this.name) {
+          const formData = new FormData();
+          formData.append('file', this.picture);
 
-      if (this.edit) {
-        if (this.activeCategory !== undefined) {
-          if (this.picture) {
-            this.editSubscription$ = this.imageService
-              .addImage$(formData, 'category')
+          if (this.edit) {
+            if (this.activeCategory !== undefined) {
+              if (this.picture) {
+                this.editSubscription$ = this.imageService.addImage$(formData, 'category')
+                  .pipe(
+                    switchMap((picture) => this.categoryService.editCategory$(this.name, picture.file, this.activeCategory!)
+                    )
+                  )
+                  .subscribe({
+                    next: () => {
+                      this.toastService.success('Catégorie modifiée avec succès.');
+                      this.refreshCategory$.next();
+                    },
+                    error: (error) =>
+                      this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
+                  });
+              } else {
+                this.editSubscription$ = this.categoryService.editCategory$(this.name, this.picturePath, this.activeCategory!)
+                  .subscribe({
+                    next: () => {
+                      this.toastService.success('Catégorie modifiée avec succès.');
+                      this.refreshCategory$.next();
+                    },
+                    error: (error) => this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
+                  });
+              }
+            }
+          } else {
+            this.postSubscription$ = this.imageService.addImage$(formData, 'category')
               .pipe(
                 switchMap((picture) =>
-                  this.categoryService.editCategory$(this.name, picture.file, this.activeCategory!)
+                  this.categoryService.addCategory$(this.name, picture.file)
                 )
               )
               .subscribe({
                 next: () => {
-                  this.toastService.success('Catégorie modifiée avec succès.');
+                  this.toastService.success('Catégorie ajoutée avec succès.');
                   this.refreshCategory$.next();
                 },
-                error: (error) =>
-                  this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
-              });
-          } else {
-            this.editSubscription$ = this.categoryService
-              .editCategory$(this.name, this.picturePath, this.activeCategory!)
-              .subscribe({
-                next: () => {
-                  this.toastService.success('Catégorie modifiée avec succès.');
-                  this.refreshCategory$.next();
-                },
-                error: (error) =>
-                  this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
+                error: (error) => this.toastService.error("Une erreur s'est produite lors de l'ajout de la catégorie."),
               });
           }
+        } else {
+          this.toastService.error('Veuillez remplir les champs.');
         }
-      } else {
-        this.postSubscription$ = this.imageService
-          .addImage$(formData, 'category')
-          .pipe(
-            switchMap((picture) =>
-              this.categoryService.addCategory$(this.name, picture.file)
-            )
-          )
+      }
+    } else if (response.action === 'delete') {
+      if (response.confirmed) {
+        this.deleteSubscription$ = this.categoryService
+          .deleteCategory$(this.idToDelete!)
           .subscribe({
             next: () => {
-              this.toastService.success('Catégorie ajoutée avec succès.');
-              this.refreshCategory$.next();
+              this.toastService.success('Panier supprimé avec Succès'),
+                this.refreshCategory$.next();
             },
-            error: (error) =>
-              this.toastService.error("Une erreur s'est produite lors de l'ajout de la catégorie."),
+            error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression"),
           });
       }
-    } else {
-      this.toastService.error('Veuillez remplir les champs.');
     }
+  }
+
+  onDelete(id: number): void {
+    this.confirmModalService.delete();
+    this.idToDelete = id;
+  }
+
+  onSubmit(): void {
+    this.confirmModalService.save();
   }
 
   ngOnDestroy(): void {

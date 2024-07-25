@@ -17,6 +17,7 @@ import { LastLogComponent } from './modules/shared-components/components/last-lo
 import { HowItWorksPageComponent } from './components/how-it-works-page/how-it-works-page.component';
 import { HowItWorksCardComponent } from './modules/shared-components/components/how-it-works-card/how-it-works-card.component';
 import { TechnologieCardComponent } from './modules/shared-components/components/technologie-card/technologie-card.component';
+import { ConfirmModalComponent } from './modules/shared-components/components/confirm-modal/confirm-modal.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { TechnologieCardComponent } from './modules/shared-components/components
     LastLogComponent,
     DateFormatPipe,
     HowItWorksCardComponent,
-    TechnologieCardComponent
+    TechnologieCardComponent,
+    ConfirmModalComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

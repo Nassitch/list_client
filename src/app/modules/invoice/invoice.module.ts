@@ -6,6 +6,7 @@ import { InvoiceComponent } from './components/invoice/invoice.component';
 import { CardComponent } from '../shared-components/components/card/card.component';
 import { FormsModule } from '@angular/forms';
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
+import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SubmitBtnComponent } from '../shared-components/components/submit-btn/s
     InvoiceRoutingModule,
     FormsModule,
     CardComponent,
-    SubmitBtnComponent
+    SubmitBtnComponent,
+    ConfirmModalComponent
   ]
 })
 export class InvoiceModule { }

@@ -52,14 +52,3 @@
   overflow: auto;
 }
 
-.copyright {
-    position: absolute;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-    bottom: 30px;
-    font-size: 16px;
-    color: var(--main-color);
-}
