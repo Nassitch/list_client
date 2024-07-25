@@ -58,7 +58,7 @@ export class BasketComponent implements OnInit, OnDestroy, AfterViewInit {
     this.confirmModalService.setModalComponent(this.confirmModal);
   }
   
-  handleConfirmSubmission(response: boolean): void {
+  handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
     if (response) {
     const allSelectedItems = this.getAllSelectedItems();
     if (this.edit) {

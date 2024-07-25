@@ -89,15 +89,17 @@ export class SettingProfileComponent implements OnInit {
     this.confirmModalService.setModalComponent(this.confirmModal);
   }
 
-  handleConfirmSubmission(response: boolean): void {
-    if (this.formGroup.invalid) {
-      Object.keys(this.formGroup.controls).forEach((key) => {
+  handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
+    if (response.action === 'save') {
+
+      if (this.formGroup.invalid) {
+        Object.keys(this.formGroup.controls).forEach((key) => {
         const control = this.formGroup.get(key);
         control?.markAsTouched();
       });
       return;
     }
-
+    
     const userInfo: UserInfo = {
       firstName: this.formGroup.get('firstName')?.value,
       lastName: this.formGroup.get('lastName')?.value,
@@ -106,7 +108,7 @@ export class SettingProfileComponent implements OnInit {
       city: this.formGroup.get('city')?.value,
       zipCode: this.formGroup.get('zipCode')?.value,
     };
-
+    
     if (response) {
       this.userService.putUserProfile$(userInfo).pipe(
         catchError((error) => {
@@ -121,6 +123,7 @@ export class SettingProfileComponent implements OnInit {
         }
       });
     }
+  }
   }
 
   onSubmit(): void {

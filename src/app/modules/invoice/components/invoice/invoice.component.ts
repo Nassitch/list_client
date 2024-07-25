@@ -36,6 +36,7 @@ export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
 
   marketContent: string = "market";
   activeMarket?: number;
+  idToDeleted?: number;
   shopContent: string = "shop";
   activeShop?: number;
   editPath: string = "/shop/";
@@ -62,18 +63,14 @@ export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDelete(id: number): void {
-    this.deleteSubscription$ = this.shopService.deleteShop$(id).subscribe({
-      next: () => {
-        this.toastService.success("Panier supprimé avec Succès"),
-        this.refreshShops$.next()
-      },
-      error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression")
-    });
+    this.confirmModalService.delete();
+    this.idToDeleted = id;
   }
   
-  handleConfirmSubmission(response: boolean): void {
-    if (this.total === undefined || this.activeMarket === undefined || this.activeShop === undefined) {
-      this.toastService.error('Tous les champs ne sont pas remplis.');
+  handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
+    if (response.action === 'save') {
+      if (this.total === undefined || this.activeMarket === undefined || this.activeShop === undefined) {
+        this.toastService.error('Tous les champs ne sont pas remplis.');
     } else {
       if (response) {
         this.postSubscription$ = this.invoiceService.addInvoice$(this.total, this.activeMarket, this.activeShop).subscribe({
@@ -87,7 +84,16 @@ export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
         });
       }
     }
+  } else if (response.action === 'delete') {
+    this.deleteSubscription$ = this.shopService.deleteShop$(this.idToDeleted!).subscribe({
+      next: () => {
+        this.toastService.success("Panier supprimé avec Succès"),
+        this.refreshShops$.next()
+      },
+      error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression")
+    });
   }
+}
 
   onSubmit(): void {
     this.confirmModalService.save();

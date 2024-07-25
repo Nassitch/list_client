@@ -29,32 +29,35 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class ConfirmModalComponent {
 
-  @Output() response = new EventEmitter<boolean>();
+  @Output() response = new EventEmitter<{ confirmed: boolean, action: 'save' | 'delete' }>();
 
   visibility: boolean = false;
+  action!: 'save' | 'delete';
   save: boolean = false;
   delete: boolean = false;
 
   public saveAction(): void {
     this.visibility = true;
-    this.save = true;
-    this.delete = false;
+    // this.save = true;
+    // this.delete = false;
+    this.action = 'save';
   }
   
   public deleteAction(): void {
     this.visibility = true;
-    this.save = false;
-    this.delete = true;
+    // this.save = false;
+    // this.delete = true;
+    this.action = 'delete';
   }
   
   protected onConfirm(): void {
     this.visibility = false;
-    this.response.emit(true);
+    this.response.emit({ confirmed: true, action: this.action });
   }
   
   protected onCancel(): void {
     this.visibility = false;
-    this.response.emit(false);
+    this.response.emit({ confirmed: false, action: this.action });
   }
 
 }
