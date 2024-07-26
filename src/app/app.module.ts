@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -18,6 +18,7 @@ import { HowItWorksPageComponent } from './components/how-it-works-page/how-it-w
 import { HowItWorksCardComponent } from './modules/shared-components/components/how-it-works-card/how-it-works-card.component';
 import { TechnologieCardComponent } from './modules/shared-components/components/technologie-card/technologie-card.component';
 import { ConfirmModalComponent } from './modules/shared-components/components/confirm-modal/confirm-modal.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,11 @@ import { ConfirmModalComponent } from './modules/shared-components/components/co
     DateFormatPipe,
     HowItWorksCardComponent,
     TechnologieCardComponent,
-    ConfirmModalComponent
+    ConfirmModalComponent,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
