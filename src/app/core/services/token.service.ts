@@ -11,8 +11,8 @@ import { TokenDecrypted } from '../../models/token-decrypted.interface';
   providedIn: 'root',
 })
 export class TokenService implements OnInit {
-  private _tokenDetailsSubject$: BehaviorSubject<any> =
-  new BehaviorSubject<any>([]);
+  private _tokenDetailsSubject$: BehaviorSubject<TokenDecrypted | undefined> =
+  new BehaviorSubject<TokenDecrypted | undefined>(undefined);
   
   private cookieService = inject(CookieService);
   private toastService = inject(ToastService);
@@ -31,7 +31,7 @@ export class TokenService implements OnInit {
   getTokenFromCookiesAndDecode(): any {
     const tokenId = this.cookieService.getCookie('authToken');
     if (tokenId) {
-      const decodedToken = this._decodeToken({ token: tokenId });
+      const decodedToken: TokenDecrypted = this._decodeToken({ token: tokenId });
       if (this._isTokenExpired(decodedToken)) {
         this.toastService.error('Votre session à expirée');
         this.resetToken();
