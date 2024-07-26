@@ -74,8 +74,6 @@ export class SignupComponent implements OnInit {
         if (user) {
           this.toastService.success('Votre compte à bien été créer.');
           this.router.navigate(['/register']);
-        } else {
-          console.error('User ID is undefined');
         }
       },
       error: (error) => {

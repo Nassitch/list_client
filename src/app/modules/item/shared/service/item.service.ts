@@ -18,7 +18,6 @@ export class ItemService {
   private _PUBLIC: string = environment._PUBLIC;
   private _CATEGORY: string = environment._CATEGORY;
   private _ITEM: string = environment._ITEM;
-  private _READ_ALL: string = environment._READ_ALL;
   private _READ: string = environment._READ;
   private _CREATE: string = environment._CREATE;
   private _UPDATE: string = environment._UPDATE;

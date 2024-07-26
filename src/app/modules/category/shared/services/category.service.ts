@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../../environments/environment.developpment';
-import { BehaviorSubject, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, tap } from 'rxjs';
 import { Category } from '../../models/category.interface';
-import { StorageService } from '../../../../core/services/storage.service';
 import { CategoryRequest } from '../../models/category-request.interface';
 import { DeleteMsg } from '../../../shared-components/models/delete-msg.interface';
+import { CategoryResponse } from '../../models/category-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -42,20 +42,20 @@ export class CategoryService {
     return this.http.get<Category>(`${this._BASE_URL}${this._PUBLIC}${this._CATEGORY}${this._READ}/${id}`);
   }
 
-  addCategory$(name: string, picture: string): Observable<any> {
+  addCategory$(name: string, picture: string): Observable<CategoryResponse> {
     const category: CategoryRequest = {
       name: name,
       picture: picture,
     }
-    return this.http.post(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._CREATE}`,  category);
+    return this.http.post<CategoryResponse>(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._CREATE}`,  category);
   }
   
-  editCategory$(name: string, picture: string, id: number): Observable<any> {
+  editCategory$(name: string, picture: string, id: number): Observable<CategoryResponse> {
       const category: CategoryRequest = {
         name: name,
         picture: picture,
       }
-      return this.http.put(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._UPDATE}/${id}`, category);
+      return this.http.put<CategoryResponse>(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._UPDATE}/${id}`, category);
   }
 
   deleteCategory$(id: number): Observable<DeleteMsg> {

@@ -60,7 +60,7 @@ saveShop(categories: Category[]): void {
   this.storageService.setItem('shop', JSON.stringify(categories));
 }
 
-  addShop$(items: Item[]) {
+  addShop$(items: Item[]): Observable<any> {
     this.userService.initialize();
     const itemIds = items.map(item => item.id);
     const shopToSave = new ShopSave(itemIds, this.userService.id);

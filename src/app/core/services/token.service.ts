@@ -11,8 +11,8 @@ import { TokenDecrypted } from '../../models/token-decrypted.interface';
   providedIn: 'root',
 })
 export class TokenService implements OnInit {
-  private _tokenDetailsSubject$: BehaviorSubject<TokenDecrypted | undefined> =
-  new BehaviorSubject<TokenDecrypted | undefined>(undefined);
+  private _tokenDetailsSubject$: BehaviorSubject<TokenDecrypted | null> =
+  new BehaviorSubject<TokenDecrypted | null>(null);
   
   private cookieService = inject(CookieService);
   private toastService = inject(ToastService);

@@ -10,6 +10,10 @@ import { Router } from '@angular/router';
 import { CookieService } from '../../../../core/services/cookie.service';
 import { TokenService } from '../../../../core/services/token.service';
 import { inject, Injectable, OnInit } from '@angular/core';
+import { LogResponse } from '../../models/log-response.interface';
+import { TokenDecrypted } from '../../../../models/token-decrypted.interface';
+import { LogMessageResponse } from '../../models/log-message-response.interface';
+import { SignupResponse } from '../../models/signup-response.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -36,17 +40,17 @@ export class AuthService implements OnInit {
     this.initializeCurrentUser();
   }
 
-  login$(user: AuthRequest): Observable<any> {
+  login$(user: AuthRequest): Observable<LogMessageResponse> {
     return this.http
-      .post(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
+      .post<LogResponse>(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
       .pipe(
-        tap((response: any) => {
+        tap((response: LogResponse) => {
           this.cookieService.setCookie('authToken', response.token, 0.1);
 
-          const decodedToken = this.tokenService.getTokenFromCookiesAndDecode();
+          const decodedToken: TokenDecrypted = this.tokenService.getTokenFromCookiesAndDecode();
           if (decodedToken) {
             const userInfo: UserToken = {
-              userId: decodedToken.userId,
+              userId: decodedToken.userId!,
               loginId: decodedToken.loginId,
               role: decodedToken.role,
               picture: decodedToken.picture,
@@ -61,7 +65,6 @@ export class AuthService implements OnInit {
           message: `Bienvenue `,
         })),
         catchError((error: HttpErrorResponse) => {
-          console.error('Erreur lors de la connexion:', error);
           return of({ success: false, message: 'Identifiants invalides' });
         })
       );
@@ -76,7 +79,7 @@ export class AuthService implements OnInit {
 
   signup$(newUser: AuthRequest): Observable<any> {
     this.logInfoUser.next(newUser);
-      return this.http.post<{ id: number, message: string }>(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
+      return this.http.post<SignupResponse>(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
         .pipe(
           tap(response => {
             this.currentUserId.next(response.id);
@@ -86,8 +89,7 @@ export class AuthService implements OnInit {
             message: response.message,
             id: response.id
           })),
-          catchError((error: HttpErrorResponse) => {
-            console.error("Erreur lors de l'inscription:", error);
+          catchError(() => {
             return of({
               success: false,
               message: "Erreur lors de l'inscription",
@@ -103,8 +105,7 @@ export class AuthService implements OnInit {
     ).pipe(
       switchMap((user: any) =>
         this.login$(this.logInfoUser.getValue()).pipe(
-          catchError((authError) => {
-            console.error('Error while logging in:', authError);
+          catchError(() => {
             return of(null);
           }),
           map(() => ({
@@ -113,8 +114,7 @@ export class AuthService implements OnInit {
           }))
         )
       ),
-      catchError((error: HttpErrorResponse) => {
-        console.error("Erreur lors de l'inscription:", error);
+      catchError(() => {
         return of({
           success: false,
           message: "Erreur lors de l'inscription",
@@ -124,10 +124,10 @@ export class AuthService implements OnInit {
   }
 
   private initializeCurrentUser(): void {
-    const decodedToken = this.tokenService.getTokenFromCookiesAndDecode();
+    const decodedToken: TokenDecrypted = this.tokenService.getTokenFromCookiesAndDecode();
     if (decodedToken) {
       const userInfo: UserToken = {
-        userId: decodedToken.userId,
+        userId: decodedToken.userId!,
         loginId: decodedToken.loginId,
         role: decodedToken.role,
         picture: decodedToken.picture,
