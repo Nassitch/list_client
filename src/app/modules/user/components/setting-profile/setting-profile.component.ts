@@ -111,9 +111,8 @@ export class SettingProfileComponent implements OnInit {
     
     if (response.confirmed) {
       this.userService.putUserProfile$(userInfo).pipe(
-        catchError((error) => {
+        catchError(() => {
           this.toastService.error('Erreur lors de la modification de votre compte.');
-          console.error('Error updating user profile', error);
           return of(null);
         })
       ).subscribe((response) => {

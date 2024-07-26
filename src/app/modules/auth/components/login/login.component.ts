@@ -62,13 +62,10 @@ export class LoginComponent implements OnInit {
             } else {
               this.router.navigate(['/register']);
             }
-          } else {
-            console.error('User ID is undefined', currentUser);
           }
         });
       } else {
         this.toastService.error(result.message);
-        console.error(result.message);
       }
     });
   };

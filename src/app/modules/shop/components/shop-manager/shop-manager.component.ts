@@ -80,7 +80,6 @@ export class ShopManagerComponent implements OnInit, OnDestroy, AfterViewInit {
   onDelete(id: number): void {
     this.confirmModalService.delete();
     this.idToDeleted = id;
-    console.log(id);
   }
 
   ngOnDestroy(): void {

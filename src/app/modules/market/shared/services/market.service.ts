@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Market } from '../../models/market.interface';
 import { HttpClient } from '@angular/common/http';
 import { DeleteMsg } from '../../../shared-components/models/delete-msg.interface';
+import { MarketResponse } from '../../models/market-response.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,6 @@ export class MarketService {
   private _ADMIN: string = environment._ADMIN;
   private _PUBLIC: string = environment._PUBLIC;
   private _MARKET: string = environment._MARKET;
-  private _UPLOAD: string = environment._UPLOAD;
-  private _READ: string = environment._READ;
   private _READ_ALL: string = environment._READ_ALL;
   private _CREATE: string = environment._CREATE;
   private _UPDATE: string = environment._UPDATE;
@@ -30,24 +29,24 @@ export class MarketService {
     return this.http.get<Market[]>(`${this._BASE_URL}${this._PUBLIC}${this._MARKET}${this._READ_ALL}`);
   }
 
-  addMarket$(name: string, size: string, place: string, picture: string): Observable<any> {
+  addMarket$(name: string, size: string, place: string, picture: string): Observable<MarketResponse> {
     const market = {
       name: name,
       size: size,
       place: place,
       picture: picture,
     }
-    return this.http.post(`${this._BASE_URL}${this._ADMIN}${this._MARKET}${this._CREATE}`, market);
+    return this.http.post<MarketResponse>(`${this._BASE_URL}${this._ADMIN}${this._MARKET}${this._CREATE}`, market);
   }
 
-  editMarket$(name: string, size: string, place: string, picture: string, id: number): Observable<any> {
+  editMarket$(name: string, size: string, place: string, picture: string, id: number): Observable<MarketResponse> {
     const market = {
       name: name,
       size: size,
       place: place,
       picture: picture,
     }
-    return this.http.put(`${this._BASE_URL}${this._ADMIN}${this._MARKET}${this._UPDATE}/${id}`, market);
+    return this.http.put<MarketResponse>(`${this._BASE_URL}${this._ADMIN}${this._MARKET}${this._UPDATE}/${id}`, market);
   }
 
   deleteMarket$(id: number): Observable<DeleteMsg> {

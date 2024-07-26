@@ -99,7 +99,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
           }
         },
         error: (error) => {
-          console.error("Erreur lors de l'inscription:", error);
           this.toastService.error("Erreur lors de l'inscription");
         },
       });
