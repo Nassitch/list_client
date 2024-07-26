@@ -11,20 +11,15 @@ import { DeleteMsg } from '../../../shared-components/models/delete-msg.interfac
   providedIn: 'root'
 })
 export class AdminService {
-
   public currentUserRole$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
 
   private http = inject(HttpClient);
   private tokenService = inject(TokenService);
 
   private _BASE_URL: string = environment._BASE_URL;
-  private _ADMIN: string = environment._ADMIN;
-  private _PUBLIC: string = environment._PUBLIC;
   private _USER: string = environment._USER;
-  private _UPLOAD: string = environment._UPLOAD;
   private _THIS_USER: string = environment._THIS_USER;
   private _READ: string = environment._READ;
-  private _READ_ALL: string = environment._READ_ALL;
   private _UPDATE: string = environment._UPDATE;
   private _DELETE: string = environment._DELETE;
 
