@@ -19,6 +19,11 @@
                     />
                 }
             }
+            @else {
+                <div class="loading">
+                  <app-loader />
+                </div>
+              }
         }
         @else {
         @if (shopList$ | async; as shopList) {
@@ -33,6 +38,11 @@
                     />
                 }
             }
+            @else {
+                <div class="loading">
+                  <app-loader />
+                </div>
+              }
     }
     
     <app-total [items]="this.getAllSelectedItems()" />

@@ -7,6 +7,7 @@ import { InputComponent } from '../shared-components/components/input/input.comp
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
 import { DateFormatPipe } from '../shared-components/pipes/date-format.pipe';
 import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
+import { LoaderComponent } from '../shared-components/components/loader/loader.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ConfirmModalComponent } from '../shared-components/components/confirm-m
   imports: [
     CommonModule,
     UserRoutingModule,
+    LoaderComponent,
     InputComponent,
     SubmitBtnComponent,
     DateFormatPipe,

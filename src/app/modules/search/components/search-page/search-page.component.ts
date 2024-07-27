@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { finalize, Observable, tap } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
 import { CategoryService } from '../../../category/shared/services/category.service';
 import { Router } from '@angular/router';
@@ -17,8 +17,14 @@ export class SearchPageComponent implements OnInit {
 
   categories$!: Observable<Category[]>;
   input: string = '';
+  isLoading: boolean = true;
 
   ngOnInit(): void {
+    this.loadCategories();
+  }
+
+  loadCategories(): void {
+    this.isLoading = true;
     this.categories$ = this.categoryService.getAllCategories$();
   }
 
