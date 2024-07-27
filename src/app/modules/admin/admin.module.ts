@@ -14,6 +14,7 @@ import { ItemManagerComponent } from './components/item-manager/item-manager.com
 import { UserPanelComponent } from './components/user-panel/user-panel.component';
 import { LastLogComponent } from '../shared-components/components/last-log/last-log.component';
 import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
+import { LoaderComponent } from '../shared-components/components/loader/loader.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { ConfirmModalComponent } from '../shared-components/components/confirm-m
     CommonModule,
     AdminRoutingModule,
     LastLogComponent,
+    LoaderComponent,
     NewCardComponent,
     CardComponent,
     InputComponent,

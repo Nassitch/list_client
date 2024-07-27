@@ -12,6 +12,7 @@ import { TotalComponent } from '../shared-components/components/total/total.comp
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
 import { FullDateFormatPipe } from '../shared-components/pipes/full-date-format.pipe';
 import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
+import { LoaderComponent } from '../shared-components/components/loader/loader.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ConfirmModalComponent } from '../shared-components/components/confirm-m
     ShopRoutingModule,
     LandingMsgComponent,
     NewCardComponent,
+    LoaderComponent,
     CardComponent,
     ListComponent,
     TotalComponent,

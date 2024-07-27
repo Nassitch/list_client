@@ -33,6 +33,10 @@
                     (cardSelected)="onCardClick(shop.id)"
                 />
             }
+        } @else {
+            <div class="loading">
+              <app-loader />
+            </div>
         }
     </div>
   </section>

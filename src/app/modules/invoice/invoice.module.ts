@@ -7,6 +7,7 @@ import { CardComponent } from '../shared-components/components/card/card.compone
 import { FormsModule } from '@angular/forms';
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
 import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
+import { LoaderComponent } from '../shared-components/components/loader/loader.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { ConfirmModalComponent } from '../shared-components/components/confirm-m
     CommonModule,
     InvoiceRoutingModule,
     FormsModule,
+    LoaderComponent,
     CardComponent,
     SubmitBtnComponent,
     ConfirmModalComponent
