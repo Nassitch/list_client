@@ -33,6 +33,7 @@
   --background-color: #eee;
   /* Couleurs inputs. */
   --background-input: rgba(242, 241, 238, 0.6);
+  --app-color: #fdebd7;
   /* Couleurs de messages d'alerte */
   --succes-msg: #355233;
   --succes-background: #d4eed9;
@@ -59,7 +60,8 @@
 
 main {
   position: relative;
-  height: 110vh;
+  /* height: 150vh; */
+  height: 100%;
   width: 100vw;
   padding: 30px 25px 40px 25px;
   background-color: var(--background-color);

@@ -19,6 +19,7 @@ import { HowItWorksCardComponent } from './modules/shared-components/components/
 import { TechnologieCardComponent } from './modules/shared-components/components/technologie-card/technologie-card.component';
 import { ConfirmModalComponent } from './modules/shared-components/components/confirm-modal/confirm-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { LineChartComponent } from './modules/shared-components/components/line-chart/line-chart.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     DateFormatPipe,
     HowItWorksCardComponent,
     TechnologieCardComponent,
+    LineChartComponent,
     ConfirmModalComponent,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),

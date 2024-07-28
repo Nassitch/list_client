@@ -2,8 +2,10 @@
     @if (profile$ | async; as profile) {
         <app-last-log [lastLog]="profile.lastLog"  />
     }
-
+    
     <app-landing-msg [title]="this.titleLandingMsg" [description]="this.descriptionLandingMsg" />
+    
+    <app-line-chart [statOne]="'Facture'" [statTwo]="'Panier'" />
 
     <menu class="bckgrnd-clr-main">
         <article class="d-flex">
@@ -70,4 +72,5 @@
     </menu>
 
     <p class="copyright">&copy;2024 · 3A1D. Tous drois réservés.</p>
+
 </main>
