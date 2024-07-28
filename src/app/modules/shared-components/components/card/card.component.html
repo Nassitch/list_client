@@ -5,12 +5,12 @@
     <article>
       <section class="high-section">
         @if (imgContent) {
-          <img [src]="imgContent" />
+          <img [src]="imgContent" [alt]="title" />
         }
         @if (count) {
           <p>{{ count }}</p>
         }
-        <img [src]="isActive ? checked : unChecked" />
+        <img [src]="isActive ? checked : unChecked" alt="Bouton validé" />
       </section>
       <section class="middle-section">
         <h4>{{ title }}</h4>
@@ -27,19 +27,19 @@
     <article>
       <section class="high-section">
         @if (imgContent) {
-          <img [src]="imgContent" />
+          <img [src]="imgContent" [alt]="title" />
         }
         @if (count) {
           <p>{{ count }}</p>
         }
-        <img [src]="isActive ? checked : unChecked" />
+        <img [src]="isActive ? checked : unChecked" alt="Bouton validé" />
       </section>
       <section class="middle-section">
         @if (date) {
           <p>{{ date | dateFormat }}
             @if (isCompleted) {
               <br/>
-              <span class="is-checked"><img src="../../../../../assets/icons/is-check.svg" />Validé</span>
+              <span class="is-checked"><img src="../../../../../assets/icons/is-check.svg" alt="validé" />Validé</span>
             }
           </p>
         }
@@ -49,11 +49,11 @@
       </section>
       <section class="low-section">
         <button (click)="edit(id)">
-          <img src="../../../../../assets/icons/pen.svg" />
+          <img src="../../../../../assets/icons/pen.svg" alt="Modifier" />
         </button>
         <div></div>
         <button (click)="delete()">
-          <img src="../../../../../assets/icons/bin.svg" />
+          <img src="../../../../../assets/icons/bin.svg" alt="Supprimer" />
         </button>
       </section>
     </article>

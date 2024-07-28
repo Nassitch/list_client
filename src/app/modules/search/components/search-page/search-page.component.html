@@ -1,11 +1,11 @@
 <main>
   <div class="search-bar">
     <button class="ghost-btn" (click)="navigateTo('/product/', input)">
-      <img src="../../../../../assets/icons/search-bar.svg" />
+      <img src="../../../../../assets/icons/search-bar.svg" alt="Rechercher" />
     </button>
     <input [(ngModel)]="input" name="input" />
     <button class="ghost-btn" (click)="reset()">
-      <img src="../../../../../assets/icons/close-bar.svg" />
+      <img src="../../../../../assets/icons/close-bar.svg" alt="Restaurer" />
     </button>
   </div>
 
@@ -16,11 +16,7 @@
           <div class="category">
             <article>
               <button (click)="navigateTo('/search/category/', category.id)">
-                <img
-                  [src]="
-                    this.imageService._BASE_URL_CATEGORY_IMG + category.picture
-                  "
-                />
+                <img [src]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture" [alt]="'Categorie' + category.name" />
               </button>
               <p>{{ category.name }}</p>
             </article>

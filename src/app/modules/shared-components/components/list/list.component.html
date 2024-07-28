@@ -7,7 +7,7 @@
         </div>
         <div class="list-unroll">
             <button (click)="toggleList()">
-                <img [src]="isUnroll ? unRoll : roll" />
+                <img [src]="isUnroll ? unRoll : roll" alt="Rouler/Dérouler" />
             </button>
         </div>
     </article>
@@ -15,7 +15,7 @@
         @for(item of items; track $index) {
             <button class="list-items" (click)="toggleSelection(item.id)">
                 <p>{{ item.name }}</p>
-                <img [src]="isSelected(item.id) ? check : unCheck" />
+                <img [src]="isSelected(item.id) ? check : unCheck" alt="Bouton validé" />
             </button>
         }
     }
