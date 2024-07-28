@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "@angular/service-worker": "^17.0.0",
+    "chart.js": "^4.4.3",
     "jwt-decode": "^4.0.0",
     "rphm": "^0.4.4",
     "rxjs": "~7.8.0",

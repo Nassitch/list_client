@@ -11,7 +11,7 @@
                             <img [src]="this.imageService._BASE_URL_USER_IMG + user.picture" [alt]="user.firstName" />
                         </div>
                         <div class="menu-txt">
-                            <h3>{{ user.firstName }} {{ user.lastName }}</h3>
+                            <h3>{{ user.firstName | titlecase }} {{ user.lastName | titlecase }}</h3>
                             <p>loginId = {{ user.loginId }} | userId = {{ user.id }}</p>
                         </div>
                         <div class="see-user-btn">
