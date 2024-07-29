@@ -2,7 +2,7 @@
 
   <div class="title-card">
     <h5>Marchés</h5>
-    <img src="../../../../../assets/icons/market.svg" />
+    <img src="../../../../../assets/icons/market.svg" alt="Marchés" />
   </div>
   <div class="card-list">
       @if (marketList$ | async; as marketList) {
@@ -28,9 +28,9 @@
     
     <div class="title-card">
         <h5>Paniers</h5>
-        <img src="../../../../../assets/icons/shop.svg" />
+        <img src="../../../../../assets/icons/shop.svg" alt="Paniers" />
     </div>
-    <div class="card-list">
+    <div class="card-list last-card-first">
         @if (shopList$ | async; as shopList) {
             @for (shop of shopList; track $index) {
                 <app-card

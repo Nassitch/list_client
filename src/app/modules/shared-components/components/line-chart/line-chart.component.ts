@@ -32,7 +32,6 @@ export class LineChartComponent implements OnInit {
     const canvas = this.lineChart.nativeElement as HTMLCanvasElement;
     const ctx = canvas.getContext('2d');
 
-    // Create gradients
     const gradientBlack = ctx!.createLinearGradient(0, 0, 0, canvas.height);
     gradientBlack.addColorStop(0, 'rgba(0, 0, 0, 0.3)');
     gradientBlack.addColorStop(1, 'rgba(0, 0, 0, 0)');
@@ -44,7 +43,7 @@ export class LineChartComponent implements OnInit {
     const chartConfig: ChartConfiguration = {
       type: 'line',
       data: {
-        labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+        labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',],
         datasets: [
           {
             data: [65, 59, 80, 81, 110, 54, 55, 87, 97, 102, 120, 155],
@@ -57,7 +56,7 @@ export class LineChartComponent implements OnInit {
             pointRadius: 0,
             pointHoverRadius: 0,
             pointHitRadius: 20,
-            pointBackgroundColor: 'rgb(0, 0, 0)'
+            pointBackgroundColor: 'rgb(0, 0, 0)',
           },
           {
             data: [55, 49, 70, 71, 100, 44, 45, 77, 107, 120, 122, 177],
@@ -70,30 +69,30 @@ export class LineChartComponent implements OnInit {
             pointRadius: 0,
             pointHoverRadius: 0,
             pointHitRadius: 20,
-            pointBackgroundColor: 'rgb(0, 0, 0)'
-          }
-        ]
+            pointBackgroundColor: 'rgb(0, 0, 0)',
+          },
+        ],
       },
       options: {
         responsive: true,
         plugins: {
           legend: {
-            display: false
+            display: false,
           },
           tooltip: {
             callbacks: {
               label: (context) => `Label: ${context.label}`,
-              afterLabel: (context) => `Value: ${context.raw}`
-            }
-          }
+              afterLabel: (context) => `Value: ${context.raw}`,
+            },
+          },
         },
         scales: {
           x: {
-            display: false
+            display: false,
           },
           y: {
-            display: false
-          }
+            display: false,
+          },
         },
         onClick: (event: ChartEvent, elements: ActiveElement[], chart: Chart) => {
           if (elements.length > 0) {
@@ -112,19 +111,20 @@ export class LineChartComponent implements OnInit {
 
             const meta = chart.getDatasetMeta(datasetIndex).data[index];
             meta.options['radius'] = meta.options['radius'] === 5 ? 0 : 5;
-            meta.options['hoverRadius'] = meta.options['hoverRadius'] === 5 ? 0 : 5;
+            meta.options['hoverRadius'] =
+              meta.options['hoverRadius'] === 5 ? 0 : 5;
             this.chart.update();
           }
-        }
-      }
+        },
+      },
     };
 
     this.chart = new Chart(this.lineChart.nativeElement, chartConfig);
   }
 
   calculateInitialSums(): void {
-    const dataValue = [65, 59, 80, 81, 110, 54, 55, 87, 97, 102, 120, 155];
-    const dataShop = [55, 49, 70, 71, 100, 44, 45, 77, 107, 120, 122, 177];
+    const dataValue: number[] = this.chart.config.data.datasets[0].data as number[];
+    const dataShop: number[] = this.chart.config.data.datasets[1].data as number[];
 
     this.value = dataValue.reduce((a, b) => a + b, 0);
     this.shop = dataShop.reduce((a, b) => a + b, 0);
