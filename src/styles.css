@@ -1,14 +1,14 @@
 @font-face {
-  font-family: '3a1d_font';
-  src: url('./assets/fonts/3a1d_font_bold.otf') format('opentype');
+  font-family: "3a1d_font";
+  src: url("./assets/fonts/3a1d_font_bold.otf") format("opentype");
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: '3a1d_font';
-  src: url('./assets/fonts/3a1d_font_medium.otf') format('opentype');
-  font-weight:normal;
+  font-family: "3a1d_font";
+  src: url("./assets/fonts/3a1d_font_medium.otf") format("opentype");
+  font-weight: normal;
   font-style: normal;
 }
 
@@ -20,12 +20,11 @@
 } */
 
 @font-face {
-  font-family: '3a1d_font';
-  src: url('./assets/fonts/3a1d_font_light.otf') format('opentype');
+  font-family: "3a1d_font";
+  src: url("./assets/fonts/3a1d_font_light.otf") format("opentype");
   font-weight: lighter;
   font-style: normal;
 }
-
 
 :root {
   --main-color: #000000;
@@ -55,7 +54,7 @@
 }
 
 * {
-  font-family: '3a1d_font';
+  font-family: "3a1d_font";
 }
 
 main {
@@ -209,6 +208,10 @@ menu > article > .see-user-btn {
   height: 160px;
   display: flex;
   overflow: auto;
+}
+
+.last-card-first {
+  flex-direction: row-reverse;
 }
 
 .submit-btn {
