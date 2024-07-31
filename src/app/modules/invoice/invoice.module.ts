@@ -8,18 +8,24 @@ import { FormsModule } from '@angular/forms';
 import { SubmitBtnComponent } from '../shared-components/components/submit-btn/submit-btn.component';
 import { ConfirmModalComponent } from '../shared-components/components/confirm-modal/confirm-modal.component';
 import { LoaderComponent } from '../shared-components/components/loader/loader.component';
+import { HistoryComponent } from './components/history/history.component';
+import { BarChartComponent } from '../shared-components/components/bar-chart/bar-chart.component';
+import { TicketComponent } from '../shared-components/components/ticket/ticket.component';
 
 
 @NgModule({
   declarations: [
-    InvoiceComponent
+    InvoiceComponent,
+    HistoryComponent
   ],
   imports: [
     CommonModule,
     InvoiceRoutingModule,
     FormsModule,
     LoaderComponent,
+    BarChartComponent,
     CardComponent,
+    TicketComponent,
     SubmitBtnComponent,
     ConfirmModalComponent
   ]

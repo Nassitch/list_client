@@ -30,8 +30,7 @@
   --main-color: #000000;
   --second-color: #fff;
   --background-color: #eee;
-  /* Couleurs inputs. */
-  --background-input: rgba(242, 241, 238, 0.6);
+  --dark-grey: #D9D9D9;
   --app-color: #fdebd7;
   /* Couleurs de messages d'alerte */
   --succes-msg: #355233;
@@ -59,8 +58,7 @@
 
 main {
   position: relative;
-  /* height: 150vh; */
-  height: 100%;
+  min-height: 100vh;
   width: 100vw;
   padding: 30px 25px 40px 25px;
   background-color: var(--background-color);
@@ -99,7 +97,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-color: red; */
 }
 
 .ghost-btn {
@@ -210,8 +207,11 @@ menu > article > .see-user-btn {
   overflow: auto;
 }
 
-.last-card-first {
-  flex-direction: row-reverse;
+.ticket-list {
+  height: 210px;
+  display: flex;
+  overflow: auto;
+  gap: 20px;
 }
 
 .submit-btn {

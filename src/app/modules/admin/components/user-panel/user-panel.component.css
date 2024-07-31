@@ -2,10 +2,10 @@
 .delete-btn {
     height: 50px;
     width: 100%;
-    color: var(--background-input);
+    color: var(--dark-grey);
     background: transparent;
     margin-block: 20px -10px;
-    border: 1px solid var(--background-input);
+    border: 1px solid var(--dark-grey);
     border-radius: 10px;
 }
 

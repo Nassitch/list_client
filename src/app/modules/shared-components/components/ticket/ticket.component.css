@@ -1,0 +1,40 @@
+section {
+  height: 200px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 20px;
+  background-color: var(--second-color);
+  border-radius: 10px;
+}
+
+section > p {
+  margin-bottom: 10px;
+}
+
+section > div {
+  display: flex;
+  justify-content: space-between;
+  max-height: 25%;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+section > div > img {
+  height: 40px;
+  width: 40px;
+}
+
+section > div > button {
+  color: var(--dark-grey);
+  font-size: 12px;
+  text-decoration: underline;
+  border: none;
+  background-color: var(--second-color);
+}
+
+section > h4 {
+  font-weight: 400;
+}
