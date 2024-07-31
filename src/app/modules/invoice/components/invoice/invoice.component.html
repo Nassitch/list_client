@@ -30,7 +30,7 @@
         <h5>Paniers</h5>
         <img src="../../../../../assets/icons/shop.svg" alt="Paniers" />
     </div>
-    <div class="card-list last-card-first">
+    <div class="card-list">
         @if (shopList$ | async; as shopList) {
             @for (shop of shopList; track $index) {
                 <app-card

@@ -1,5 +1,30 @@
 <main>
+  <section class="manager-section">
+    <h2>Historique.</h2>
+  </section>
 
-    <app-bar-chart [statOne]="'Facture'" [statTwo]="'Panier'" />
+  <app-bar-chart [statOne]="'Facture'" [statTwo]="'Panier'" />
 
+  
+  @if (invoiceList$ | async; as invoiceList) {
+      @for (year of getKeys(invoiceList); track $index) {
+          <h3 class="year">{{ year }}</h3>
+          
+          @for (month of getMonthKeys(invoiceList[year]); track $index) {
+              <h4 class="month">{{ month | titlecase }}</h4>
+              <div class="ticket-list">
+                  
+                @for (invoice of invoiceList[year][month]; track $index) {
+                    <app-ticket
+                    [id]="invoice.id"
+                    [date]="invoice.createdAt"
+                    [count]="invoice.count"
+                    [image]="imageService._BASE_URL_MARKET_IMG + invoice.picture"
+                    [total]="invoice.total"
+                    />
+                }
+            </div>
+            }
+        }
+    }
 </main>

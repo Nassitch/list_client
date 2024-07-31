@@ -207,6 +207,13 @@ menu > article > .see-user-btn {
   overflow: auto;
 }
 
+.ticket-list {
+  height: 210px;
+  display: flex;
+  overflow: auto;
+  gap: 20px;
+}
+
 .submit-btn {
   display: flex;
   align-items: center;

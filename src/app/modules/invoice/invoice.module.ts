@@ -10,6 +10,7 @@ import { ConfirmModalComponent } from '../shared-components/components/confirm-m
 import { LoaderComponent } from '../shared-components/components/loader/loader.component';
 import { HistoryComponent } from './components/history/history.component';
 import { BarChartComponent } from '../shared-components/components/bar-chart/bar-chart.component';
+import { TicketComponent } from '../shared-components/components/ticket/ticket.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { BarChartComponent } from '../shared-components/components/bar-chart/bar
     LoaderComponent,
     BarChartComponent,
     CardComponent,
+    TicketComponent,
     SubmitBtnComponent,
     ConfirmModalComponent
   ]
