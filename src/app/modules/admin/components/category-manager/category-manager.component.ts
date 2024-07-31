@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { CategoryService } from '../../../category/shared/services/category.service';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { ImageService } from '../../../shared-components/services/image.service';
@@ -50,7 +50,8 @@ export class CategoryManagerComponent
 
   ngOnInit(): void {
     this.categoryList$ = this.refreshCategory$.pipe(
-      switchMap(() => this.categoryService.getAllCategories$())
+      switchMap(() => this.categoryService.getAllCategories$()),
+      map(categoryList => categoryList.reverse())
     );
   }
 

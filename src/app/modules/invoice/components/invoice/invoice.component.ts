@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MarketService } from '../../../market/shared/services/market.service';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { Market } from '../../../market/models/market.interface';
 import { Shop } from '../../../shop/models/shop.interface';
 import { ShopService } from '../../../shop/shared/services/shop.service';
@@ -46,7 +46,8 @@ export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.marketList$ = this.marketService.getAllMarket$();
     this.shopList$ = this.refreshShops$.pipe(
-      switchMap(() => this.shopService.getShopFromUser$())
+      switchMap(() => this.shopService.getShopFromUser$()),
+      map(shopList => shopList.reverse())
     );
   }
 

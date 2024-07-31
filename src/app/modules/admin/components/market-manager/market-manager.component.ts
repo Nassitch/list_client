@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { Market } from '../../../market/models/market.interface';
 import { MarketService } from '../../../market/shared/services/market.service';
 import { ToastService } from '../../../shared-components/services/toast.service';
@@ -46,7 +46,8 @@ export class MarketManagerComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.marketList$ = this.refreshMarket$.pipe(
-      switchMap(() => this.marketService.getAllMarket$())
+      switchMap(() => this.marketService.getAllMarket$()),
+      map(marketList => marketList.reverse())
     );
   }
 

@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { CategoryService } from '../../../category/shared/services/category.service';
 import { ItemService } from '../../../item/shared/service/item.service';
 import { Category } from '../../../category/models/category.interface';
@@ -60,7 +60,8 @@ export class ItemManagerComponent implements OnInit {
   onCardClick(id: number, type: 'category' | 'item', name?: string): void {
     if (type === 'category') {
       this.itemList$ = this.refreshItem$.pipe(
-        switchMap(() => this.itemService.getItemFromCategory$(id))
+        switchMap(() => this.itemService.getItemFromCategory$(id)),
+        map(itemList => itemList.reverse())
       );
       this.activeCategory = this.activeCategory === id ? undefined : id;
     }

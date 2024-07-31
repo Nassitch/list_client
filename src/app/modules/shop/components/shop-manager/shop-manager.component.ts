@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ShopService } from '../../shared/services/shop.service';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { Shop } from '../../models/shop.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { Router } from '@angular/router';
@@ -41,7 +41,8 @@ export class ShopManagerComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.shopList$ = this.refreshShops$.pipe(
-      switchMap(() => this.shopService.getShopFromUser$())
+      switchMap(() => this.shopService.getShopFromUser$()),
+      map(shopList => shopList.reverse())
     );
     this.currentShop = this.storageService.getItem(this.shopContent);
   }
