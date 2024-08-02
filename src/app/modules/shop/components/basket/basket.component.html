@@ -1,0 +1,55 @@
+<main>
+
+    @if (edit) {
+        @if (shop$ | async; as shop) {
+
+            <div class="created-at">
+                <p>Créer le :</p>
+                <p>{{ shop.createdAt | fullDateFormat }}</p>
+            </div>
+
+                @for (shop of shop.categories; track $index) {
+                    <app-list
+                    [id]="shop.id"
+                    [image]="this.imageService._BASE_URL_CATEGORY_IMG + shop.picture"
+                    [name]="shop.name"
+                    [items]="shop.items"
+                    [allSelected]="true"
+                    (selectedItemsChange)="onSelectedItemsChange(shop.id, $event.items)"
+                    />
+                }
+            }
+            @else {
+                <div class="loading">
+                  <app-loader />
+                </div>
+              }
+        }
+        @else {
+        @if (shopList$ | async; as shopList) {
+                @for (shop of shopList; track $index) {
+                    <app-list
+                    [id]="shop.id"
+                    [image]="this.imageService._BASE_URL_CATEGORY_IMG + shop.picture"
+                    [name]="shop.name"
+                    [items]="shop.items"
+                    [allSelected]="true"
+                    (selectedItemsChange)="onSelectedItemsChange(shop.id, $event.items)"
+                    />
+                }
+            }
+            @else {
+                <div class="loading">
+                  <app-loader />
+                </div>
+              }
+    }
+    
+    <app-total [items]="this.getAllSelectedItems()" />
+
+    <div class="submit-btn">
+        <app-submit-btn [text]="this.textBtn" (buttonClick)="onSubmit()" />
+    </div>
+
+    <app-confirm-modal (response)="handleConfirmSubmission($event)" />
+</main>

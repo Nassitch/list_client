@@ -1,0 +1,29 @@
+.dots {
+  display: flex;
+  height: 55px;
+  width: 55px;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.dots > span {
+  position: absolute;
+  height: 10px;
+  width: 5px;
+  background: var(--main-color);
+  border-radius: 25%;
+  transform: rotate(calc(var(--i) * (360deg / 14))) translateY(20px);
+  animation: animate 1.5s linear infinite;
+  animation-delay: calc(var(--i) * 0.1s);
+  opacity: 0;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

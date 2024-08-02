@@ -1,22 +1,43 @@
-<div id="setting-window">
-    <button class="d-flex setting-btn" [routerLink]="['/settings']" (click)="close()" >
-        <img src="../../../assets/icons/setting.svg" />
-        <p>Paramètres</p>
-    </button>
-    <span></span>
-    <button class="d-flex setting-btn" [routerLink]="['/dash-board']" (click)="close()" >
-        <img src="../../../assets/icons/administrator.svg" />
-        <p>Tableau de bord</p>
-    </button>
-    <span></span>
-    <button class="d-flex setting-btn" [routerLink]="['/credits']" (click)="close()" >
-        <img src="../../../assets/icons/documents.svg" />
-        <p>Crédits</p>
-    </button>
-    <span></span>
-    <button class="d-flex setting-btn" (click)="logout()">
-        <img src="../../../assets/icons/logout.svg" />
-        <p>Déconnexion</p>
-    </button>
-</div>
-<div class="modal-close-clicker" (click)="close()"></div>
+@if (!isUser) {
+    <div id="setting-window">
+        <button class="d-flex setting-btn" [routerLink]="['/admin/dash-board']" (click)="close()" >
+            <img src="../../../assets/icons/administrator.svg" alt="Tableau de bord" />
+            <p>Tableau de bord</p>
+        </button>
+        <span></span>
+        <button class="d-flex setting-btn" [routerLink]="['/credits']" (click)="close()" >
+            <img src="../../../assets/icons/documents.svg" alt="Crédits" />
+            <p>Crédits</p>
+        </button>
+        <span></span>
+        <button class="d-flex setting-btn" (click)="logout()">
+            <img src="../../../assets/icons/logout.svg" alt="Deconnexion" />
+            <p>Déconnexion</p>
+        </button>
+    </div>
+    <div class="modal-close-clicker" (click)="close()"></div>
+    
+} @else {
+    <div id="setting-window">
+        <button class="d-flex setting-btn" [routerLink]="['/user/settings']" (click)="close()" >
+            <img src="../../../assets/icons/setting.svg" alt="Paramètres" />
+            <p>Paramètres</p>
+        </button>
+        <span></span>
+        <button class="d-flex setting-btn" [routerLink]="['/how-it-works']" (click)="close()" >
+            <img src="../../../assets/icons/how-it-works.svg" alt="Comment ça marche" />
+            <p>Comment ça marche ?</p>
+        </button>
+        <span></span>
+        <button class="d-flex setting-btn" [routerLink]="['/credits']" (click)="close()" >
+            <img src="../../../assets/icons/documents.svg" alt="Crédits" />
+            <p>Crédits</p>
+        </button>
+        <span></span>
+        <button class="d-flex setting-btn" (click)="logout()">
+            <img src="../../../assets/icons/logout.svg" alt="Déconnexion" />
+            <p>Déconnexion</p>
+        </button>
+    </div>
+    <div class="modal-close-clicker" (click)="close()"></div>
+}

@@ -1,0 +1,15 @@
+.total-count {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding: 5px 15px;
+  background-color: var(--second-color);
+  border-radius: 10px;
+}
+
+.total-count > p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

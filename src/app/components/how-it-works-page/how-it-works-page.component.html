@@ -1,0 +1,17 @@
+<main class="bckgrnd-clr-main">
+
+    <div class="legal-page-head">
+        <h2>Comment ça marche ?</h2>
+        <p>Documentez et renseignez-vous sur le fonctionnement de l'application.</p>
+    </div>
+
+    <div class="cards">
+        @for (stepCard of stepCardList; track $index) {
+            <app-how-it-works-card
+            [title]="stepCard.title"
+            [description]="stepCard.description"
+            [step]="stepCard.step"
+            />
+        }
+    </div>
+</main>

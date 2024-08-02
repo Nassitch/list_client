@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  inject,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ControlType, InputType } from '../../models/input.type';
 import { CommonModule } from '@angular/common';
@@ -20,6 +13,7 @@ import { HandleFormErrorService } from '../../services/handle-form-error.service
 })
 export class InputComponent implements OnInit {
   
+  @ViewChild('inputField') inputField!: ElementRef;
   @Input() public autocomplete = 'off';
   @Input({ required: true }) public control!: FormControl;
   @Input({ required: true }) public controlName = '';
@@ -47,6 +41,10 @@ export class InputComponent implements OnInit {
   togglePasswordVisibility() {
     this.isPasswordVisible = !this.isPasswordVisible;
     this.type = this.isPasswordVisible ? 'text' : 'password';
+  }
+
+  focusInput():void {
+    this.inputField.nativeElement.focus();
   }
 
   get showError(): boolean {

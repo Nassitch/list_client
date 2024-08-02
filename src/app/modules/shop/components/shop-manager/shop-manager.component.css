@@ -1,0 +1,19 @@
+.edit-card {
+  height: 150px;
+  min-width: 150px;
+  margin-right: 10px;
+  padding: 20px;
+  background-color: var(--second-color);
+  border: none;
+  border-radius: 10px;
+}
+
+.edit-card > article > img {
+  height: 50px;
+  width: 50px;
+}
+
+.edit-card > article > p {
+  max-width: 110px;
+  text-align: center;
+}

@@ -1,0 +1,70 @@
+<main>
+
+  <div class="title-card">
+    <h5>Marchés</h5>
+    <img src="../../../../../assets/icons/market.svg" alt="Marchés" />
+  </div>
+  <div class="card-list">
+      @if (marketList$ | async; as marketList) {
+          @for (market of marketList; track $index) {
+              <app-card
+              [type]="'static'"
+              [id]="market.id"
+              [content]="marketContent"
+              [imgContent]="this.imageService._BASE_URL_MARKET_IMG + market .picture"
+              [title]="market.name"
+              [subTitle]="market.size"
+              [isActive]="market.id === activeMarket"
+              (cardSelected)="onCardClick(market.id, 'market')"
+              />
+            }
+        }
+        @else {
+            <div class="loading">
+              <app-loader />
+            </div>
+          }
+    </div>
+    
+    <div class="title-card">
+        <h5>Paniers</h5>
+        <img src="../../../../../assets/icons/shop.svg" alt="Paniers" />
+    </div>
+    <div class="card-list">
+        @if (shopList$ | async; as shopList) {
+            @for (shop of shopList; track $index) {
+                <app-card
+                [type]="'edit'"
+                [id]="shop.id"
+                [content]="shopContent"
+                [isCompleted]="shop.isCompleted"
+                [count]="shop.count"
+                [date]="shop.createdAt"
+                [editPath]="editPath"
+                [onDelete]="onDelete.bind(this, shop.id)"
+                [isActive]="shop.id === activeShop"
+                (cardSelected)="onCardClick(shop.id, 'shop')"
+              />
+            }
+        }
+        @else {
+            <div class="loading">
+              <app-loader />
+            </div>
+          }
+    </div>
+
+    <div class="input-text mt-6">
+        <label for="total">TOTAL</label>
+        <div>
+            <input type="number" name="total" [(ngModel)]="this.total" />
+            <p>€</p>
+        </div>
+    </div>
+
+    <div class="submit-btn mt-8">
+        <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()" />
+    </div>
+
+    <app-confirm-modal (response)="handleConfirmSubmission($event)" />
+</main>

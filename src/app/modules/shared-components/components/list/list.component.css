@@ -1,0 +1,67 @@
+/* Category. */
+.list {
+  /* padding-block: 20px; */
+  background-color: var(--second-color);
+  border-radius: 10px;
+  margin-block: 20px;
+}
+
+.list > .list-category {
+  height: 50px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding-inline: 20px;
+}
+
+.list > .list-category > .list-category-info {
+  width: 90%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.list > .list-category > .list-category-info > img {
+  height: 35px;
+  width: 35px;
+  margin-left: 5px;
+}
+
+.list > .list-category > .list-category-info > h5 {
+  font-size: 16px;
+  margin-left: 5px;
+}
+
+.list > .list-category > .list-unroll {
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.list > .list-category > .list-unroll > button {
+  border: none;
+  background: transparent;
+}
+
+/* Items. */
+.list > .list-items {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 50px;
+  border: none;
+  border-top: 1px solid var(--background-color);
+  background: transparent;
+}
+
+.list > .list-items > img {
+  height: 35px;
+  width: 35px;
+}
+
+.list > .list-items > p {
+  font-size: 14px;
+  margin-block: 15px;
+}

@@ -1,15 +1,15 @@
 <div id="header" class="d-flex">
   <div class="nav-section">
     <button class="ghost-btn" (click)="navigateTo('/shop')">
-      <img src="../../../assets/icons/shop.svg" />
+      <img src="../../../assets/icons/shop.svg" alt="Panier" />
     </button>
 
     <button class="ghost-btn" (click)="navigateTo('/search')">
-      <img src="../../../assets/icons/search.svg" />
+      <img src="../../../assets/icons/search.svg" alt="Recherche" />
     </button>
 
-    <button class="ghost-btn" (click)="navigateTo('/')">
-      <img src="../../../assets/icons/home.svg" />
+    <button class="ghost-btn" (click)="navigateTo('/home')">
+      <img src="../../../assets/icons/home.svg" alt="Accueil" />
     </button>
   </div>
 
@@ -20,7 +20,7 @@
     @if (isSettingWindowActive) {
         <app-setting-window
         (closeWindow)="toggleSettingWindow()"
-        ></app-setting-window>
+        />
     }
   </div>
 </div>

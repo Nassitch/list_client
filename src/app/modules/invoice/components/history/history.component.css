@@ -1,0 +1,12 @@
+.year {
+    display: flex;
+    justify-content: right;
+    margin-block: 20px 10px;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.month {
+    margin-block: 10px;
+
+}

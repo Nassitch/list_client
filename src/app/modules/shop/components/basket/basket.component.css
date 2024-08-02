@@ -1,0 +1,8 @@
+
+.created-at {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    background-color: var(--second-color);
+    border-radius: 10px;
+}

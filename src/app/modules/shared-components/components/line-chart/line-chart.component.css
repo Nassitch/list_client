@@ -1,0 +1,61 @@
+section {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 220px;
+  margin-block: 10px;
+  border-radius: 10px;
+  background-color: var(--second-color);
+}
+
+section > div {
+  display: flex;
+  justify-content: space-around;
+}
+
+section > div > p {
+  margin-top: 10px;
+  padding: 5px 15px;
+  text-align: center;
+  background-color: var(--background-color);
+  border-radius: 10px;
+}
+
+section > canvas {
+  position: absolute;
+  bottom: 10px;
+}
+
+section > legend {
+  position: absolute;
+  bottom: 0;
+  height: 10px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+section > legend > article {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+section > legend > article > div {
+  height: 5px;
+  width: 10px;
+}
+
+section > legend > article > .legend-one {
+  background-color: var(--main-color);
+}
+
+section > legend > article > .legend-two {
+  background-color: var(--app-color);
+}
+
+section > legend > article > p {
+  font-size: 10px;
+  margin-left: 5px;
+}

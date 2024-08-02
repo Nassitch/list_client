@@ -1,0 +1,26 @@
+article {
+  position: relative;
+  height: 250px;
+  width: 175px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 10px 30px 10px;
+  background-color: var(--background-color);
+  border-radius: 10px;
+}
+
+article > h3 {
+  font-size: 18px;
+}
+
+article > p {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+article > span {
+  position: absolute;
+  bottom: 10px;
+}

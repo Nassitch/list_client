@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-submit-btn',
@@ -8,13 +8,10 @@ import { Component, Input } from '@angular/core';
   styleUrl: './submit-btn.component.css'
 })
 export class SubmitBtnComponent {
+  @Input() text: string = 'Enregistrer';
+  @Output() buttonClick = new EventEmitter<void>();
 
-  @Input() text: string = "";
-  @Input() onClick!: () => void;
-
-  handleClick() {
-    if (this.onClick) {
-      this.onClick();
-    }
+  onClick(): void {
+    this.buttonClick.emit();
   }
 }

@@ -1,0 +1,52 @@
+<main>
+  <section class="manager-section">
+    <h2>Panier.</h2>
+
+    <div class="cards">
+      <app-new-card
+      [path]="'/search'"
+      [word]="'Panier'"
+      (newShopEvent)="newShop()"
+      />
+
+      @if (currentShop) {
+        <button class="edit-card" (click)="navigateTo('/shop/0')">
+          <article>
+            <img src="../../../../../assets/icons/pen.svg" alt="Modifier" />
+            <p>Panier<br/>Actuel</p>
+          </article>
+        </button>
+      }
+
+        @if (shopList$ | async; as shopList) {
+            @for (shop of shopList; track $index) {
+                <app-card
+                    [type]="'edit'"
+                    [id]="shop.id"
+                    [content]="shopContent"
+                    [isCompleted]="shop.isCompleted"
+                    [count]="shop.count"
+                    [date]="shop.createdAt"
+                    [editPath]="editPath"
+                    [onDelete]="onDelete.bind(this, shop.id)"
+                    [isActive]="shop.id === activeShop"
+                    (cardSelected)="onCardClick(shop.id)"
+                />
+            }
+        } @else {
+            <div class="loading">
+              <app-loader />
+            </div>
+        }
+    </div>
+  </section>
+
+  <app-landing-msg
+    [title]="this.titleLandingMsg"
+    [description]="this.descriptionLandingMsg"
+    [additionalOne]="addtitonalOneLandingMsg"
+    [additionalTwo]="addtitonalTwoLandingMsg"
+  />
+
+  <app-confirm-modal (response)="handleConfirmSubmission($event)" />
+</main>

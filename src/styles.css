@@ -1,9 +1,37 @@
+@font-face {
+  font-family: "3a1d_font";
+  src: url("./assets/fonts/3a1d_font_bold.otf") format("opentype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "3a1d_font";
+  src: url("./assets/fonts/3a1d_font_medium.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* @font-face {
+  font-family: '3a1d_font';
+  src: url('./assets/fonts/3a1d_font_regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+} */
+
+@font-face {
+  font-family: "3a1d_font";
+  src: url("./assets/fonts/3a1d_font_light.otf") format("opentype");
+  font-weight: lighter;
+  font-style: normal;
+}
+
 :root {
   --main-color: #000000;
   --second-color: #fff;
   --background-color: #eee;
-  /* Couleurs inputs. */
-  --background-input: rgba(242, 241, 238, 0.6);
+  --dark-grey: #D9D9D9;
+  --app-color: #fdebd7;
   /* Couleurs de messages d'alerte */
   --succes-msg: #355233;
   --succes-background: #d4eed9;
@@ -24,14 +52,56 @@
   --background-input: #212128;
 }
 
+* {
+  font-family: "3a1d_font";
+}
+
+main {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 30px 25px 40px 25px;
+  background-color: var(--background-color);
+}
+
 .auth {
   height: 96vh;
   margin-inline: 50px;
 }
 
+.form {
+  height: 95vh;
+  margin-inline: 50px;
+  background-color: var(--second-color);
+}
+
+.form-user-panel {
+  margin-inline: 30px;
+}
+
+.bckgrnd-clr-main {
+  background-color: var(--second-color);
+}
+
+.bckgrnd-clr-second {
+  background-color: var(--background-color);
+}
+
+.bckgrnd-clr-third {
+  background-color: var(--main-color);
+}
+
+.loading {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .ghost-btn {
-  height: 40px;
-  width: 40px;
+  height: 35px;
+  width: 35px;
   border: none;
   background: transparent;
 }
@@ -42,7 +112,7 @@
 
 .avatar-choice {
   width: 110%;
-  margin-left: 65px;
+  margin-left: 20px;
 }
 
 .avatar-list {
@@ -65,4 +135,207 @@
 
 .avatar-list > button > img.selected {
   border: 2px solid var(--main-color);
+}
+
+menu {
+  margin-block: 30px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+menu > .user-ticket {
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+
+menu > .user-ticket.active {
+  opacity: 1;
+}
+
+.user-ticket:not(:last-child) {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--second-color);
+}
+
+.user-ticket:last-child {
+  padding-top: 10px;
+}
+
+menu > article {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+menu > article > .menu-img {
+  width: 10%;
+}
+
+menu > article > .menu-picture {
+  width: 15%;
+  border: 1px solid var(--main-color);
+  border-radius: 50%;
+}
+
+menu > article > .menu-txt {
+  width: 80%;
+  margin-left: 10px;
+}
+
+menu > article > .menu-txt {
+  width: 75%;
+  margin-left: 10px;
+}
+
+menu > article > .menu-btn {
+  width: 10%;
+}
+
+menu > article > .see-user-btn {
+  width: 10%;
+}
+
+.line {
+  height: 1px;
+  width: 100%;
+  margin-block: 15px;
+}
+
+.card-list {
+  height: 160px;
+  display: flex;
+  overflow: auto;
+}
+
+.ticket-list {
+  height: 210px;
+  display: flex;
+  overflow: auto;
+  gap: 20px;
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.manager-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.manager-section > h2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.manager-section > .cards {
+  height: 160px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+}
+
+.number-bubble {
+  min-height: 35px;
+  min-width: 35px;
+  max-height: 35px;
+  max-width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--second-color);
+  background-color: var(--main-color);
+  border-radius: 50%;
+}
+
+/* Form admin. */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-block: 20px;
+}
+
+/* Input text. */
+.manager-input-text {
+  height: 50px;
+  width: 80%;
+  margin-block: 10px;
+  padding: 5px 15px;
+  background-color: var(--second-color);
+  border-radius: 10px;
+}
+
+.manager-input-text > label {
+  font-size: 14px;
+}
+
+.manager-input-text > input {
+  width: 100%;
+  background-color: var(--second-color);
+  border: none;
+}
+
+/* Input file. */
+.manager-input-file {
+  height: 50px;
+  width: 80%;
+  position: relative;
+  margin-block: 10px;
+  background-color: var(--second-color);
+  padding: 10px 15px;
+  border-radius: 10px;
+}
+
+.manager-input-file > label {
+  color: var(--main-color);
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.manager-input-file > input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Legal page. */
+.legal-page-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-block: 40px;
+}
+
+.legal-page-head > h3 {
+  font-size: 21px;
+}
+
+.legal-page-head > p {
+  font-size: 16px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.copyright {
+  position: absolute;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  bottom: 30px;
+  font-size: 16px;
+  color: var(--main-color);
 }

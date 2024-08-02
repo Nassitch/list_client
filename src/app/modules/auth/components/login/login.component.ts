@@ -52,21 +52,20 @@ export class LoginComponent implements OnInit {
 
     this.loginResult$.subscribe((result) => {
       if (result.success) {
-        this.toastService.show('Connexion réussie', 'Succès', 'success');
+        this.toastService.success('Connexion réussie');
         this.authService.getCurrentUser().subscribe((currentUser) => {
           if (currentUser) {
             if (currentUser.userId) {
-              this.router.navigate(['/']);
+              this.router.navigate(['/home']);
+            } else if (currentUser.role === 'ROLE_ADMIN') {
+              this.router.navigate(['/admin/dash-board']);
             } else {
               this.router.navigate(['/register']);
             }
-          } else {
-            console.error('User ID is undefined', currentUser);
           }
         });
       } else {
-        this.toastService.show(result.message, 'Erreur', 'error');
-        console.error(result.message);
+        this.toastService.error(result.message);
       }
     });
   };

@@ -1,0 +1,15 @@
+@if (path) {
+    <button class="new-card" (click)="navigateTo(path)">
+        <article>
+            <img src="../../../../../assets/icons/add.svg" alt="Ajouter" />
+            <p>{{ wordMale ? "Nouveau" : "Nouvelle" }} {{ word }}</p>
+        </article>
+    </button>
+} @else {
+    <button class="new-card" (click)="newShop()">
+        <article>
+            <img src="../../../../../assets/icons/add.svg" alt="Ajouter" />
+            <p>{{ wordMale ? "Nouveau" : "Nouvelle" }} {{ word }}</p>
+        </article>
+    </button>
+}

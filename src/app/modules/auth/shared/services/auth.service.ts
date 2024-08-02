@@ -1,24 +1,30 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable, OnInit, inject } from '@angular/core';
-import { environment } from '../../../../../environments/environment.developpment';
-import { BehaviorSubject, catchError, map, mergeMap, Observable, of, tap } from 'rxjs';
-import { CookieService } from '../../../../core/services/cookie.service';
-import { TokenService } from '../../../../core/services/token.service';
+import { BehaviorSubject, catchError, map, mergeMap, Observable, of, switchMap, tap } from 'rxjs';
 import { UserToken } from '../../../../models/user-token.interface';
-import { TokenResponse } from '../../../../models/token-response.interface';
-import { AuthRequest } from '../../models/auth-request.interface';
 import { UserInfo } from '../../../user/models/user-info.interface';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { AuthRequest } from '../../models/auth-request.interface';
+import { TokenResponse } from '../../../../models/token-response.interface';
+import { environment } from '../../../../../environments/environment.developpment';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { Router } from '@angular/router';
+import { CookieService } from '../../../../core/services/cookie.service';
+import { TokenService } from '../../../../core/services/token.service';
+import { inject, Injectable, OnInit } from '@angular/core';
+import { LogResponse } from '../../models/log-response.interface';
+import { TokenDecrypted } from '../../../../models/token-decrypted.interface';
+import { LogMessageResponse } from '../../models/log-message-response.interface';
+import { SignupResponse } from '../../models/signup-response.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService implements OnInit {
-  
-  private currentUser: BehaviorSubject<UserToken | null> = new BehaviorSubject<UserToken | null>(null);
-  
-  protected http = inject(HttpClient)
+  private currentUser: BehaviorSubject<UserToken | null> =
+    new BehaviorSubject<UserToken | null>(null);
+    private logInfoUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+    public currentUserId: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
+
+  protected http = inject(HttpClient);
   private cookieService = inject(CookieService);
   private tokenService = inject(TokenService);
   private toastService = inject(ToastService);
@@ -34,79 +40,97 @@ export class AuthService implements OnInit {
     this.initializeCurrentUser();
   }
 
-  login$(user: AuthRequest): Observable<any> {
-    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
-    .pipe(
-      tap((response: any) => {
-        this.cookieService.setCookie('authToken', response.token, 0.1);
+  login$(user: AuthRequest): Observable<LogMessageResponse> {
+    return this.http
+      .post<LogResponse>(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
+      .pipe(
+        tap((response: LogResponse) => {
+          this.cookieService.setCookie('authToken', response.token, 0.1);
 
-        const decodedToken = this.tokenService.getTokenFromCookiesAndDecode();
-        if (decodedToken) {
+          const decodedToken: TokenDecrypted = this.tokenService.getTokenFromCookiesAndDecode();
+          if (decodedToken) {
+            const userInfo: UserToken = {
+              userId: decodedToken.userId!,
+              loginId: decodedToken.loginId,
+              role: decodedToken.role,
+              picture: decodedToken.picture,
+            };
 
-          const userInfo: UserToken = {
-            userId: decodedToken.userId,
-            loginId: decodedToken.loginId,
-            role: decodedToken.role,
-            picture: decodedToken.picture
+            this.setCurrentUser(userInfo);
           }
-
-          this.setCurrentUser(userInfo);
-          console.log('Current User after login:', userInfo);
-        }
-        
-      }),
-      map((response: TokenResponse) => ({
-        success: true,
-        token: response.token,
-        message: `Bienvenue `,
-      })),
-      catchError((error: HttpErrorResponse) => {
-        console.error('Erreur lors de la connexion:', error);
-        return of({ success: false, message: 'Identifiants invalides' });
-      })
-    )
+        }),
+        map((response: TokenResponse) => ({
+          success: true,
+          token: response.token,
+          message: `Bienvenue `,
+        })),
+        catchError((error: HttpErrorResponse) => {
+          return of({ success: false, message: 'Identifiants invalides' });
+        })
+      );
   }
 
   logout(): void {
     this.tokenService.resetToken();
-    this.toastService.show('Déconnexion réussie', 'Succès', 'success');
+    this.toastService.success('Déconnexion réussie');
     this.router.navigate(['/login']);
+    this.currentUser.next(null);
   }
 
   signup$(newUser: AuthRequest): Observable<any> {
-    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
-    .pipe(
-      mergeMap((user: any) => this.login$(newUser)
-      .pipe(
-        catchError((authError) => {
-          console.error('Error while logging in:', authError);
-          return of(null);
-        }),
-        map(() => ({
-          success: true,
-          message: 'Inscription et connexion réussies'
-        }))
-      )
-    ),
-    catchError((error: HttpErrorResponse) => {
-      console.error('Erreur lors de l\'inscription:', error);
-      return of({ success: false, message: 'Erreur lors de l\'inscription' });
-    })
-  );
-}
+    this.logInfoUser.next(newUser);
+      return this.http.post<SignupResponse>(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
+        .pipe(
+          tap(response => {
+            this.currentUserId.next(response.id);
+          }),
+          map(response => ({
+            success: true,
+            message: response.message,
+            id: response.id
+          })),
+          catchError(() => {
+            return of({
+              success: false,
+              message: "Erreur lors de l'inscription",
+            });
+          })
+        );
+    }
 
-register$(userInfo: UserInfo): Observable<any> {
-    return this.http.post(`${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`, userInfo)
+  register$(userInfo: UserInfo): Observable<any> {
+    return this.http.post(
+      `${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`,
+      userInfo
+    ).pipe(
+      switchMap((user: any) =>
+        this.login$(this.logInfoUser.getValue()).pipe(
+          catchError(() => {
+            return of(null);
+          }),
+          map(() => ({
+            success: true,
+            message: 'Inscription et connexion réussies',
+          }))
+        )
+      ),
+      catchError(() => {
+        return of({
+          success: false,
+          message: "Erreur lors de l'inscription",
+        });
+      })
+    );
   }
 
   private initializeCurrentUser(): void {
-    const decodedToken = this.tokenService.getTokenFromCookiesAndDecode();
+    const decodedToken: TokenDecrypted = this.tokenService.getTokenFromCookiesAndDecode();
     if (decodedToken) {
       const userInfo: UserToken = {
-        userId: decodedToken.userId,
+        userId: decodedToken.userId!,
         loginId: decodedToken.loginId,
         role: decodedToken.role,
-        picture: decodedToken.picture
+        picture: decodedToken.picture,
       };
       this.setCurrentUser(userInfo);
     }

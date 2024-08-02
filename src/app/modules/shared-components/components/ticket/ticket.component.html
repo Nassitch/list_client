@@ -1,0 +1,14 @@
+<section>
+  <p>{{ date | dateFormatTicket }}</p>
+  <div>
+    <span class="number-bubble">{{ count }}</span>
+    <img [src]="image" alt="Marché" />
+  </div>
+  <div>
+    <button>Modifier</button>
+    <button>Supprimer</button>
+  </div>
+  <h4>
+    Total :<br />€ <strong>{{ total }}</strong>
+  </h4>
+</section>
