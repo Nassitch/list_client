@@ -3,6 +3,8 @@ import { ImageService } from '../../../shared-components/services/image.service'
 import { InvoiceService } from '../../shared/services/invoice.service';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { InvoiceResponse } from '../../models/invoice-response.interface';
+import { StatisticService } from '../../../shared-components/services/statistic.service';
+import { Statistic } from '../../../shared-components/models/statistic.interface';
 
 @Component({
   selector: 'app-history',
@@ -13,16 +15,18 @@ export class HistoryComponent implements OnInit {
   private refreshInvoice$ = new BehaviorSubject<void>(undefined);
 
   private invoiceService = inject(InvoiceService);
+  private statService = inject(StatisticService);
   public imageService = inject(ImageService);
 
   invoiceList$!: Observable<{ [year: string]: { [month: string]: InvoiceResponse[] } }>;
+  statistics$!: Observable<Statistic>;
 
   ngOnInit(): void {
     this.invoiceList$ = this.refreshInvoice$.pipe(
       switchMap(() => this.invoiceService.getInvoiceByUserId$()),
       map(invoiceList => this.groupByYearAndMonth(invoiceList.reverse())),
-      tap(res => console.log(res))
     );
+    this.statistics$ = this.statService.getStatsByUserId$();
   }
 
   private groupByYearAndMonth(invoices: InvoiceResponse[]): { [year: string]: { [month: string]: InvoiceResponse[] } } {

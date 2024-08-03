@@ -13,15 +13,15 @@ export class ItemService {
 
   private http = inject(HttpClient);
 
-  private _BASE_URL: string = environment._BASE_URL;
-  private _ADMIN: string = environment._ADMIN;
-  private _PUBLIC: string = environment._PUBLIC;
-  private _CATEGORY: string = environment._CATEGORY;
-  private _ITEM: string = environment._ITEM;
-  private _READ: string = environment._READ;
-  private _CREATE: string = environment._CREATE;
-  private _UPDATE: string = environment._UPDATE;
-  private _DELETE: string = environment._DELETE;
+  private readonly _BASE_URL: string = environment._BASE_URL;
+  private readonly _ADMIN: string = environment._ADMIN;
+  private readonly _PUBLIC: string = environment._PUBLIC;
+  private readonly _CATEGORY: string = environment._CATEGORY;
+  private readonly _ITEM: string = environment._ITEM;
+  private readonly _READ: string = environment._READ;
+  private readonly _CREATE: string = environment._CREATE;
+  private readonly _UPDATE: string = environment._UPDATE;
+  private readonly _DELETE: string = environment._DELETE;
 
   getItemFromCategory$(id: number): Observable<Item[]> {
     return this.http.get<Item[]>(`${this._BASE_URL}${this._PUBLIC}${this._ITEM}${this._READ}${this._CATEGORY}/${id}`);
