@@ -59,7 +59,7 @@ export class LineChartComponent implements OnInit {
             pointBackgroundColor: 'rgb(0, 0, 0)',
           },
           {
-            data: [55, 49, 70, 71, 100, 44, 45, 77, 107, 120, 122, 177],
+            data: [5, 4, 7, 7, 10, 4, 4, 7, 10, 12, 12, 17],
             fill: true,
             backgroundColor: gradientYellow,
             borderColor: 'rgb(253, 235, 215)',

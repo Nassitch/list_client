@@ -22,14 +22,14 @@ export class ShopService {
   private toastService = inject(ToastService);
   private router = inject(Router);
 
-  private _BASE_URL: string = environment._BASE_URL;
-  private _USER: string = environment._USER;
-  private _SHOP: string = environment._SHOP;
-  private _READ: string = environment._READ;
-  private _READ_ALL: string = environment._READ_ALL;
-  private _CREATE: string = environment._CREATE;
-  private _UPDATE: string = environment._UPDATE;
-  private _DELETE: string = environment._DELETE;
+  private readonly _BASE_URL: string = environment._BASE_URL;
+  private readonly _USER: string = environment._USER;
+  private readonly _SHOP: string = environment._SHOP;
+  private readonly _READ: string = environment._READ;
+  private readonly _READ_ALL: string = environment._READ_ALL;
+  private readonly _CREATE: string = environment._CREATE;
+  private readonly _UPDATE: string = environment._UPDATE;
+  private readonly _DELETE: string = environment._DELETE;
 
   getShopFromUser$(): Observable<Shop[]> {
     this.userService.initialize();

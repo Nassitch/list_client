@@ -19,15 +19,15 @@ export class UserService implements OnDestroy {
   public id!: number;
   private currentUserSubscription: Subscription | null = null;
 
-  private _BASE_URL: string = environment._BASE_URL;
-  private _ADMIN: string = environment._ADMIN;
-  private _PUBLIC: string = environment._PUBLIC;
-  private _USER: string = environment._USER;
-  private _UPLOAD: string = environment._UPLOAD;
-  private _THIS_USER: string = environment._THIS_USER;
-  private _READ: string = environment._READ;
-  private _READ_ALL: string = environment._READ_ALL;
-  private _UPDATE: string = environment._UPDATE;
+  private readonly _BASE_URL: string = environment._BASE_URL;
+  private readonly _ADMIN: string = environment._ADMIN;
+  private readonly _PUBLIC: string = environment._PUBLIC;
+  private readonly _USER: string = environment._USER;
+  private readonly _UPLOAD: string = environment._UPLOAD;
+  private readonly _THIS_USER: string = environment._THIS_USER;
+  private readonly _READ: string = environment._READ;
+  private readonly _READ_ALL: string = environment._READ_ALL;
+  private readonly _UPDATE: string = environment._UPDATE;
 
   initialize(): void {
     this.currentUserSubscription = this.authService.getCurrentUser().subscribe((user) => {

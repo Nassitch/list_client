@@ -3,7 +3,15 @@
     <h2>Historique.</h2>
   </section>
 
-  <app-bar-chart [statOne]="'Facture'" [statTwo]="'Panier'" />
+  @if (statistics$ | async; as statistics) {
+      <app-bar-chart
+      [months]="statistics.months"
+      [shops]="statistics.shops"
+      [invoices]="statistics.invoices"
+      [statOne]="'Facture'"
+      [statTwo]="'Panier'"
+      />
+    }
 
   
   @if (invoiceList$ | async; as invoiceList) {
