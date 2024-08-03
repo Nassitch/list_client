@@ -24,7 +24,7 @@
         @for (avatar of avatars; track $index) {
             <button (click)="takeAvatar(avatar)">
                 <img
-                [src]="_URL_IMG + avatar"
+                [src]="this.imageService._BASE_URL_USER_IMG + avatar"
                 [ngClass]="{ selected: avatar === picture }"
                 alt="avatar"
                 />

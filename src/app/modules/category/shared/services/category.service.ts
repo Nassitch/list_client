@@ -16,15 +16,15 @@ export class CategoryService {
 
   private http = inject(HttpClient);
 
-  private _BASE_URL: string = environment._BASE_URL;
-  private _ADMIN: string = environment._ADMIN;
-  private _PUBLIC: string = environment._PUBLIC;
-  private _CATEGORY: string = environment._CATEGORY;
-  private _READ_ALL: string = environment._READ_ALL;
-  private _READ: string = environment._READ;
-  private _CREATE: string = environment._CREATE;
-  private _UPDATE: string = environment._UPDATE;
-  private _DELETE: string = environment._DELETE;
+  private readonly _BASE_URL: string = environment._BASE_URL;
+  private readonly _ADMIN: string = environment._ADMIN;
+  private readonly _PUBLIC: string = environment._PUBLIC;
+  private readonly _CATEGORY: string = environment._CATEGORY;
+  private readonly _READ_ALL: string = environment._READ_ALL;
+  private readonly _READ: string = environment._READ;
+  private readonly _CREATE: string = environment._CREATE;
+  private readonly _UPDATE: string = environment._UPDATE;
+  private readonly _DELETE: string = environment._DELETE;
 
   getAllCategories$(): Observable<Category[]> {
     const storedCategories = this.categoryList$.getValue();

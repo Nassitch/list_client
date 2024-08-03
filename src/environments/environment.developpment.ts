@@ -13,6 +13,7 @@ export const environment = {
     _ITEM: "/item",
     _MARKET: "/market",
     _SHOP: "/shop",
+    _STATS: "/stats",
     _UPLOAD: "/upload",
     _READ: "/read",
     _READ_ALL: "/read/all",

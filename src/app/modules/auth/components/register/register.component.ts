@@ -8,6 +8,7 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { environment } from '../../../../../environments/environment.developpment';
+import { ImageService } from '../../../shared-components/services/image.service';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   private fb = inject(FormBuilder);
   private router = inject(Router);
   private toastService = inject(ToastService);
+  public imageService = inject(ImageService);
 
   formGroup!: FormGroup;
 
@@ -28,12 +30,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   avatars$!: Observable<string[]>;
   registerSubscription$: Subscription = new Subscription();
-  private _BASE_URL: string = environment._BASE_URL;
-  private _PUBLIC: string = environment._PUBLIC;
-  private _UPLOAD: string = environment._UPLOAD;
-  private _READ: string = environment._READ;
-  private _AVATAR: string = environment._AVATAR;
-  protected _URL_IMG: string = `${this._BASE_URL}${this._PUBLIC}${this._UPLOAD}${this._READ}${this._AVATAR}`;
 
   ngOnInit() {
     this.avatars$ = this.userService.getAvatars$();

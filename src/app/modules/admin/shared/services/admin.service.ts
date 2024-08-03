@@ -16,12 +16,12 @@ export class AdminService {
   private http = inject(HttpClient);
   private tokenService = inject(TokenService);
 
-  private _BASE_URL: string = environment._BASE_URL;
-  private _USER: string = environment._USER;
-  private _THIS_USER: string = environment._THIS_USER;
-  private _READ: string = environment._READ;
-  private _UPDATE: string = environment._UPDATE;
-  private _DELETE: string = environment._DELETE;
+  private readonly _BASE_URL: string = environment._BASE_URL;
+  private readonly _USER: string = environment._USER;
+  private readonly _THIS_USER: string = environment._THIS_USER;
+  private readonly _READ: string = environment._READ;
+  private readonly _UPDATE: string = environment._UPDATE;
+  private readonly _DELETE: string = environment._DELETE;
 
   initializeUserRole(): void {
     const decodedToken: UserToken = this.tokenService.getTokenFromCookiesAndDecode();

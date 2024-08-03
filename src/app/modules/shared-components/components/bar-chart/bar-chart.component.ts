@@ -10,16 +10,19 @@ import { Chart, ChartConfiguration, registerables, ChartEvent, ActiveElement } f
 })
 export class BarChartComponent implements OnInit {
   @ViewChild('lineChart', { static: true }) lineChart!: ElementRef;
+  @Input() public months!: string[];
+  @Input() public shops!: number[];
+  @Input() public invoices!: number[];
   @Input() public statOne!: string;
   @Input() public statTwo!: string;
 
   label: string = 'Tous';
   shop: number | null = null;
-  facture: number | null = null;
+  invoice: number | null = null;
   value: number | null = null;
 
-  shopData!: number[];
-  invoiceData!: number[];
+  shopData: number[] = [];
+  invoiceData: number[] = [];
 
   private chart!: Chart;
 
@@ -28,19 +31,19 @@ export class BarChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.shopData = this.shops;
+    this.invoiceData = this.invoices;
     this.renderChart();
     this.calculateInitialSums();
   }
 
   renderChart(): void {
-    this.shopData = [55, 77, 97, 42, 33, 155];
-    this.invoiceData = [45, 77, 107, 120, 122, 177];
     const combinedData = this.shopData.map((value, index) => value + this.invoiceData[index]);
 
     const chartConfig: ChartConfiguration = {
       type: 'bar',
       data: {
-        labels: ['Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
+        labels: this.months,
         datasets: [
           {
             label: 'Shop + Facture',
@@ -79,9 +82,12 @@ export class BarChartComponent implements OnInit {
             const index = firstPoint.index;
 
             this.shop = this.shopData[index];
-            this.facture = this.invoiceData[index];
+            this.invoice = this.invoiceData[index];
             this.value = combinedData[index];
             this.label = chart.data.labels![index] as string;
+
+            console.log(1, this.shopData);
+            console.log(2, this.invoiceData);
 
             this.chart.update();
           }
@@ -94,7 +100,6 @@ export class BarChartComponent implements OnInit {
 
   calculateInitialSums(): void {
     this.shop = this.shopData.reduce((a, b) => a + b, 0);
-    this.facture = this.invoiceData.reduce((a, b) => a + b, 0);
-    this.value = this.shop + this.facture;
+    this.invoice = this.invoiceData.reduce((a, b) => a + b, 0);
   }
 }
