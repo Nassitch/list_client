@@ -15,9 +15,9 @@ const routes: Routes = [
   {path: 'search', loadChildren: () => import("./modules/search/search.module").then((m) => m.SearchModule), canActivateChild: [mobileGuard, userGuard]},
   {path: 'shop', loadChildren: () => import("./modules/shop/shop.module").then((m) => m.ShopModule), canActivateChild: [mobileGuard, userGuard]},
   {path: 'invoice', loadChildren: () => import("./modules/invoice/invoice.module").then((m) => m.InvoiceModule), canActivateChild: [mobileGuard, userGuard]},
-  {path: 'home', component: HomePageComponent, canActivateChild: [mobileGuard, userGuard]},
-  {path: 'how-it-works', component: HowItWorksPageComponent, canActivateChild: [mobileGuard, userGuard]},
-  {path: 'credits', component: CreditPageComponent, canActivateChild: [mobileGuard]},
+  {path: 'home', component: HomePageComponent, canActivate: [mobileGuard, userGuard]},
+  {path: 'how-it-works', component: HowItWorksPageComponent, canActivate: [mobileGuard, userGuard]},
+  {path: 'credits', component: CreditPageComponent, canActivate: [mobileGuard]},
   {path: 'landing-page', component: LandingPageComponent},
 ];
 
