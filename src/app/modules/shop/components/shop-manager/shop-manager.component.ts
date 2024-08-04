@@ -29,9 +29,9 @@ export class ShopManagerComponent implements OnInit, OnDestroy, AfterViewInit {
   private confirmModalService = inject(ConfirmModalService);
 
   titleLandingMsg: string = "Gestionnaire de Paniers.";
-  descriptionLandingMsg: string = "Cette page contient l'histoique de tous vos precédents paniers, vous pouvez ainsi choisir de créer un nouveau panier ou bien modifier un panier existant.";
-  addtitonalOneLandingMsg: string = "La première carte vous permet créer un nouveau Panier. S'il y a déjà un panier non validé il sera supprimé.";
-  addtitonalTwoLandingMsg: string = "La deuxième carte vous permet de consulter votre panier actuel afin de le modifier ou le valider.";
+  descriptionLandingMsg: string = "Cette page contient l'historique de tous vos précédents paniers. Vous pouvez ainsi choisir de créer un nouveau panier ou de modifier un panier existant.";
+  addtitonalOneLandingMsg: string = "La première carte vous permet de créer un nouveau panier. S'il y a déjà un panier non validé, il sera supprimé.";
+  addtitonalTwoLandingMsg: string = "Dans le cas où vous possédez un panier, la carte 'Panier Actuel' vous permet de modifier, enregistrer ou supprimer ce dernier. Dans le cas contraire, vous avez une liste de vos paniers précédemment validés.";
 
   currentShop!: any;
   idToDeleted?: number;

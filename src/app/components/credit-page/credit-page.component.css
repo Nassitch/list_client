@@ -50,5 +50,6 @@
   flex-direction: row;
   gap: 20px;
   overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--background-color) var(--second-color);
 }
-
