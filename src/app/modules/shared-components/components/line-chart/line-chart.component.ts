@@ -34,6 +34,7 @@ export class LineChartComponent implements OnInit {
 
   ngOnInit(): void {
     this.renderChart();
+    this.updateChart();
   }
 
   renderChart(): void {
