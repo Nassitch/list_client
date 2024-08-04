@@ -5,7 +5,15 @@
     
     <app-landing-msg [title]="this.titleLandingMsg" [description]="this.descriptionLandingMsg" />
     
-    <app-line-chart [statOne]="'Facture'" [statTwo]="'Panier'" />
+    @if (statistics$ | async; as statistics) {
+        <app-line-chart
+        [months]="statistics.months"
+        [shops]="statistics.shops"
+        [invoices]="statistics.invoices"
+        [statOne]="'Facture'"
+        [statTwo]="'Panier'"
+        />
+    }
 
     <menu class="bckgrnd-clr-main">
         <article class="d-flex">
