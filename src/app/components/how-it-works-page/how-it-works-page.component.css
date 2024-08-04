@@ -1,10 +1,11 @@
-
 .cards {
-    height: 260px;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-    margin-top: 60px;
-    overflow: auto;
-  }
+  height: 260px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  margin-top: 60px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--background-color) var(--second-color);
+}
