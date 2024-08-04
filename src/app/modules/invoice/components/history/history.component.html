@@ -4,6 +4,15 @@
   </section>
 
   @if (statistics$ | async; as statistics) {
+    <div class="year-navigation">
+      <button (click)="yearNavigation('back')">
+        <img src="../../../../../assets/icons/left-arrow.svg" alt="Precédent" />
+      </button>
+      <p>{{ currentYear }}</p>
+      <button (click)="yearNavigation('forward')">
+        <img src="../../../../../assets/icons/right-arrow.svg" alt="Suivant" />
+      </button>
+    </div>
       <app-bar-chart
       [months]="statistics.months"
       [shops]="statistics.shops"
@@ -11,6 +20,11 @@
       [statOne]="'Facture'"
       [statTwo]="'Panier'"
       />
+    }
+    @else {
+      <div class="loading">
+        <app-loader />
+      </div>
     }
 
   
