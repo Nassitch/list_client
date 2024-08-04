@@ -1,14 +1,28 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Chart, ChartConfiguration, registerables, ChartEvent, ActiveElement } from 'chart.js';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+  ViewChild,
+} from '@angular/core';
+import {
+  Chart,
+  ChartConfiguration,
+  registerables,
+  ChartEvent,
+  ActiveElement,
+} from 'chart.js';
 
 @Component({
   selector: 'app-bar-chart',
   standalone: true,
   imports: [],
   templateUrl: './bar-chart.component.html',
-  styleUrl: './bar-chart.component.css'
+  styleUrl: './bar-chart.component.css',
 })
-export class BarChartComponent implements OnInit {
+export class BarChartComponent implements OnInit, OnChanges {
   @ViewChild('lineChart', { static: true }) lineChart!: ElementRef;
   @Input() public months!: string[];
   @Input() public shops!: number[];
@@ -19,10 +33,6 @@ export class BarChartComponent implements OnInit {
   label: string = 'Tous';
   shop: number | null = null;
   invoice: number | null = null;
-  value: number | null = null;
-
-  shopData: number[] = [];
-  invoiceData: number[] = [];
 
   private chart!: Chart;
 
@@ -31,15 +41,14 @@ export class BarChartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.shopData = this.shops;
-    this.invoiceData = this.invoices;
     this.renderChart();
-    this.calculateInitialSums();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updateChart();
   }
 
   renderChart(): void {
-    const combinedData = this.shopData.map((value, index) => value + this.invoiceData[index]);
-
     const chartConfig: ChartConfiguration = {
       type: 'bar',
       data: {
@@ -47,12 +56,14 @@ export class BarChartComponent implements OnInit {
         datasets: [
           {
             label: 'Shop + Facture',
-            data: combinedData,
+            data: this.shops.map(
+              (value, index) => value + this.invoices[index]
+            ),
             fill: true,
             backgroundColor: 'rgb(253, 235, 215)',
             borderRadius: 5,
             pointBackgroundColor: 'rgb(0, 0, 0)',
-          }
+          },
         ],
       },
       options: {
@@ -76,18 +87,18 @@ export class BarChartComponent implements OnInit {
             display: false,
           },
         },
-        onClick: (event: ChartEvent, elements: ActiveElement[], chart: Chart) => {
+        onClick: (
+          event: ChartEvent,
+          elements: ActiveElement[],
+          chart: Chart
+        ) => {
           if (elements.length > 0) {
             const firstPoint = elements[0];
             const index = firstPoint.index;
 
-            this.shop = this.shopData[index];
-            this.invoice = this.invoiceData[index];
-            this.value = combinedData[index];
+            this.shop = this.shops[index];
+            this.invoice = this.invoices[index];
             this.label = chart.data.labels![index] as string;
-
-            console.log(1, this.shopData);
-            console.log(2, this.invoiceData);
 
             this.chart.update();
           }
@@ -98,8 +109,13 @@ export class BarChartComponent implements OnInit {
     this.chart = new Chart(this.lineChart.nativeElement, chartConfig);
   }
 
-  calculateInitialSums(): void {
-    this.shop = this.shopData.reduce((a, b) => a + b, 0);
-    this.invoice = this.invoiceData.reduce((a, b) => a + b, 0);
+  updateChart(): void {
+    if (this.chart) {
+      const combinedData = this.shops.map(
+        (value, index) => value + this.invoices[index]
+      );
+      this.chart.data.datasets[0].data = combinedData;
+      this.chart.update();
+    }
   }
 }

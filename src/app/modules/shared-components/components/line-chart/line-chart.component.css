@@ -23,6 +23,9 @@ section > div > p {
 
 section > canvas {
   position: absolute;
+  margin: auto;
+  display: flex;
+  justify-content: center;
   bottom: 10px;
 }
 
