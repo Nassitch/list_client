@@ -9,7 +9,7 @@ import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { ToastComponent } from './modules/shared-components/components/toast/toast.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { SettingWindowComponent } from './layout/setting-window/setting-window.component';
-import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { HomePageComponent } from './components/home-page/home-page.component';
 import { CreditPageComponent } from './components/credit-page/credit-page.component';
 import { DateFormatPipe } from './modules/shared-components/pipes/date-format.pipe';
 import { LandingMsgComponent } from './modules/shared-components/components/landing-msg/landing-msg.component';
@@ -20,15 +20,17 @@ import { TechnologieCardComponent } from './modules/shared-components/components
 import { ConfirmModalComponent } from './modules/shared-components/components/confirm-modal/confirm-modal.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { LineChartComponent } from './modules/shared-components/components/line-chart/line-chart.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SettingWindowComponent,
-    LandingPageComponent,
+    HomePageComponent,
     CreditPageComponent,
-    HowItWorksPageComponent
+    HowItWorksPageComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,

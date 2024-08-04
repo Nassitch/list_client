@@ -1,36 +1,40 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { UserService } from '../../modules/user/shared/services/user.service';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { StatisticService } from '../../modules/shared-components/services/statistic.service';
-import { Statistic } from '../../modules/shared-components/models/statistic.interface';
+import { DeviceService } from '../../modules/shared-components/services/device.service';
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.css'
+  styleUrl: './landing-page.component.css',
 })
 export class LandingPageComponent implements OnInit {
+  private deviceService = inject(DeviceService);
 
-  private userService = inject(UserService);
-  private router = inject(Router);
-  private statService = inject(StatisticService);
-
-  profile$!: Observable<any>;
-  statistics$!: Observable<Statistic>;
-
-  titleLandingMsg: string = "Bienvenue sur List.";
-  descriptionLandingMsg: string = "Vous pouvez desormais vous faire une liste, enregistrer une facture et vérifier vos statistiques, tout ça à l'infinis !";
-
+  deferredPrompt: any;
+  isMobile: boolean = false;
 
   ngOnInit(): void {
-    this.userService.initialize();
-    this.profile$ = this.userService.getUserProfile$();
-    this.statistics$ = this.statService.getStatsByUserId$(new Date().getFullYear());
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      this.deferredPrompt = event;
+    });
+    if (this.deviceService.isMobileDevice()) {
+      this.isMobile = true;
+    }
   }
 
-  navigateTo(path: string): void {
-    this.router.navigate([path]);
+  installPWA(): void {
+    console.log("click");
+    
+    if (this.deferredPrompt) {
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('Installation.');
+        } else {
+          console.log('not Installable.');
+        }
+        this.deferredPrompt = null;
+      });
+    }
   }
-
 }
