@@ -1,5 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DeviceService } from '../../modules/shared-components/services/device.service';
+import { StorageService } from '../../core/services/storage.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -8,6 +9,7 @@ import { DeviceService } from '../../modules/shared-components/services/device.s
 })
 export class LandingPageComponent implements OnInit {
   private deviceService = inject(DeviceService);
+  private storageService = inject(StorageService);
 
   deferredPrompt: any;
   isMobile: boolean = false;
@@ -29,6 +31,7 @@ export class LandingPageComponent implements OnInit {
       this.deferredPrompt.prompt();
       this.deferredPrompt.userChoice.then((choiceResult: any) => {
         if (choiceResult.outcome === 'accepted') {
+          this.storageService.setItem('installed', true)
           console.log('Installation.');
         } else {
           console.log('not Installable.');

@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+import { StorageService } from '../../../core/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
