@@ -1,13 +1,15 @@
 <section class="d-flex flex-column justify-center align-center auth">
   <h2 class="mb-8 text-6">Se connecter à <span>List.</span></h2>
 
-  <app-input
+  <div class="col-12">
+    <app-input
     [control]="getFormControl('email')"
     [controlName]="'email'"
     [type]="'email'"
     [label]="'EMAIL *'"
     [placeholder]="'user@list.com'"
-  />
+    />
+  </div>
 
   <app-input
     [control]="getFormControl('password')"
