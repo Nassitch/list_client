@@ -17,8 +17,8 @@ export class StatisticService {
   private readonly _STATS: string = environment._STATS;
   private readonly _INVOICE: string = environment._INVOICE;
 
-  getStatsByUserId$(): Observable<Statistic> {
+  getStatsByUserId$(year: number): Observable<Statistic> {
     this.userService.initialize();
-    return this.http.get<Statistic>(`${this._BASE_URL}${this._USER}${this._STATS}${this._INVOICE}/${this.userService.id}`);
+    return this.http.get<Statistic>(`${this._BASE_URL}${this._USER}${this._STATS}${this._INVOICE}/${this.userService.id}/${year}`);
   }
 }

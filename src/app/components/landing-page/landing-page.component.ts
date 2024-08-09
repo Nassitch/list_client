@@ -1,31 +1,43 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { UserService } from '../../modules/user/shared/services/user.service';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { DeviceService } from '../../modules/shared-components/services/device.service';
+import { StorageService } from '../../core/services/storage.service';
 
 @Component({
   selector: 'app-landing-page',
   templateUrl: './landing-page.component.html',
-  styleUrl: './landing-page.component.css'
+  styleUrl: './landing-page.component.css',
 })
 export class LandingPageComponent implements OnInit {
+  private deviceService = inject(DeviceService);
+  private storageService = inject(StorageService);
 
-  private userService = inject(UserService);
-  private router = inject(Router);
-
-  profile$!: Observable<any>;
-
-  titleLandingMsg: string = "Bienvenue sur List.";
-  descriptionLandingMsg: string = "Vous pouvez desormais vous faire une liste, enregistrer une facture et vérifier vos statistiques, tout ça à l'infinis !";
-
+  deferredPrompt: any;
+  isMobile: boolean = false;
 
   ngOnInit(): void {
-    this.userService.initialize();
-    this.profile$ = this.userService.getUserProfile$();
+    window.addEventListener('beforeinstallprompt', (event) => {
+      event.preventDefault();
+      this.deferredPrompt = event;
+    });
+    if (this.deviceService.isMobileDevice()) {
+      this.isMobile = true;
+    }
   }
 
-  navigateTo(path: string): void {
-    this.router.navigate([path]);
+  installPWA(): void {
+    console.log("click");
+    
+    if (this.deferredPrompt) {
+      this.deferredPrompt.prompt();
+      this.deferredPrompt.userChoice.then((choiceResult: any) => {
+        if (choiceResult.outcome === 'accepted') {
+          this.storageService.setItem('installed', true)
+          console.log('Installation.');
+        } else {
+          console.log('not Installable.');
+        }
+        this.deferredPrompt = null;
+      });
+    }
   }
-
 }

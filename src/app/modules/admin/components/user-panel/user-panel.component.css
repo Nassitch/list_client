@@ -12,4 +12,5 @@
 .delete-btn.active {
     color: var(--error-msg);
     background-color: var(--error-background);
+    border: 1px solid var(--error-msg);
 }

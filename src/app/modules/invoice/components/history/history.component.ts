@@ -13,6 +13,7 @@ import { Statistic } from '../../../shared-components/models/statistic.interface
 })
 export class HistoryComponent implements OnInit {
   private refreshInvoice$ = new BehaviorSubject<void>(undefined);
+  private refreshSatistics$ = new BehaviorSubject<void>(undefined);
 
   private invoiceService = inject(InvoiceService);
   private statService = inject(StatisticService);
@@ -21,19 +22,37 @@ export class HistoryComponent implements OnInit {
   invoiceList$!: Observable<{ [year: string]: { [month: string]: InvoiceResponse[] } }>;
   statistics$!: Observable<Statistic>;
 
+  year: number = new Date().getFullYear();
+  currentYear: number = this.year;
+
   ngOnInit(): void {
     this.invoiceList$ = this.refreshInvoice$.pipe(
       switchMap(() => this.invoiceService.getInvoiceByUserId$()),
       map(invoiceList => this.groupByYearAndMonth(invoiceList.reverse())),
     );
-    this.statistics$ = this.statService.getStatsByUserId$();
+    this.statistics$ = this.refreshSatistics$.pipe(
+      switchMap(() => this.statService.getStatsByUserId$(this.currentYear))
+    );
+    this.refreshSatistics$.next();
+  }
+
+  yearNavigation(move: string): void {
+    if (move === 'forward' && this.currentYear !== this.year) {
+      this.currentYear += 1;
+      this.refreshSatistics$.next();
+    } else if (move === 'back') {
+      this.currentYear -= 1;
+      this.refreshSatistics$.next();
+    } else {
+      console.error("Le futur n'est pas visible.");
+    }
   }
 
   private groupByYearAndMonth(invoices: InvoiceResponse[]): { [year: string]: { [month: string]: InvoiceResponse[] } } {
     return invoices.reduce((groupedInvoices, invoice) => {
       const date = new Date(invoice.createdAt);
       const year = date.getFullYear().toString();
-      const month = date.toLocaleString('fr-FR', { month: 'long'}); 
+      const month = date.toLocaleString('fr-FR', { month: 'long' });
 
       if (!groupedInvoices[year]) {
         groupedInvoices[year] = {};
