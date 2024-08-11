@@ -25,6 +25,32 @@
           "/*.(svg|png|otf)"
         ]
       }
+    },
+    {
+      "name": "routes",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+        "urls": [
+          "/home",
+          "/landing-page",
+          "/credits"
+        ]
+      }
     }
-  ]
+  ],
+  "dataGroups": [
+  {
+    "name": "api-calls",
+    "urls": [
+      "/api/v1/**"
+    ],
+    "cacheConfig": {
+      "strategy": "performance",
+      "maxSize": 100,
+      "maxAge": "1h",
+      "timeout": "10s"
+    }
+  }
+]
 }

@@ -52,37 +52,6 @@ section > h4 {
   margin-bottom: 20px;
 }
 
-section > .action-desktop {
-  position: relative;
-  margin-block: 40px;
-  z-index: 10;
-}
-
-section > .action-desktop > button {
-    height: 50px;
-    width: 175px;
-    font-size: 1.4rem;
-    color: var(--second-color);
-    padding: 5px 20px;
-    background-color: var(--background-color);
-    border: none;
-    border-radius: 10px;
-}
-
-section > .action-desktop::after {
-    content: "";
-  position: absolute;
-  display: block;
-  background: url(../../../assets/icons/sparks.svg) no-repeat;
-  width: 84px;
-  height: 86px;
-  right: 0;
-  top: 0;
-  margin-right: -31px;
-  margin-top: -31px;
-  z-index: -1;
-}
-
 section > div > img {
   height: 350px;
 }

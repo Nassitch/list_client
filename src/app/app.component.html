@@ -2,4 +2,7 @@
 @if (showHeader) {
     <app-header />
 }
+@if (showInstallWindow) {
+    <app-install-app (closeWindow)="closeInstallWindow($event)" />
+}
 <router-outlet></router-outlet>
