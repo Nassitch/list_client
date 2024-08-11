@@ -2,6 +2,7 @@
 .input-text {
   height: 50px;
   width: 100%;
+  max-width: 285px;
   padding: 5px 15px;
   background-color: var(--background-color);
   border-radius: 10px;
@@ -20,6 +21,7 @@
 /* Password. */
 .input-password {
   width: 100%;
+  max-width: 285px;
 }
 
 .input-password > button {

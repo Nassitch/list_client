@@ -34,6 +34,16 @@
   border-radius: 50%;
 }
 
+.card-static > article > .high-section > .logo-img {
+  min-width: 45px;
+  max-width: 45px;
+}
+
+.card-static > article > .high-section > .check-img {
+  min-width: 45px;
+  max-width: 45px;
+}
+
 .card-static > article > .middle-section {
   min-height: 33%;
   width: 100%;
