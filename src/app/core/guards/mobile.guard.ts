@@ -9,13 +9,14 @@ export const mobileGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (deviceService.isMobileDevice()) {
-    if (storageService.getItem('installed')) {
-      return true;
-    } else {
-      storageService.setItem('installed', false);
-      router.navigate(['/landing-page']);
-      return false;
-    }
+    // if (storageService.getItem('installed')) {
+    //   return true;
+    // } else {
+    //   storageService.setItem('installed', false);
+    //   router.navigate(['/landing-page']);
+    //   return false;
+    // }
+    return true;
   } else {
     router.navigate(['/landing-page']);
     return false;

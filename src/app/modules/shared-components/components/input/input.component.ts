@@ -9,7 +9,7 @@ import { HandleFormErrorService } from '../../services/handle-form-error.service
   imports: [CommonModule, ReactiveFormsModule],
   selector: 'app-input',
   templateUrl: './input.component.html',
-  styleUrl: './input.component.scss',
+  styleUrl: './input.component.css',
 })
 export class InputComponent implements OnInit {
   
