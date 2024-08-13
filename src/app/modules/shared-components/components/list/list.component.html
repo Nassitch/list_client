@@ -7,7 +7,7 @@
         </div>
         <div class="list-unroll">
             <button (click)="toggleList()">
-                <img [src]="isUnroll ? unRoll : roll" alt="Rouler/Dérouler" />
+                <img [src]="isUnroll ? unRoll : roll" [alt]=" isUnroll ? 'Rouler' : 'Dérouler'" />
             </button>
         </div>
     </article>
