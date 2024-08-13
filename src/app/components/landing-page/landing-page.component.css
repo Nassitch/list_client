@@ -1,10 +1,17 @@
 section {
-  height: 100vh;
-  width: 100vw;
+  /* height: 100vh; */
+  /* width: 100vw; */
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-block: 60px;
+}
+
+section > .title-section {
+  font-size: 24px;
+  margin-block: 20px 10px;
 }
 
 section > .head-desktop {
@@ -46,14 +53,101 @@ section > .head-desktop > h3 {
   margin-top: 20px;
 }
 
-section > h4 {
+section > .head-desktop > h4 {
   font-size: 1.2rem;
   color: var(--background-color);
   margin-bottom: 20px;
 }
 
-section > div > img {
+section > .qr-code > img {
+  height: 250px;
+  width: 250px;
+}
+
+section > .available-os {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 5px 10px;
+  background-color: var(--main-color);
+  border-radius: 20px;
+}
+
+section > .available-os > img {
+  height: 50px;
+  width: 50px;
+}
+
+section > .available-os > img:first-child {
+  height: 50px;
+  width: 50px;
+  border-right: 1px solid var(--second-color);
+}
+
+section > .hard-skills {
+  width: 450px;
+  margin-block: 10px 20px;
+  background-color: var(--app-color);
+  border-radius: 10px;
+  max-height: 65px;
+  overflow: hidden;
+  /* transition: max-height 1s ease-in-out, padding 1s ease-in-out; */
+  transition: max-height 0.5s ease-in-out;
+}
+
+section > .hard-skills.open {
+  max-height: 500px;
+}
+/* 
+section > .hard-skills.close {
+  max-height: 65px;
+} */
+
+section > .hard-skills > button {
+  height: 35px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-block: 10px 20px;
+  border: none;
+  background: transparent;
+  /* background-color: red; */
+}
+
+section > .hard-skills > button > h3 {
+  font-size: 24px;
+  /* color: var(--second-color); */
+  text-align: center;
+}
+
+section > .hard-skills > button > img {
+  height: 35px;  
+}
+
+section > .hard-skills > div {
+  width: 60%;
+  /* background-color: red; */
+  padding-bottom: 20px;
+  margin: auto;
+}
+
+section > .hard-skills > div > ul > li {
+  font-size: 21px;
+  list-style:disc;
+}
+
+section > .mockup-img > img {
   height: 350px;
+}
+
+section > .techno-cards {
+  width: 750px;
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--background-color) var(--second-color);
 }
 
 @media screen and (min-height: 667px) and (max-height: 885px) {

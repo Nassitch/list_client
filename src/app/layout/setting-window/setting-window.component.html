@@ -33,6 +33,13 @@
             <img src="../../../assets/icons/documents.svg" alt="Crédits" />
             <p>Crédits</p>
         </button>
+        @if (isInstalled) {
+            <span></span>
+            <button class="d-flex setting-btn" (click)="open()" >
+                <img src="../../../assets/manifest/logo.png" alt="Installer" />
+                <p>Installer l'app</p>
+            </button>
+        }
         <span></span>
         <button class="d-flex setting-btn" (click)="logout()">
             <img src="../../../assets/icons/logout.svg" alt="Déconnexion" />

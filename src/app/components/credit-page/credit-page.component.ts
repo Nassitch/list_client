@@ -15,14 +15,14 @@ export class CreditPageComponent {
       version: "17.1"
     },
     {
-      picture: "../../../../../assets/technologies/ionic.svg",
-      title: "Ionic",
-      version: "7.1.3"
-    },
-    {
       picture: "../../../../../assets/technologies/spring.svg",
       title: "Spring",
       version: "3.2"
+    },
+    {
+      picture: "../../../../../assets/technologies/mysql.svg",
+      title: "MySQL",
+      version: "8.0"
     },
     {
       picture: "../../../../../assets/technologies/figma.svg",
@@ -36,9 +36,14 @@ export class CreditPageComponent {
       secondLink: "https://github.com/Nassitch/list_server"
     },
     {
-      picture: "../../../../../assets/technologies/azure.svg",
-      title: "Azure",
-      version: "2024"
+      picture: "../../../../../assets/technologies/apache.svg",
+      title: "Apache",
+      version: "2.4"
+    },
+    {
+      picture: "../../../../../assets/technologies/nginx.svg",
+      title: "Nginx",
+      version: "1.27"
     }
   ]
 
