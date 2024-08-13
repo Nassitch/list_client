@@ -51,7 +51,7 @@ export class TokenService implements OnInit {
 
   private _clearCookiesAndThenPutNewToken(tokenFromDB: TokenResponse): void {
     this.cookieService.deleteCookie('authToken');
-    this.cookieService.setCookie('authToken', tokenFromDB.token, 7);
+    this.cookieService.setCookie('authToken', tokenFromDB.token, 7, true, 'Strict');
   }
 
   private _decodeToken(tokenFromDB: TokenResponse): any {

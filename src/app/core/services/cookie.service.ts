@@ -4,11 +4,24 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CookieService {
-  setCookie(name: string, value: string, days: number): void {
+  setCookie(
+    name: string,
+    value: string,
+    days: number,
+    secure: boolean = true,
+    sameSite: 'Lax' | 'Strict' | 'None' = 'Lax',
+    path: string = '/'
+  ): void {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     const expires = 'expires=' + date.toUTCString();
-    document.cookie = name + '=' + value + ';' + expires + ';path=/';
+    let cookieString = `${name}=${value};${expires};path=${path};SameSite=${sameSite}`;
+
+    if (secure) {
+      cookieString += ';Secure';
+    }
+
+    document.cookie = cookieString;
   }
 
   getCookie(name: string): string | null {
@@ -24,7 +37,7 @@ export class CookieService {
     return null;
   }
 
-  deleteCookie(name: string): void {
-    this.setCookie(name, '', -1);
+  deleteCookie(name: string, path: string = '/'): void {
+    this.setCookie(name, '', -1, true, 'Lax', path);
   }
 }
