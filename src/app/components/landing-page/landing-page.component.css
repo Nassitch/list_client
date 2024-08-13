@@ -1,6 +1,4 @@
 section {
-  /* height: 100vh; */
-  /* width: 100vw; */
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -91,17 +89,12 @@ section > .hard-skills {
   border-radius: 10px;
   max-height: 65px;
   overflow: hidden;
-  /* transition: max-height 1s ease-in-out, padding 1s ease-in-out; */
   transition: max-height 0.5s ease-in-out;
 }
 
 section > .hard-skills.open {
   max-height: 500px;
 }
-/* 
-section > .hard-skills.close {
-  max-height: 65px;
-} */
 
 section > .hard-skills > button {
   height: 35px;
@@ -112,12 +105,10 @@ section > .hard-skills > button {
   margin-block: 10px 20px;
   border: none;
   background: transparent;
-  /* background-color: red; */
 }
 
 section > .hard-skills > button > h3 {
   font-size: 24px;
-  /* color: var(--second-color); */
   text-align: center;
 }
 
@@ -127,7 +118,6 @@ section > .hard-skills > button > img {
 
 section > .hard-skills > div {
   width: 60%;
-  /* background-color: red; */
   padding-bottom: 20px;
   margin: auto;
 }
