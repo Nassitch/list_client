@@ -16,14 +16,6 @@ export class InstallAppComponent implements OnInit {
 
   deferredPrompt: any;
 
-  // ngOnInit(): void {
-  //   window.addEventListener('beforeinstallprompt', (e: any) => {
-  //     console.log('beforeinstallprompt event captured');  // Ajout d'un journal
-  //     e.preventDefault();
-  //     this.deferredPrompt = e;
-  //   });
-  // }
-
   ngOnInit(): void {
     window.addEventListener('beforeinstallprompt', (e: any) => {
       console.log('beforeinstallprompt event captured:', e);
@@ -34,14 +26,14 @@ export class InstallAppComponent implements OnInit {
   }
   
   installPWA(): void {
+    this.storageService.setItem('installed', true);
     if (!this.deferredPrompt) {
-      console.log('PWA installation prompt not available.');  // Journal si l'événement n'est pas capturé
+      console.log('PWA installation prompt not available.');
       return;
     }
     this.deferredPrompt.prompt();
     this.deferredPrompt.userChoice.then((choiceResult: any) => {
       if (choiceResult.outcome === 'accepted') {
-        this.storageService.setItem('installed', true);
         console.log('User accepted the PWA install prompt');
       } else {
         console.log('User dismissed the PWA install prompt');
