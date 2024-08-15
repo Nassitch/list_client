@@ -4,7 +4,6 @@ export interface MarketResponse {
     id: number;
     name: string;
     size: string;
-    place: string;
     picture: string;
     invoices: Invoice[] | null
 }

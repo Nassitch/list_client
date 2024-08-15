@@ -5,12 +5,12 @@
     <article>
       <section class="high-section">
         @if (imgContent) {
-          <img [src]="imgContent" [alt]="title" />
+          <img [src]="imgContent" class="logo-img" [alt]="title" />
         }
         @if (count) {
           <p>{{ count }}</p>
         }
-        <img [src]="isActive ? checked : unChecked" alt="Bouton validé" />
+        <img [src]="isActive ? checked : unChecked" class="check-img" alt="Bouton validé" />
       </section>
       <section class="middle-section">
         <h4>{{ title }}</h4>

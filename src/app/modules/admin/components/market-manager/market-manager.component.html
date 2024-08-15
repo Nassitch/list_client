@@ -16,7 +16,7 @@
                     [title]="market.name"
                     [onDelete]="onDelete.bind(this, market.id)"
                     [isActive]="market.id === activeMarket"
-                    (cardSelected)="onCardClick(market.id, market.name, market.size, market.place, market.picture)"
+                    (cardSelected)="onCardClick(market.id, market.name, market.size, market.picture)"
                     />
                 }
             }
@@ -38,11 +38,6 @@
         <div class="manager-input-text" (click)="focusInput(inputFieldSize)">
           <label for="size">TAILLE *</label>
           <input #inputFieldSize type="text" [(ngModel)]="size" name="size" />
-        </div>
-    
-        <div class="manager-input-text" (click)="focusInput(inputFieldPlace)">
-          <label for="place">LIEU *</label>
-          <input #inputFieldPlace type="text" [(ngModel)]="place" name="place" />
         </div>
 
         <div class="manager-input-file" >

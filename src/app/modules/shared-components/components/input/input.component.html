@@ -13,9 +13,9 @@
       {{ label }}</label
     >
     <input
-    #inputField
-    [type]="type"
-    id="form-{{ controlName }}-id"
+      #inputField
+      [type]="type"
+      id="form-{{ controlName }}-id"
       class="form-control {{ inputClass }}"
       [formControl]="control"
       [autocomplete]="autocomplete"
@@ -23,21 +23,20 @@
     />
   </div>
   <ng-container
-  *ngTemplateOutlet="errorTemplate; context: { control: control }"
+    *ngTemplateOutlet="errorTemplate; context: { control: control }"
   />
 </ng-template>
 
 <ng-template #passwordTemplate>
-    <div class="d-flex input-password mb-4" (click)="focusInput()">
-        <div>
-            <!-- <div class="input-text mb-4"> -->
-                <label
+  <div class="d-flex input-password mb-4" (click)="focusInput()">
+    <div>
+      <label
         class="form-label {{ labelClass }}"
         for="form-{{ controlName }}-id"
-        >
+      >
         {{ label }}
-    </label>
-    <input
+      </label>
+      <input
         #inputField
         [type]="isPasswordVisible ? 'text' : 'password'"
         id="form-{{ controlName }}-id"
@@ -53,19 +52,18 @@
     </button>
   </div>
   @if (showError) {
-    <ng-container
-        [ngTemplateOutlet]="errorTemplate"
-        [ngTemplateOutletContext]="{ control: control }"
-    />
+  <ng-container
+    [ngTemplateOutlet]="errorTemplate"
+    [ngTemplateOutletContext]="{ control: control }"
+  />
   }
 </ng-template>
 
 <ng-template #errorTemplate let-control="control">
-  @if (showError) {
-    @if(control.invalid && (control.dirty || control.touched) && errorMessage) {
-    <span class="error-input">
-        {{ errorMessage }}
-    </span>
-  }
-}
+  @if (showError) { @if(control.invalid && (control.dirty || control.touched) &&
+  errorMessage) {
+  <span class="error-input">
+    {{ errorMessage }}
+  </span>
+  } }
 </ng-template>

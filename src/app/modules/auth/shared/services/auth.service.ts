@@ -45,7 +45,7 @@ export class AuthService implements OnInit {
       .post<LogResponse>(`${this._BASE_URL}${this._AUTH}${this._AUTHENTIFICATE}`, user)
       .pipe(
         tap((response: LogResponse) => {
-          this.cookieService.setCookie('authToken', response.token, 0.1);
+          this.cookieService.setCookie('authToken', response.token, 1, true, 'Strict');
 
           const decodedToken: TokenDecrypted = this.tokenService.getTokenFromCookiesAndDecode();
           if (decodedToken) {

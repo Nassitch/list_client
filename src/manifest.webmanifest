@@ -6,7 +6,8 @@
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
-  "lang": "french",
+  "lang": "fr",
+  "orientation": "paysage",
   "icons": [
     {
       "src": "assets/manifest/logo_72x72.png",

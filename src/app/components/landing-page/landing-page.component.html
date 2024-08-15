@@ -1,26 +1,58 @@
 <section>
+  <div class="head-desktop">
+    <article>
+      <h1>List.</h1>
+      <img src="../../../assets/manifest/logo.png" alt="Logo" />
+    </article>
+    <h2>
+      Une nouvelle manière d'organiser vos courses et d'enregistrer vos
+      factures.
+    </h2>
+    <h3>N'hésitez plus et téléchargez l'application ici !</h3>
+    <h4>( Uniquement réservé aux appareils mobiles. )</h4>
+  </div>
 
-    <div class="head-desktop">
-        <article>
-            <h1>List.</h1>
-            <img src="../../../assets/manifest/logo.png" alt="Logo" />    
-        </article>
-        <h2>Une nouvelle manière d'organiser vos courses et d'enregistrer vos factures.</h2>
-        <h3>N'hésitez plus et téléchargez l'application ici !</h3>
+  <div class="qr-code">
+    <img src="../../../assets/qrcodes/qr_code.svg" alt="QR Code" />
+  </div>
+
+  <div class="available-os">
+    <img src="../../../assets/os/ios.svg" alt="IOS" />
+    <div></div>
+    <img src="../../../assets/os/android.svg" alt="Android" />
+  </div>
+
+  <div [ngClass]="openSkills ? 'hard-skills open' : 'hard-skills close' ">
+    <button (click)="seeOrHideSkills()">
+      <h3>Caractéristiques techniques</h3>
+      <img [src]="openSkills ? unRoll : roll" [alt]="openSkills ? 'Moins' : 'Plus'" />  
+    </button>
+    @if (openSkills) {
+      <div>
+        @for (hardSkill of hardSkillList; track $index) {
+          <ul>
+            <li>{{ hardSkill }}</li>
+          </ul>
+        }
       </div>
-      
-      @if (isMobile) {
-        <div class="action-desktop">
-          <button (click)="installPWA()">Installer</button>
-        </div>
-      }
-      @else {
-        <h4>( Uniquement réservé aux appareils mobiles. )</h4>
-      }
+    }
+  </div>
 
-  <div>
+  <div class="mockup-img">
     <img src="../../../assets/mockups/iphone_portrait.png" alt="iPhone" />
     <img src="../../../assets/mockups/samsung_portrait.png" alt="Samsung" />
   </div>
 
+  <h3 class="title-section">Téchnologies.</h3>
+  <div class="techno-cards">
+    @for (technologieCard of technologiesCardList; track $index) {
+    <app-technologie-card
+      [picture]="technologieCard.picture"
+      [title]="technologieCard.title"
+      [version]="technologieCard.version"
+      [link]="technologieCard.link"
+      [secondLink]="technologieCard.secondLink"
+    />
+    }
+  </div>
 </section>

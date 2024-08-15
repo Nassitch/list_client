@@ -63,14 +63,12 @@ export class MarketManagerComponent implements OnInit, AfterViewInit {
     id: number,
     name: string,
     size: string,
-    place: string,
     picturePath: string
   ): void {
     this.activeMarket = this.activeMarket === id ? undefined : id;
     this.edit = true;
     this.name = name;
     this.size = size;
-    this.place = place;
     this.picturePath = picturePath;
     this.textBtn = 'Modifier';
   }
