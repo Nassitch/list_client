@@ -2,12 +2,12 @@
   "name": "List.",
   "short_name": "List.",
   "theme_color": "#fdebd7",
-  "background_color": "#fff",
+  "background_color": "#fdebd7",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
   "lang": "fr",
-  "orientation": "paysage",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "assets/manifest/logo_72x72.png",
