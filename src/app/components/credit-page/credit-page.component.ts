@@ -36,6 +36,16 @@ export class CreditPageComponent {
       secondLink: "https://github.com/Nassitch/list_server"
     },
     {
+      picture: "../../../../../assets/technologies/docker.svg",
+      title: "Docker",
+      version: "27.2"
+    },
+    {
+      picture: "../../../../../assets/technologies/github_actions.svg",
+      title: "GH Actions",
+      version: "1.0.19"
+    },
+    {
       picture: "../../../../../assets/technologies/apache.svg",
       title: "Apache",
       version: "2.4"
