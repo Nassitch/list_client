@@ -1,5 +1,5 @@
 @if (!isUser) {
-    <div id="setting-window">
+    <div class="setting-window">
         <button class="d-flex setting-btn" [routerLink]="['/admin/dash-board']" (click)="close()" >
             <img src="../../../assets/icons/administrator.svg" alt="Tableau de bord" />
             <p>Tableau de bord</p>
@@ -16,9 +16,9 @@
         </button>
     </div>
     <div class="modal-close-clicker" (click)="close()"></div>
-    
+
 } @else {
-    <div id="setting-window">
+    <div class="setting-window">
         <button class="d-flex setting-btn" [routerLink]="['/user/settings']" (click)="close()" >
             <img src="../../../assets/icons/setting.svg" alt="Paramètres" />
             <p>Paramètres</p>
@@ -33,13 +33,6 @@
             <img src="../../../assets/icons/documents.svg" alt="Crédits" />
             <p>Crédits</p>
         </button>
-        @if (isInstalled) {
-            <span></span>
-            <button class="d-flex setting-btn" (click)="open()" >
-                <img src="../../../assets/manifest/logo.png" alt="Installer" />
-                <p>Installer l'app</p>
-            </button>
-        }
         <span></span>
         <button class="d-flex setting-btn" (click)="logout()">
             <img src="../../../assets/icons/logout.svg" alt="Déconnexion" />

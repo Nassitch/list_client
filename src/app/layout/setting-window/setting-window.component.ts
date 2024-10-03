@@ -1,7 +1,6 @@
 import { Component, EventEmitter, inject, OnInit, Output } from '@angular/core';
 import { AuthService } from '../../modules/auth/shared/services/auth.service';
 import { AdminService } from '../../modules/admin/shared/services/admin.service';
-import { InstallService } from '../../modules/shared-components/services/install.service';
 
 @Component({
   selector: 'app-setting-window',
@@ -14,7 +13,6 @@ export class SettingWindowComponent implements OnInit {
 
   private adminService = inject(AdminService);
   private authService = inject(AuthService);
-  private installService = inject(InstallService);
 
   isUser: boolean = true;
   isInstalled: boolean = false;
@@ -24,9 +22,6 @@ export class SettingWindowComponent implements OnInit {
     const role = this.adminService.currentUserRole$.getValue();
     if (role === 'ROLE_ADMIN') {
       this.isUser = false;
-    }
-    if (!this.installService.pwaIsInstalled()) {
-      this.isInstalled = true;
     }
   }
 
