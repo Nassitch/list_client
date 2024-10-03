@@ -16,11 +16,11 @@ export class ListComponent implements OnInit {
   @Input() public items!: Item[];
   @Input() public isUnroll: boolean = true;
   @Input() public allSelected: boolean = false;
-  
+
   @Output() public selectedItemsChange = new EventEmitter<{ categoryId: number, items: Item[] }>();
-  
+
   selectedItems: { [id: number]: boolean } = {};
-  
+
   count: number = 0;
   unRoll: string = '../../../../../assets/icons/unroll.svg';
   roll: string = '../../../../../assets/icons/roll.svg';
@@ -31,11 +31,16 @@ export class ListComponent implements OnInit {
     this.count = this.countItem(this.items);
     this.selectAllItems(this.allSelected);
     this.emitSelectItems();
+    this.sortItem(this.items);
   }
 
   countItem(items: Item[]): number {
     let howMuch: number = items.length;
     return howMuch;
+  }
+
+  sortItem(items: Item[]): Item[] {
+    return items.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   toggleList(): boolean {

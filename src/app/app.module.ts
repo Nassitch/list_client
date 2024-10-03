@@ -21,7 +21,6 @@ import { ConfirmModalComponent } from './modules/shared-components/components/co
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { LineChartComponent } from './modules/shared-components/components/line-chart/line-chart.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
-import { InstallAppComponent } from './modules/shared-components/components/install-app/install-app.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +38,6 @@ import { InstallAppComponent } from './modules/shared-components/components/inst
     AppRoutingModule,
     HttpClientModule,
     ToastComponent,
-    InstallAppComponent,
     LandingMsgComponent,
     LastLogComponent,
     DateFormatPipe,

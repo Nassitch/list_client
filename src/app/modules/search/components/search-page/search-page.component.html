@@ -1,14 +1,4 @@
 <main>
-  <div class="search-bar">
-    <button class="ghost-btn" (click)="navigateTo('/product/', input)">
-      <img src="../../../../../assets/icons/search-bar.svg" alt="Rechercher" />
-    </button>
-    <input [(ngModel)]="input" name="input" />
-    <button class="ghost-btn" (click)="reset()">
-      <img src="../../../../../assets/icons/close-bar.svg" alt="Restaurer" />
-    </button>
-  </div>
-
   <section class="container-category mt-8">
     <div class="categories mt-8">
       @if (categories$ | async; as categories) {
