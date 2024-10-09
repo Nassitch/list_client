@@ -8,11 +8,11 @@ export class DateFormatTicketPipe implements PipeTransform {
   transform(value: string): string {
     if (!value) return '';
 
-    const date = new Date(value);
+    const date: Date = new Date(value);
 
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const day: string = date.getDate().toString().padStart(2, '0');
+    const hours: string = date.getHours().toString().padStart(2, '0');
+    const minutes: string = date.getMinutes().toString().padStart(2, '0');
 
     if (minutes === '00') {
       return `le ${day} à ${hours}h`;

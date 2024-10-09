@@ -1,11 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import {
-  Chart,
-  ChartConfiguration,
-  registerables,
-  ChartEvent,
-  ActiveElement,
-} from 'chart.js';
+import { Chart, ChartConfiguration, registerables, ChartEvent, ActiveElement } from 'chart.js';
 
 @Component({
   selector: 'app-line-chart',
@@ -38,8 +32,8 @@ export class LineChartComponent implements OnInit {
   }
 
   renderChart(): void {
-    const canvas = this.lineChart.nativeElement as HTMLCanvasElement;
-    const ctx = canvas.getContext('2d');
+    const canvas: HTMLCanvasElement = this.lineChart.nativeElement as HTMLCanvasElement;
+    const ctx: CanvasRenderingContext2D | null = canvas.getContext('2d');
 
     const gradientYellow = ctx!.createLinearGradient(0, 0, 0, canvas.height);
     gradientYellow.addColorStop(0, 'rgb(253, 235, 215)');
@@ -52,7 +46,7 @@ export class LineChartComponent implements OnInit {
         datasets: [
           {
             data: this.shops.map(
-              (value, index) => value + this.invoices[index]
+              (value: number, index: number) => value + this.invoices[index]
             ),
             fill: true,
             backgroundColor: gradientYellow,
@@ -75,8 +69,8 @@ export class LineChartComponent implements OnInit {
           },
           tooltip: {
             callbacks: {
-              label: (context) => `Label: ${context.label}`,
-              afterLabel: (context) => `Value: ${context.raw}`,
+              label: (context): string => `Label: ${context.label}`,
+              afterLabel: (context): string => `Value: ${context.raw}`,
             },
           },
         },
@@ -92,10 +86,10 @@ export class LineChartComponent implements OnInit {
           event: ChartEvent,
           elements: ActiveElement[],
           chart: Chart
-        ) => {
+        ): void => {
           if (elements.length > 0) {
-            const firstPoint = elements[0];
-            const index = firstPoint.index;
+            const firstPoint: ActiveElement = elements[0];
+            const index: number = firstPoint.index;
 
             this.shop = this.shops[index];
             this.value = this.invoices[index];
@@ -112,8 +106,8 @@ export class LineChartComponent implements OnInit {
 
   updateChart(): void {
     if (this.chart) {
-      const combinedData = this.shops.map(
-        (value, index) => value + this.invoices[index]
+      const combinedData: number[] = this.shops.map(
+        (value: number, index: number) => value + this.invoices[index]
       );
       this.chart.data.datasets[0].data = combinedData;
       this.chart.update();

@@ -27,15 +27,15 @@
             }
         </div>
     </section>
-        
+
     <form>
 
-        <div class="manager-input-text" (click)="focusInput(inputFieldName)">
+        <div class="manager-input-text" (click)="focusInput(inputFieldName)" tabindex="0" (keydown.enter)="focusInput(inputFieldName)">
           <label for="name">NOM *</label>
           <input #inputFieldName type="text" [(ngModel)]="name" name="name" />
         </div>
-    
-        <div class="manager-input-text" (click)="focusInput(inputFieldSize)">
+
+        <div class="manager-input-text" (click)="focusInput(inputFieldSize)" tabindex="0" (keydown.enter)="focusInput(inputFieldSize)">
           <label for="size">TAILLE *</label>
           <input #inputFieldSize type="text" [(ngModel)]="size" name="size" />
         </div>

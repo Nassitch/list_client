@@ -9,7 +9,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class SubmitBtnComponent {
   @Input() text: string = 'Enregistrer';
-  @Output() buttonClick = new EventEmitter<void>();
+  @Output() buttonClick: EventEmitter<void> = new EventEmitter<void>();
 
   onClick(): void {
     this.buttonClick.emit();

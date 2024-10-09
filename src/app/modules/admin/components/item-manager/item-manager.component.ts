@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
 import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { CategoryService } from '../../../category/shared/services/category.service';
 import { ItemService } from '../../../item/shared/service/item.service';
@@ -20,17 +14,17 @@ import { ConfirmModalService } from '../../../shared-components/services/confirm
   templateUrl: './item-manager.component.html',
   styleUrl: './item-manager.component.css',
 })
-export class ItemManagerComponent implements OnInit {
+export class ItemManagerComponent implements OnInit, AfterViewInit {
   @ViewChild('inputField') inputField!: ElementRef;
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
-  private refreshItem$ = new BehaviorSubject<void>(undefined);
+  private refreshItem$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
 
-  private categoryService = inject(CategoryService);
-  private itemService = inject(ItemService);
-  private toastService = inject(ToastService);
-  private confirmModalService = inject(ConfirmModalService);
-  public imageService = inject(ImageService);
+  private categoryService: CategoryService = inject(CategoryService);
+  private itemService: ItemService = inject(ItemService);
+  private toastService: ToastService = inject(ToastService);
+  private confirmModalService: ConfirmModalService = inject(ConfirmModalService);
+  public imageService: ImageService = inject(ImageService);
 
   categoryList$!: Observable<Category[]>;
   itemList$!: Observable<Item[]>;
@@ -89,21 +83,21 @@ export class ItemManagerComponent implements OnInit {
             if (this.activeCategory !== undefined || this.activeItem !== undefined) {
               this.editSubscription$ = this.itemService.editItem$(this.activeItem!, this.name, this.activeCategory!)
                 .subscribe({
-                  next: () => {
+                  next: (): void => {
                     this.toastService.success('Produit modifiée avec succès.');
                     this.refreshItem$.next();
                   },
-                  error: (error) => this.toastService.error("Une erreur s'est produite lors de la modification du produit."),
+                  error: () => this.toastService.error("Une erreur s'est produite lors de la modification du produit."),
                 });
             }
           } else {
             this.postSubscription$ = this.itemService.addItem$(this.activeCategory!, this.name)
               .subscribe({
-                next: () => {
+                next: (): void => {
                   this.toastService.success('Produit ajoutée avec succès.');
                   this.refreshItem$.next();
                 },
-                error: (error) => this.toastService.error("Une erreur s'est produite lors de l'ajout du produit."),
+                error: () => this.toastService.error("Une erreur s'est produite lors de l'ajout du produit."),
               });
           }
         } else {
@@ -114,11 +108,11 @@ export class ItemManagerComponent implements OnInit {
       if (response.confirmed) {
         this.deleteSubscription$ = this.itemService.deleteItem$(this.idToDeleted!)
           .subscribe({
-            next: () => {
+            next: (): void => {
               this.toastService.success('Produit supprimé avec Succès'),
                 this.refreshItem$.next();
             },
-            error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression"),
+            error: () => this.toastService.error("Une erreur s'est produite lors de la suppression"),
           });
       }
     }

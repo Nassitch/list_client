@@ -1,19 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  ViewChild,
-} from '@angular/core';
-import {
-  Chart,
-  ChartConfiguration,
-  registerables,
-  ChartEvent,
-  ActiveElement,
-} from 'chart.js';
+import { Component, ElementRef, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Chart, ChartConfiguration, registerables, ChartEvent, ActiveElement } from 'chart.js';
 
 @Component({
   selector: 'app-bar-chart',
@@ -44,7 +30,7 @@ export class BarChartComponent implements OnInit, OnChanges {
     this.renderChart();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
+  ngOnChanges(): void {
     this.updateChart();
   }
 
@@ -57,7 +43,7 @@ export class BarChartComponent implements OnInit, OnChanges {
           {
             label: 'Shop + Facture',
             data: this.shops.map(
-              (value, index) => value + this.invoices[index]
+              (value: number, index: number) => value + this.invoices[index]
             ),
             fill: true,
             backgroundColor: 'rgb(253, 235, 215)',
@@ -74,8 +60,8 @@ export class BarChartComponent implements OnInit, OnChanges {
           },
           tooltip: {
             callbacks: {
-              label: (context) => `Mois: ${context.label}`,
-              afterLabel: (context) => `Total: ${context.raw} €`,
+              label: (context): string => `Mois: ${context.label}`,
+              afterLabel: (context): string => `Total: ${context.raw} €`,
             },
           },
         },
@@ -93,8 +79,8 @@ export class BarChartComponent implements OnInit, OnChanges {
           chart: Chart
         ) => {
           if (elements.length > 0) {
-            const firstPoint = elements[0];
-            const index = firstPoint.index;
+            const firstPoint: ActiveElement = elements[0];
+            const index: number = firstPoint.index;
 
             this.shop = this.shops[index];
             this.invoice = this.invoices[index];
@@ -111,8 +97,8 @@ export class BarChartComponent implements OnInit, OnChanges {
 
   updateChart(): void {
     if (this.chart) {
-      const combinedData = this.shops.map(
-        (value, index) => value + this.invoices[index]
+      const combinedData: number[] = this.shops.map(
+        (value: number, index: number) => value + this.invoices[index]
       );
       this.chart.data.datasets[0].data = combinedData;
       this.chart.update();

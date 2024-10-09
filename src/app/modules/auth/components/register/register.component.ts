@@ -7,7 +7,6 @@ import { UserInfo } from '../../../user/models/user-info.interface';
 import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared-components/services/toast.service';
-import { environment } from '../../../../../environments/environment.developpment';
 import { ImageService } from '../../../shared-components/services/image.service';
 
 @Component({
@@ -16,12 +15,12 @@ import { ImageService } from '../../../shared-components/services/image.service'
   styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-  private authService = inject(AuthService);
-  private userService = inject(UserService);
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private toastService = inject(ToastService);
-  public imageService = inject(ImageService);
+  private authService: AuthService = inject(AuthService);
+  private userService: UserService = inject(UserService);
+  private fb: FormBuilder = inject(FormBuilder);
+  private router: Router = inject(Router);
+  private toastService: ToastService = inject(ToastService);
+  public imageService: ImageService = inject(ImageService);
 
   formGroup!: FormGroup;
 
@@ -31,7 +30,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   avatars$!: Observable<string[]>;
   registerSubscription$: Subscription = new Subscription();
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.avatars$ = this.userService.getAvatars$();
 
     this.formGroup = this.fb.group({
@@ -66,7 +65,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     if (this.formGroup.invalid) {
-      Object.keys(this.formGroup.controls).forEach((key) => {
+      Object.keys(this.formGroup.controls).forEach((key: string): void => {
         const control = this.formGroup.get(key);
         control?.markAsTouched();
       });
@@ -94,7 +93,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
             this.toastService.error("Erreur lors de l'inscription");
           }
         },
-        error: (error) => {
+        error: (): void => {
           this.toastService.error("Erreur lors de l'inscription");
         },
       });

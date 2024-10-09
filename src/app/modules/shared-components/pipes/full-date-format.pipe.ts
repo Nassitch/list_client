@@ -9,14 +9,14 @@ export class FullDateFormatPipe implements PipeTransform {
   transform(value: string): string {
     if (!value) return '';
 
-    const date = new Date(value);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    const hours = date.getHours();
-    const minutes = date.getMinutes();
+    const date: Date = new Date(value);
+    const day: number = date.getDate();
+    const month: number = date.getMonth() + 1;
+    const year: number = date.getFullYear();
+    const hours: number = date.getHours();
+    const minutes: number = date.getMinutes();
 
-    const formattedDate = `${day.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}.${year} à ${hours.toString().padStart(2, '0')}h${minutes.toString().padStart(2, '0')}`;
+    const formattedDate: string = `${day.toString().padStart(2, '0')}.${month.toString().padStart(2, '0')}.${year} à ${hours.toString().padStart(2, '0')}h${minutes.toString().padStart(2, '0')}`;
 
     return formattedDate;
   }

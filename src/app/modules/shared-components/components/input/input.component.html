@@ -8,7 +8,7 @@
 }
 
 <ng-template #defaultTemplate>
-  <div class="input-text mb-4" (click)="focusInput()">
+  <div class="input-text mb-4" (click)="focusInput()" tabindex="0" (keydown.enter)="focusInput()">
     <label class="form-label {{ labelClass }}" for="form-{{ controlName }}-id">
       {{ label }}</label
     >
@@ -28,7 +28,7 @@
 </ng-template>
 
 <ng-template #passwordTemplate>
-  <div class="d-flex input-password mb-4" (click)="focusInput()">
+  <div class="d-flex input-password mb-4" (click)="focusInput()" tabindex="0" (keydown.enter)="focusInput()">
     <div>
       <label
         class="form-label {{ labelClass }}"

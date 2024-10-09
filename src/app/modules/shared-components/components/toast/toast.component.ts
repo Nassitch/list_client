@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ToastService } from '../../services/toast.service';
 import { CommonModule } from '@angular/common';
+import {ToastType} from "../../../../models/toast.interface";
 
 @Component({
   selector: 'app-toast',
@@ -30,7 +31,7 @@ import { CommonModule } from '@angular/common';
 })
 export class ToastComponent implements OnInit {
 
-  public toasts: any[] = [];
+  public toasts: ToastType[] = [];
 
   constructor(private toastService: ToastService) { }
 
@@ -38,16 +39,12 @@ export class ToastComponent implements OnInit {
     this.toastService.setToastComponent(this);
   }
 
-  showToast(message: string, title: string, type: string) {
+  showToast(message: string, title: string, type: string): void {
     this.toasts.push({ message, title, type });
     setTimeout(() => this.removeToast(this.toasts[0]), 3000);
   }
 
-  removeToast(toast: any) {
+  removeToast(toast: ToastType): void {
     this.toasts = this.toasts.filter(t => t !== toast);
-  }
-
-  trackByIndex(index: number, item: any): number {
-    return index;
   }
 }

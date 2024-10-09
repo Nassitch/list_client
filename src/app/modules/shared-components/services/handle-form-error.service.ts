@@ -12,31 +12,37 @@ export class HandleFormErrorService {
       return undefined;
     }
 
-    const key = Object.keys(control.errors)[0];
+    const key: string = Object.keys(control.errors)[0];
     const error = control.getError(key);
 
     switch (key) {
-      case 'minlength':
+      case 'minlength': {
         return `La longueur minimum est de ${error.requiredLength} caractères.`;
+      }
 
-      case 'maxlength':
+      case 'maxlength': {
         return `La longueur maximum est de ${error.requiredLength} caractères.`;
+      }
 
-      case 'email':
+      case 'email': {
         return "Le format de l'email est invalide.";
+      }
 
-      case 'required':
+      case 'required': {
         return 'Le champ est requis.';
+      }
 
-      case 'pattern':
+      case 'pattern': {
         return "Le format n'est pas valide.";
+      }
 
-      default:
+      default: {
         if (typeof error === 'string') {
           return error;
         }
-        const data = JSON.stringify(error);
+        const data: string = JSON.stringify(error);
         throw new Error(`Unrecognized validator key: ${key} - Data: ${data}`);
+      }
     }
   }
 }

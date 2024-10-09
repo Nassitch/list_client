@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { StatisticService } from '../../modules/shared-components/services/statistic.service';
 import { Statistic } from '../../modules/shared-components/models/statistic.interface';
+import {UserInfo} from "../../modules/user/models/user-info.interface";
 
 @Component({
   selector: 'app-home-page',
@@ -12,11 +13,11 @@ import { Statistic } from '../../modules/shared-components/models/statistic.inte
 })
 export class HomePageComponent implements OnInit {
 
-  private userService = inject(UserService);
-  private router = inject(Router);
-  private statService = inject(StatisticService);
+  private userService: UserService = inject(UserService);
+  private router: Router = inject(Router);
+  private statService: StatisticService = inject(StatisticService);
 
-  profile$!: Observable<any>;
+  profile$!: Observable<UserInfo>;
   statistics$!: Observable<Statistic>;
 
   titleLandingMsg: string = "Bienvenue sur List.";

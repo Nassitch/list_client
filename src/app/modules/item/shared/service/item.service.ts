@@ -11,7 +11,7 @@ import { DeleteMsg } from '../../../shared-components/models/delete-msg.interfac
 })
 export class ItemService {
 
-  private http = inject(HttpClient);
+  private http: HttpClient = inject(HttpClient);
 
   private readonly _BASE_URL: string = environment._BASE_URL;
   private readonly _ADMIN: string = environment._ADMIN;
@@ -31,7 +31,7 @@ export class ItemService {
     const item: ItemRequest = new ItemRequest(id, name);
     return this.http.post<ItemRequest>(`${this._BASE_URL}${this._ADMIN}${this._ITEM}${this._CREATE}`, item);
   }
-  
+
   editItem$(idItem: number, name: string, idCategory: number): Observable<ItemRequest> {
     const item: ItemRequest = new ItemRequest(idCategory, name);
     return this.http.put<ItemRequest>(`${this._BASE_URL}${this._ADMIN}${this._ITEM}${this._UPDATE}/${idItem}`, item);

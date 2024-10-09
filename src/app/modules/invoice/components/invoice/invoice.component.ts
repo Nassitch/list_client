@@ -19,14 +19,14 @@ import { ConfirmModalService } from '../../../shared-components/services/confirm
 export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
-  private refreshShops$ = new BehaviorSubject<void>(undefined);
+  private refreshShops$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
 
-  private invoiceService = inject(InvoiceService);
-  private shopService = inject(ShopService);
-  private toastService = inject(ToastService);
-  private confirmModalService = inject(ConfirmModalService);
-  protected marketService = inject(MarketService);
-  public imageService = inject(ImageService);
+  private invoiceService: InvoiceService = inject(InvoiceService);
+  private shopService: ShopService = inject(ShopService);
+  private toastService: ToastService = inject(ToastService);
+  private confirmModalService: ConfirmModalService = inject(ConfirmModalService);
+  protected marketService: MarketService = inject(MarketService);
+  public imageService: ImageService = inject(ImageService);
 
   marketList$!: Observable<Market[]>;
   shopList$!: Observable<Shop[]>;
@@ -67,7 +67,7 @@ export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
     this.confirmModalService.delete();
     this.idToDeleted = id;
   }
-  
+
   handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
     if (response.action === 'save') {
       if (this.total === undefined || this.activeMarket === undefined || this.activeShop === undefined) {
@@ -75,11 +75,11 @@ export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
     } else {
       if (response.confirmed) {
         this.postSubscription$ = this.invoiceService.addInvoice$(this.total, this.activeMarket, this.activeShop).subscribe({
-          next: (response) => {
+          next: (): void => {
             this.toastService.success('Facture validée avec succès.');
             this.refreshShops$.next()
           },
-          error: (error) => {
+          error: (): void => {
             this.toastService.error('La facture est déjà existante.');
           }
         });
@@ -87,11 +87,11 @@ export class InvoiceComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   } else if (response.action === 'delete') {
     this.deleteSubscription$ = this.shopService.deleteShop$(this.idToDeleted!).subscribe({
-      next: () => {
+      next: (): void => {
         this.toastService.success("Panier supprimé avec Succès"),
         this.refreshShops$.next()
       },
-      error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression")
+      error: () => this.toastService.error("Une erreur s'est produite lors de la suppression")
     });
   }
 }
