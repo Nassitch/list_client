@@ -2,7 +2,7 @@ import {EnvironmentType} from "./environment.type";
 
 export const environment: EnvironmentType = {
   production: false,
-  _BASE_URL: 'http://localhost:8080/api/v1',
+  _BASE_URL: "https://list.api.3a1d.com/api/v1",
   _AUTH: '/auth',
   _ADMIN: '/admin',
   _PUBLIC: '/public',
