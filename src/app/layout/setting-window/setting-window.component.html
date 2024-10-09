@@ -15,7 +15,7 @@
             <p>Déconnexion</p>
         </button>
     </div>
-    <div class="modal-close-clicker" (click)="close()"></div>
+    <div class="modal-close-clicker" (click)="close()" tabindex="0" (keydown.enter)="close()"></div>
 
 } @else {
     <div class="setting-window">
@@ -39,5 +39,5 @@
             <p>Déconnexion</p>
         </button>
     </div>
-    <div class="modal-close-clicker" (click)="close()"></div>
+    <div class="modal-close-clicker" (click)="close()" tabindex="0" (keydown.enter)="close()"></div>
 }

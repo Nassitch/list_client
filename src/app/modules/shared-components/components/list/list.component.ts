@@ -17,7 +17,7 @@ export class ListComponent implements OnInit {
   @Input() public isUnroll: boolean = true;
   @Input() public allSelected: boolean = false;
 
-  @Output() public selectedItemsChange = new EventEmitter<{ categoryId: number, items: Item[] }>();
+  @Output() public selectedItemsChange: EventEmitter<{ categoryId: number, items: Item[] }> = new EventEmitter<{ categoryId: number, items: Item[] }>();
 
   selectedItems: { [id: number]: boolean } = {};
 
@@ -35,12 +35,11 @@ export class ListComponent implements OnInit {
   }
 
   countItem(items: Item[]): number {
-    let howMuch: number = items.length;
-    return howMuch;
+    return items.length;
   }
 
   sortItem(items: Item[]): Item[] {
-    return items.sort((a, b) => a.name.localeCompare(b.name));
+    return items.sort((a: Item, b: Item) => a.name.localeCompare(b.name));
   }
 
   toggleList(): boolean {
@@ -54,7 +53,7 @@ export class ListComponent implements OnInit {
 
   selectAllItems(allSelected: boolean): void {
     if (allSelected) {
-      for (let i = 0; i < this.items.length; i += 1) {
+      for (let i: number = 0; i < this.items.length; i += 1) {
         this.selectedItems[this.items[i].id] = true;
       }
     }
@@ -65,7 +64,7 @@ export class ListComponent implements OnInit {
   }
 
   emitSelectItems(): void {
-    const selectedItemsArray = this.items.filter(item => this.selectedItems[item.id]);
+    const selectedItemsArray: Item[] = this.items.filter(item => this.selectedItems[item.id]);
     this.selectedItemsChange.emit({ categoryId: this.id, items: selectedItemsArray });
   }
 }

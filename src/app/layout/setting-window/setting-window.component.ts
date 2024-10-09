@@ -11,15 +11,14 @@ export class SettingWindowComponent implements OnInit {
   @Output() openWindow: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() closeWindow: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private adminService = inject(AdminService);
-  private authService = inject(AuthService);
+  private adminService: AdminService = inject(AdminService);
+  private authService: AuthService = inject(AuthService);
 
   isUser: boolean = true;
-  isInstalled: boolean = false;
 
   ngOnInit(): void {
     this.adminService.initializeUserRole();
-    const role = this.adminService.currentUserRole$.getValue();
+    const role: string | undefined = this.adminService.currentUserRole$.getValue();
     if (role === 'ROLE_ADMIN') {
       this.isUser = false;
     }

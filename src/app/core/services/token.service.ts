@@ -1,4 +1,4 @@
-import { Injectable, OnInit, inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { CookieService } from './cookie.service';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -10,26 +10,26 @@ import { TokenDecrypted } from '../../models/token-decrypted.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class TokenService implements OnInit {
+export class TokenService {
   private _tokenDetailsSubject$: BehaviorSubject<TokenDecrypted | null> =
   new BehaviorSubject<TokenDecrypted | null>(null);
-  
-  private cookieService = inject(CookieService);
-  private toastService = inject(ToastService);
-  private router = inject(Router);
 
-  ngOnInit(): void {
-    this._tokenDetailsSubject$ = this.getTokenFromCookiesAndDecode();
+  private cookieService: CookieService = inject(CookieService);
+  private toastService: ToastService = inject(ToastService);
+  private router: Router = inject(Router);
+
+  constructor() {
+    this.getTokenFromCookiesAndDecode();
   }
 
-  updateToken(tokenFromDB: TokenResponse) {
+  updateToken(tokenFromDB: TokenResponse): void {
     this._clearCookiesAndThenPutNewToken(tokenFromDB);
     const decodedToken: TokenDecrypted = this._decodeToken(tokenFromDB);
     this._setTokenDetailsSubject$(decodedToken);
   }
 
-  getTokenFromCookiesAndDecode(): any {
-    const tokenId = this.cookieService.getCookie('authToken');
+  getTokenFromCookiesAndDecode(): TokenDecrypted | null {
+    const tokenId: string | null = this.cookieService.getCookie('authToken');
     if (tokenId) {
       const decodedToken: TokenDecrypted = this._decodeToken({ token: tokenId });
       if (this._isTokenExpired(decodedToken)) {
@@ -54,24 +54,24 @@ export class TokenService implements OnInit {
     this.cookieService.setCookie('authToken', tokenFromDB.token, 7, true, 'Strict');
   }
 
-  private _decodeToken(tokenFromDB: TokenResponse): any {
+  private _decodeToken(tokenFromDB: TokenResponse): TokenDecrypted {
     return this._getDecodedTokenResponse(tokenFromDB.token);
   }
 
-  private _getDecodedTokenResponse(token: string): any {
+  private _getDecodedTokenResponse(token: string): TokenDecrypted {
     return jwtDecode(token);
   }
 
-  private _isTokenExpired(decodedToken: any): boolean {
-    const currentTime = Math.floor(Date.now() / 1000);
+  private _isTokenExpired(decodedToken: TokenDecrypted): boolean {
+    const currentTime: number = Math.floor(Date.now() / 1000);
     return decodedToken.exp < currentTime;
   }
 
-  private _setTokenDetailsSubject$(tokenInfos: any): void {
+  private _setTokenDetailsSubject$(tokenInfos: TokenDecrypted): void {
     this._tokenDetailsSubject$.next(tokenInfos);
   }
 
-  _getTokenDetailsSubject$(): Observable<any> {
+  _getTokenDetailsSubject$(): Observable<TokenDecrypted | null> {
     return this._tokenDetailsSubject$.asObservable();
   }
 }

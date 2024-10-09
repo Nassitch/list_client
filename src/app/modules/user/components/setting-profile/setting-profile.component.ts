@@ -1,9 +1,8 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { catchError, Observable, of, Subscription, tap } from 'rxjs';
+import { catchError, Observable, of, Subscription } from 'rxjs';
 import { UserService } from '../../shared/services/user.service';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
-import { environment } from '../../../../../environments/environment.developpment';
 import { UserInfo } from '../../models/user-info.interface';
 import { ToastService } from '../../../shared-components/services/toast.service';
 import { ImageService } from '../../../shared-components/services/image.service';
@@ -15,17 +14,17 @@ import { ConfirmModalService } from '../../../shared-components/services/confirm
   templateUrl: './setting-profile.component.html',
   styleUrls: ['./setting-profile.component.css'],
 })
-export class SettingProfileComponent implements OnInit {
+export class SettingProfileComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
-  private userService = inject(UserService);
-  private fb = inject(FormBuilder);
-  private toastService = inject(ToastService);
-  private confirmModalService = inject(ConfirmModalService);
-  public imageService = inject(ImageService);
+  private userService: UserService = inject(UserService);
+  private fb: FormBuilder = inject(FormBuilder);
+  private toastService: ToastService = inject(ToastService);
+  private confirmModalService: ConfirmModalService = inject(ConfirmModalService);
+  public imageService: ImageService = inject(ImageService);
 
   private profileSubscription$: Subscription | null = null;
-  profile$!: Observable<any>;
+  profile$!: Observable<UserInfo>;
   avatars$!: Observable<string[]>;
   picture: string = '';
   textBtn: string = 'Enregistrer';
@@ -37,7 +36,7 @@ export class SettingProfileComponent implements OnInit {
 
     this.profile$ = this.userService.getUserProfile$();
 
-    this.profileSubscription$ = this.profile$.subscribe((profile) => {
+    this.profileSubscription$ = this.profile$.subscribe((profile): void => {
       if (profile) {
         this.picture = profile.picture,
         this.formGroup.patchValue({
@@ -93,13 +92,13 @@ export class SettingProfileComponent implements OnInit {
     if (response.action === 'save') {
 
       if (this.formGroup.invalid) {
-        Object.keys(this.formGroup.controls).forEach((key) => {
+        Object.keys(this.formGroup.controls).forEach((key: string): void => {
         const control = this.formGroup.get(key);
         control?.markAsTouched();
       });
       return;
     }
-    
+
     const userInfo: UserInfo = {
       firstName: this.formGroup.get('firstName')?.value,
       lastName: this.formGroup.get('lastName')?.value,
@@ -108,14 +107,14 @@ export class SettingProfileComponent implements OnInit {
       city: this.formGroup.get('city')?.value,
       zipCode: this.formGroup.get('zipCode')?.value,
     };
-    
+
     if (response.confirmed) {
       this.userService.putUserProfile$(userInfo).pipe(
         catchError(() => {
           this.toastService.error('Erreur lors de la modification de votre compte.');
           return of(null);
         })
-      ).subscribe((response) => {
+      ).subscribe((response: UserInfo | null): void => {
         if (response) {
           this.toastService.success('Vos données sont bien enregistrées.');
           this.userService.upToDateProfile(userInfo);

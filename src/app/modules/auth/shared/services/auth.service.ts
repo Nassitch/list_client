@@ -1,7 +1,7 @@
-import { BehaviorSubject, catchError, map, mergeMap, Observable, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap } from 'rxjs';
 import { UserToken } from '../../../../models/user-token.interface';
 import { UserInfo } from '../../../user/models/user-info.interface';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { AuthRequest } from '../../models/auth-request.interface';
 import { TokenResponse } from '../../../../models/token-response.interface';
 import { environment } from '../../../../../environments/environment.developpment';
@@ -9,7 +9,7 @@ import { ToastService } from '../../../shared-components/services/toast.service'
 import { Router } from '@angular/router';
 import { CookieService } from '../../../../core/services/cookie.service';
 import { TokenService } from '../../../../core/services/token.service';
-import { inject, Injectable, OnInit } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { LogResponse } from '../../models/log-response.interface';
 import { TokenDecrypted } from '../../../../models/token-decrypted.interface';
 import { LogMessageResponse } from '../../models/log-message-response.interface';
@@ -18,17 +18,17 @@ import { SignupResponse } from '../../models/signup-response.interface';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnInit {
+export class AuthService {
   private currentUser: BehaviorSubject<UserToken | null> =
     new BehaviorSubject<UserToken | null>(null);
-    private logInfoUser: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-    public currentUserId: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
+  private logInfoUser: BehaviorSubject<AuthRequest | null> = new BehaviorSubject<AuthRequest | null>(null);
+  public currentUserId: BehaviorSubject<number | undefined> = new BehaviorSubject<number | undefined>(undefined);
 
-  protected http = inject(HttpClient);
-  private cookieService = inject(CookieService);
-  private tokenService = inject(TokenService);
-  private toastService = inject(ToastService);
-  private router = inject(Router);
+  protected http: HttpClient = inject(HttpClient);
+  private cookieService: CookieService = inject(CookieService);
+  private tokenService: TokenService = inject(TokenService);
+  private toastService: ToastService = inject(ToastService);
+  private router: Router = inject(Router);
 
   private readonly _BASE_URL: string = environment._BASE_URL;
   private readonly _AUTH: string = environment._AUTH;
@@ -36,7 +36,7 @@ export class AuthService implements OnInit {
   private readonly _REGISTER_LOG: string = environment._REGISTER_LOG;
   private readonly _REGISTER_USER: string = environment._REGISTER_USER;
 
-  ngOnInit(): void {
+  constructor() {
     this.initializeCurrentUser();
   }
 
@@ -47,7 +47,7 @@ export class AuthService implements OnInit {
         tap((response: LogResponse) => {
           this.cookieService.setCookie('authToken', response.token, 1, true, 'Strict');
 
-          const decodedToken: TokenDecrypted = this.tokenService.getTokenFromCookiesAndDecode();
+          const decodedToken: TokenDecrypted | null = this.tokenService.getTokenFromCookiesAndDecode();
           if (decodedToken) {
             const userInfo: UserToken = {
               userId: decodedToken.userId!,
@@ -64,7 +64,7 @@ export class AuthService implements OnInit {
           token: response.token,
           message: `Bienvenue `,
         })),
-        catchError((error: HttpErrorResponse) => {
+        catchError(() => {
           return of({ success: false, message: 'Identifiants invalides' });
         })
       );
@@ -77,43 +77,50 @@ export class AuthService implements OnInit {
     this.currentUser.next(null);
   }
 
-  signup$(newUser: AuthRequest): Observable<any> {
+  signup$(newUser: AuthRequest): Observable<LogMessageResponse> {
     this.logInfoUser.next(newUser);
-      return this.http.post<SignupResponse>(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
-        .pipe(
-          tap(response => {
-            this.currentUserId.next(response.id);
-          }),
-          map(response => ({
-            success: true,
-            message: response.message,
-            id: response.id
-          })),
-          catchError(() => {
-            return of({
-              success: false,
-              message: "Erreur lors de l'inscription",
-            });
-          })
-        );
-    }
+    return this.http.post<SignupResponse>(`${this._BASE_URL}${this._AUTH}${this._REGISTER_LOG}`, newUser)
+      .pipe(
+        tap(response => {
+          this.currentUserId.next(response.id);
+        }),
+        map(response => ({
+          success: true,
+          message: response.message,
+          id: response.id
+        })),
+        catchError(() => {
+          return of({
+            success: false,
+            message: "Erreur lors de l'inscription",
+          });
+        })
+      );
+  }
 
-  register$(userInfo: UserInfo): Observable<any> {
-    return this.http.post(
+  register$(userInfo: UserInfo): Observable<{ success: boolean; message: string }> {
+    return this.http.post<SignupResponse>(
       `${this._BASE_URL}${this._AUTH}${this._REGISTER_USER}`,
       userInfo
     ).pipe(
-      switchMap((user: any) =>
-        this.login$(this.logInfoUser.getValue()).pipe(
+      switchMap(() => {
+        const authRequest: AuthRequest | null = this.logInfoUser.getValue();
+        if (!authRequest) {
+          return of({
+            success: false,
+            message: "Erreur lors de l'inscription : informations utilisateur manquantes",
+          });
+        }
+        return this.login$(authRequest).pipe(
           catchError(() => {
             return of(null);
           }),
-          map(() => ({
+          map((): { message: string; success: boolean } => ({
             success: true,
             message: 'Inscription et connexion réussies',
           }))
-        )
-      ),
+        );
+      }),
       catchError(() => {
         return of({
           success: false,
@@ -124,7 +131,7 @@ export class AuthService implements OnInit {
   }
 
   private initializeCurrentUser(): void {
-    const decodedToken: TokenDecrypted = this.tokenService.getTokenFromCookiesAndDecode();
+    const decodedToken: TokenDecrypted | null = this.tokenService.getTokenFromCookiesAndDecode();
     if (decodedToken) {
       const userInfo: UserToken = {
         userId: decodedToken.userId!,

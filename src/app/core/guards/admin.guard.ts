@@ -4,20 +4,23 @@ import { TokenService } from '../services/token.service';
 import { ToastService } from '../../modules/shared-components/services/toast.service';
 import { TokenDecrypted } from '../../models/token-decrypted.interface';
 
-export const adminGuard: CanActivateFn = (route, state) => {
-  const tokenService = inject(TokenService);
-  const router = inject(Router);
-  const toastService = inject(ToastService);
+export const adminGuard: CanActivateFn = () => {
+  const tokenService: TokenService = inject(TokenService);
+  const router: Router = inject(Router);
+  const toastService: ToastService = inject(ToastService);
 
-  const decodedToken: TokenDecrypted = tokenService.getTokenFromCookiesAndDecode();
-  
-  if (decodedToken.role === 'ROLE_USER') {
-    router.navigate(['/home']);
-    toastService.error("Vos droits ne sont pas suffisant pour accéder au tableau de bord.");
-  } else if (!decodedToken || decodedToken.role !== 'ROLE_ADMIN') {
-    router.navigate(['/login']);
-    toastService.error("Vous n'êtes pas autorisé à accéder à cette page.");
-    return false;
+  const decodedToken: TokenDecrypted | null = tokenService.getTokenFromCookiesAndDecode();
+
+  if (decodedToken) {
+
+    if (decodedToken.role === 'ROLE_USER') {
+      router.navigate(['/home']);
+      toastService.error("Vos droits ne sont pas suffisant pour accéder au tableau de bord.");
+    } else if (!decodedToken || decodedToken.role !== 'ROLE_ADMIN') {
+      router.navigate(['/login']);
+      toastService.error("Vous n'êtes pas autorisé à accéder à cette page.");
+      return false;
+    }
   }
-  return true;
+    return true;
 };

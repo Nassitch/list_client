@@ -9,8 +9,8 @@ import { Statistic } from '../models/statistic.interface';
   providedIn: 'root',
 })
 export class StatisticService {
-  private http = inject(HttpClient);
-  private userService = inject(UserService);
+  private http: HttpClient = inject(HttpClient);
+  private userService: UserService = inject(UserService);
 
   private readonly _BASE_URL: string = environment._BASE_URL;
   private readonly _USER: string = environment._USER;

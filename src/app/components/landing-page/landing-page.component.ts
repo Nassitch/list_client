@@ -1,6 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { DeviceService } from '../../modules/shared-components/services/device.service';
-import { StorageService } from '../../core/services/storage.service';
+import { Component } from '@angular/core';
 import { Technologies } from '../../models/technologies.interface';
 
 @Component({

@@ -18,35 +18,35 @@ import { ConfirmModalService } from '../../../shared-components/services/confirm
 export class UserPanelComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
-  private refreshUserProfile$ = new BehaviorSubject<void>(undefined);
+  private refreshUserProfile$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
 
-  private adminService = inject(AdminService);
-  private userService = inject(UserService);
-  private fb = inject(FormBuilder);
-  private toastService = inject(ToastService);
-  private confirmModalService = inject(ConfirmModalService);
-  public imageService = inject(ImageService);
+  private adminService: AdminService = inject(AdminService);
+  private userService: UserService = inject(UserService);
+  private fb : FormBuilder = inject(FormBuilder);
+  private toastService: ToastService = inject(ToastService);
+  private confirmModalService: ConfirmModalService = inject(ConfirmModalService);
+  public imageService: ImageService = inject(ImageService);
 
   userList$!: Observable<UserInfo[]>;
   avatars$!: Observable<string[]>;
-  
+
   userProfile$: Subscription = new Subscription();
   putUserProfile$: Subscription = new Subscription();
   deleteUserProfile$: Subscription = new Subscription();
-  
+
   profileId: number = 0;
   profileLoginId: number = 0;
   idToDeleted?: number;
   picture!: string;
   textBtn: string = "Enregistrer";
-  
+
   formGroup!: FormGroup;
 
   ngOnInit(): void {
     this.userList$ = this.refreshUserProfile$.pipe(
       switchMap(() => this.userService.getAllUserProfile$())
     )
-    
+
 
     this.avatars$ = this.userService.getAvatars$();
 
@@ -109,7 +109,7 @@ export class UserPanelComponent implements OnInit, OnDestroy, AfterViewInit {
     this.confirmModalService.delete();
     this.idToDeleted = id;
   }
-  
+
   handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
     if (response.action === 'save') {
       if (response.confirmed) {
@@ -123,12 +123,12 @@ export class UserPanelComponent implements OnInit, OnDestroy, AfterViewInit {
         };
         this.putUserProfile$ = this.adminService.editUserProfile$(this.profileId, userProfile)
         .subscribe({
-          next: () => {
+          next: (): void => {
             this.toastService.success("Le profile d'utilisateur à bien été modifié.");
             this.profileId = 0;
             this.refreshUserProfile$.next();
           },
-          error: (error) => 
+          error: () =>
             this.toastService.error("Une erreur est survenue lors de la modification du profile.")
         })
       }
@@ -136,12 +136,12 @@ export class UserPanelComponent implements OnInit, OnDestroy, AfterViewInit {
       if (response.confirmed) {
       if (this.profileId !== 0) {
         this.deleteUserProfile$ = this.adminService.deleteUser$(this.idToDeleted!).subscribe({
-          next: () => {
+          next: (): void => {
             this.toastService.success("L'utilisateur à bien été supprimé.");
             this.profileId = 0;
             this.refreshUserProfile$.next();
           },
-          error: (error) => this.toastService.error("Un erreur est survenue lors de la suppression.")
+          error: () => this.toastService.error("Un erreur est survenue lors de la suppression.")
         })
       } else {
         this.toastService.error("Vous devez séléctionner un utilisateur.");

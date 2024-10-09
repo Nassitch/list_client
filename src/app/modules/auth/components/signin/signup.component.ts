@@ -3,10 +3,11 @@ import { AuthService } from '../../shared/services/auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthRequest } from '../../models/auth-request.interface';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { passwordMatchValidator } from '../../../shared-components/validators/password-match.validator';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
 import { ToastService } from '../../../shared-components/services/toast.service';
+import {LogMessageResponse} from "../../models/log-message-response.interface";
 
 @Component({
   selector: 'app-signup',
@@ -14,18 +15,18 @@ import { ToastService } from '../../../shared-components/services/toast.service'
   styleUrl: './signup.component.css'
 })
 export class SignupComponent implements OnInit {
-  newUser$?: Observable<AuthRequest>;
+  newUser$?: Observable<LogMessageResponse>;
 
-  private authService = inject(AuthService);
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private toastService = inject(ToastService);
+  private authService: AuthService = inject(AuthService);
+  private fb: FormBuilder = inject(FormBuilder);
+  private router: Router = inject(Router);
+  private toastService: ToastService = inject(ToastService);
 
   formGroup!: FormGroup;
 
   protected textBtn: string = "S'inscrire";
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formGroup = this.fb.group(
       {
         pseudo: new FormControl('', [
@@ -52,9 +53,9 @@ export class SignupComponent implements OnInit {
     return assertFormControl(this.formGroup.get(name), name);
   }
 
-  onSubmit() {
+  onSubmit(): void {
     if (this.formGroup.invalid) {
-      Object.keys(this.formGroup.controls).forEach((key) => {
+      Object.keys(this.formGroup.controls).forEach((key: string): void => {
         const control = this.formGroup.get(key);
         control?.markAsTouched();
       });
@@ -67,17 +68,19 @@ export class SignupComponent implements OnInit {
       password: this.formGroup.get('password')?.value,
     };
 
-    this.newUser$ = this.authService.signup$(newUser);
+    this.newUser$ = this.authService.signup$(newUser); // Type approprié
 
     this.newUser$.subscribe({
-      next: (user) => {
-        if (user) {
-          this.toastService.success('Votre compte à bien été créer.');
-          this.router.navigate(['/register']);
+      next: (response: LogMessageResponse): void => { // Utiliser le type correct ici
+        if (response.success) {
+          this.toastService.success('Votre compte a bien été créé.');
+          this.router.navigate(['/login']); // Rediriger vers la page de connexion
+        } else {
+          this.toastService.error(response.message);
         }
       },
-      error: (error) => {
-        this.toastService.error('Erreur lors de la création du compte.')
+      error: (error): void => {
+        this.toastService.error('Erreur lors de la création du compte.');
         console.error("Erreur lors de la création de l'utilisateur", error);
       },
     });

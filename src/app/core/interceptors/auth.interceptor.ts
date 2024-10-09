@@ -6,10 +6,10 @@ import { CookieService } from '../services/cookie.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  private cookieService = inject(CookieService);
+  private cookieService: CookieService = inject(CookieService);
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.cookieService.getCookie('authToken');
+  intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    const token: string | null = this.cookieService.getCookie('authToken');
 
     if (token) {
       const cloned = req.clone({

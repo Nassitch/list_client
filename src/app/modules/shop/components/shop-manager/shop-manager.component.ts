@@ -16,24 +16,24 @@ import { ConfirmModalService } from '../../../shared-components/services/confirm
 export class ShopManagerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
-  private refreshShops$ = new BehaviorSubject<void>(undefined);
-  
+  private refreshShops$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
+
   shopList$!: Observable<Shop[]>;
 
   deleteSubscription$: Subscription = new Subscription();
 
-  private shopService = inject(ShopService);
-  private toastService = inject(ToastService);
-  private router = inject(Router);
-  private storageService = inject(StorageService);
-  private confirmModalService = inject(ConfirmModalService);
+  private shopService: ShopService = inject(ShopService);
+  private toastService: ToastService = inject(ToastService);
+  private router: Router = inject(Router);
+  private storageService: StorageService = inject(StorageService);
+  private confirmModalService: ConfirmModalService = inject(ConfirmModalService);
 
   titleLandingMsg: string = "Gestionnaire de Paniers.";
   descriptionLandingMsg: string = "Cette page contient l'historique de tous vos précédents paniers. Vous pouvez ainsi choisir de créer un nouveau panier ou de modifier un panier existant.";
   addtitonalOneLandingMsg: string = "La première carte vous permet de créer un nouveau panier. S'il y a déjà un panier non validé, il sera supprimé.";
   addtitonalTwoLandingMsg: string = "Dans le cas où vous possédez un panier, la carte 'Panier Actuel' vous permet de modifier, enregistrer ou supprimer ce dernier. Dans le cas contraire, vous avez une liste de vos paniers précédemment validés.";
 
-  currentShop!: any;
+  currentShop!: Shop | null;
   idToDeleted?: number;
   shopContent: string = "shop";
   activeShop?: number;
@@ -44,7 +44,7 @@ export class ShopManagerComponent implements OnInit, OnDestroy, AfterViewInit {
       switchMap(() => this.shopService.getShopFromUser$()),
       map(shopList => shopList.reverse())
     );
-    this.currentShop = this.storageService.getItem(this.shopContent);
+    this.currentShop = JSON.parse(this.storageService.getItem(this.shopContent) || 'null');
   }
 
   newShop(): void {
@@ -67,16 +67,16 @@ export class ShopManagerComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
-  if (response.confirmed) {
-    this.deleteSubscription$ = this.shopService.deleteShop$(this.idToDeleted!).subscribe({
-      next: () => {
-        this.toastService.success("Panier supprimé avec Succès"),
-        this.refreshShops$.next()
-      },
-      error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression")
-    });
+    if (response.confirmed) {
+      this.deleteSubscription$ = this.shopService.deleteShop$(this.idToDeleted!).subscribe({
+        next: (): void => {
+          this.toastService.success("Panier supprimé avec Succès"),
+            this.refreshShops$.next()
+        },
+        error: () => this.toastService.error("Une erreur s'est produite lors de la suppression")
+      });
+    }
   }
-}
 
   onDelete(id: number): void {
     this.confirmModalService.delete();

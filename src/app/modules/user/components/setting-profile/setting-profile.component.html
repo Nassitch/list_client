@@ -4,9 +4,9 @@
     @if (profile$ | async; as profile) {
       <div class="last-log">
         <p>Dernière connexion :</p>
-        <p>{{ profile.lastLog | dateFormat }}</p>
+        <p>{{ profile.lastLog ?? 'yesterday' | dateFormat }}</p>
       </div>
-      
+
       <div class="mt-8">
         <app-input
         [control]="getFormControl('firstName')"
@@ -14,14 +14,14 @@
         [type]="'text'"
         [label]="'PRÉNOM *'"
         />
-        
+
         <app-input
         [control]="getFormControl('lastName')"
         [controlName]="'lastName'"
         [type]="'text'"
         [label]="'NOM *'"
         />
-        
+
         <div class="d-flex flex-column mb-4 avatar-choice">
           <label for="email">AVATAR *</label>
           <div class="avatar-list mt-4">
@@ -36,28 +36,28 @@
             }
           </div>
         </div>
-        
+
         <app-input
         [control]="getFormControl('address')"
         [controlName]="'address'"
         [type]="'text'"
         [label]="'ADRESSE *'"
         />
-        
+
         <app-input
         [control]="getFormControl('city')"
         [controlName]="'city'"
         [type]="'text'"
         [label]="'VILLE *'"
         />
-        
+
         <app-input
         [control]="getFormControl('zipCode')"
         [controlName]="'zipCode'"
         [type]="'number'"
         [label]="'CODE POSTALE *'"
         />
-        
+
         <app-submit-btn [text]="textBtn" (click)="onSubmit()" />
       </div>
     }
@@ -66,8 +66,8 @@
         <app-loader />
       </div>
     }
-    
+
     <app-confirm-modal (response)="handleConfirmSubmission($event)" />
   </section>
-  
+
 </main>

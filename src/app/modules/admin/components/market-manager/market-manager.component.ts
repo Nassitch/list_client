@@ -1,10 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { Market } from '../../../market/models/market.interface';
 import { MarketService } from '../../../market/shared/services/market.service';
@@ -20,12 +14,12 @@ import { ConfirmModalService } from '../../../shared-components/services/confirm
 })
 export class MarketManagerComponent implements OnInit, AfterViewInit {
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
-  private refreshMarket$ = new BehaviorSubject<void>(undefined);
+  private refreshMarket$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
 
-  private marketService = inject(MarketService);
-  private toastService = inject(ToastService);
-  private confirmModalService = inject(ConfirmModalService);
-  public imageService = inject(ImageService);
+  private marketService: MarketService = inject(MarketService);
+  private toastService: ToastService = inject(ToastService);
+  private confirmModalService: ConfirmModalService = inject(ConfirmModalService);
+  public imageService: ImageService = inject(ImageService);
 
   marketList$!: Observable<Market[]>;
 
@@ -82,7 +76,7 @@ export class MarketManagerComponent implements OnInit, AfterViewInit {
   }
 
   onFile(event: Event): void {
-    const target = event.target as HTMLInputElement;
+    const target: HTMLInputElement = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.picture = target.files[0];
     }
@@ -104,20 +98,20 @@ export class MarketManagerComponent implements OnInit, AfterViewInit {
                     )
                   )
                   .subscribe({
-                    next: () => {
+                    next: (): void => {
                       this.toastService.success('Marché modifiée avec succès.');
                       this.refreshMarket$.next();
                     },
-                    error: (error) => this.toastService.error("Une erreur s'est produite lors de la modification du Marché."),
+                    error: () => this.toastService.error("Une erreur s'est produite lors de la modification du Marché."),
                   });
               } else {
                 this.editSubscription$ = this.marketService.editMarket$(this.name, this.size, this.place, this.picturePath!, this.activeMarket!)
                   .subscribe({
-                    next: () => {
+                    next: (): void => {
                       this.toastService.success('Marché modifiée avec succès.');
                       this.refreshMarket$.next();
                     },
-                    error: (error) => this.toastService.error("Une erreur s'est produite lors de la modification du Marché."),
+                    error: () => this.toastService.error("Une erreur s'est produite lors de la modification du Marché."),
                   });
               }
             }
@@ -128,11 +122,11 @@ export class MarketManagerComponent implements OnInit, AfterViewInit {
                 )
               )
               .subscribe({
-                next: () => {
+                next: (): void => {
                   this.toastService.success('Marché ajoutée avec succès.');
                   this.refreshMarket$.next();
                 },
-                error: (error) => this.toastService.error("Une erreur s'est produite lors de l'ajout du Marché."),
+                error: () => this.toastService.error("Une erreur s'est produite lors de l'ajout du Marché."),
               });
           }
         } else {
@@ -143,11 +137,11 @@ export class MarketManagerComponent implements OnInit, AfterViewInit {
       if (response.confirmed) {
         this.deleteSubscription$ = this.marketService.deleteMarket$(this.idToDeleted!)
           .subscribe({
-            next: () => {
+            next: (): void => {
               this.toastService.success('Marché supprimé avec Succès'),
                 this.refreshMarket$.next();
             },
-            error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression"),
+            error: () => this.toastService.error("Une erreur s'est produite lors de la suppression"),
           });
       }
     }

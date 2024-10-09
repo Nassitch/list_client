@@ -26,9 +26,9 @@ export class CardComponent implements OnInit {
   @Input() public editPath: string = "/";
   @Input() public onDelete?: () => void;
   @Input() public isActive: boolean = false;
-  @Output() public cardSelected = new EventEmitter<{ id: number, content: string}>();
+  @Output() public cardSelected: EventEmitter<{ id: number, content: string}> = new EventEmitter<{ id: number, content: string}>();
 
-  private router = inject(Router);
+  private router: Router = inject(Router);
 
   checked: string = "../../../../../assets/icons/check.svg";
   unChecked: string = "../../../../../assets/icons/uncheck.svg";
