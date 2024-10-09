@@ -1,12 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  inject,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CategoryService } from '../../../category/shared/services/category.service';
 import { BehaviorSubject, map, Observable, Subscription, switchMap } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
@@ -26,12 +18,12 @@ export class CategoryManagerComponent
   @ViewChild('inputField') inputField!: ElementRef;
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
-  private refreshCategory$ = new BehaviorSubject<void>(undefined);
+  private refreshCategory$: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
 
-  private toastService = inject(ToastService);
-  private confirmModalService = inject(ConfirmModalService);
-  protected categoryService = inject(CategoryService);
-  public imageService = inject(ImageService);
+  private toastService: ToastService = inject(ToastService);
+  private confirmModalService: ConfirmModalService = inject(ConfirmModalService);
+  protected categoryService: CategoryService = inject(CategoryService);
+  public imageService: ImageService = inject(ImageService);
 
   categoryList$!: Observable<Category[]>;
 
@@ -74,7 +66,7 @@ export class CategoryManagerComponent
   }
 
   onFile(event: Event): void {
-    const target = event.target as HTMLInputElement;
+    const target: HTMLInputElement = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
       this.picture = target.files[0];
     }
@@ -91,7 +83,7 @@ export class CategoryManagerComponent
     if (response.action === 'save') {
       if (response.confirmed) {
         if (this.name) {
-          const formData = new FormData();
+          const formData: FormData = new FormData();
           formData.append('file', this.picture);
 
           if (this.edit) {
@@ -99,25 +91,25 @@ export class CategoryManagerComponent
               if (this.picture) {
                 this.editSubscription$ = this.imageService.addImage$(formData, 'category')
                   .pipe(
-                    switchMap((picture) => this.categoryService.editCategory$(this.name, picture.file, this.activeCategory!)
+                    switchMap((picture: any) => this.categoryService.editCategory$(this.name, picture.file, this.activeCategory!)
                     )
                   )
                   .subscribe({
-                    next: () => {
+                    next: (): void => {
                       this.toastService.success('Catégorie modifiée avec succès.');
                       this.refreshCategory$.next();
                     },
-                    error: (error) =>
+                    error: () =>
                       this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
                   });
               } else {
                 this.editSubscription$ = this.categoryService.editCategory$(this.name, this.picturePath, this.activeCategory!)
                   .subscribe({
-                    next: () => {
+                    next: (): void => {
                       this.toastService.success('Catégorie modifiée avec succès.');
                       this.refreshCategory$.next();
                     },
-                    error: (error) => this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
+                    error: () => this.toastService.error("Une erreur s'est produite lors de la modification de la catégorie."),
                   });
               }
             }
@@ -129,11 +121,11 @@ export class CategoryManagerComponent
                 )
               )
               .subscribe({
-                next: () => {
+                next: (): void => {
                   this.toastService.success('Catégorie ajoutée avec succès.');
                   this.refreshCategory$.next();
                 },
-                error: (error) => this.toastService.error("Une erreur s'est produite lors de l'ajout de la catégorie."),
+                error: () => this.toastService.error("Une erreur s'est produite lors de l'ajout de la catégorie."),
               });
           }
         } else {
@@ -145,11 +137,11 @@ export class CategoryManagerComponent
         this.deleteSubscription$ = this.categoryService
           .deleteCategory$(this.idToDelete!)
           .subscribe({
-            next: () => {
+            next: (): void => {
               this.toastService.success('Panier supprimé avec Succès'),
                 this.refreshCategory$.next();
             },
-            error: (error) => this.toastService.error("Une erreur s'est produite lors de la suppression"),
+            error: () => this.toastService.error("Une erreur s'est produite lors de la suppression"),
           });
       }
     }

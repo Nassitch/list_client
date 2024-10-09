@@ -7,6 +7,7 @@ import { AuthRequest } from '../../models/auth-request.interface';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { assertFormControl } from '../../../shared-components/utils/assert-form-control.util';
 import { ToastService } from '../../../shared-components/services/toast.service';
+import {UserToken} from "../../../../models/user-token.interface";
 
 @Component({
   selector: 'app-login',
@@ -16,10 +17,10 @@ import { ToastService } from '../../../shared-components/services/toast.service'
 export class LoginComponent implements OnInit {
   loginResult$?: Observable<LoginData>;
 
-  private authService = inject(AuthService);
-  private fb = inject(FormBuilder);
-  private router = inject(Router);
-  private toastService = inject(ToastService);
+  private authService: AuthService = inject(AuthService);
+  private fb: FormBuilder = inject(FormBuilder);
+  private router: Router = inject(Router);
+  private toastService: ToastService = inject(ToastService);
 
   email: string = '';
   password: string = '';
@@ -28,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   textBtn: string = 'Se connecter';
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.formGroup = this.fb.group({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
     return assertFormControl(this.formGroup.get(name), name);
   }
 
-  onSubmit = () => {
+  onSubmit = (): void => {
     const user: AuthRequest = {
       email: this.formGroup.get('email')?.value,
       password: this.formGroup.get('password')?.value,
@@ -50,10 +51,10 @@ export class LoginComponent implements OnInit {
 
     this.loginResult$ = this.authService.login$(user);
 
-    this.loginResult$.subscribe((result) => {
+    this.loginResult$.subscribe((result: LoginData): void => {
       if (result.success) {
         this.toastService.success('Connexion réussie');
-        this.authService.getCurrentUser().subscribe((currentUser) => {
+        this.authService.getCurrentUser().subscribe((currentUser: UserToken | null): void => {
           if (currentUser) {
             if (currentUser.userId) {
               this.router.navigate(['/home']);

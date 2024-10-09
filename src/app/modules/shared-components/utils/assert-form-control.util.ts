@@ -1,6 +1,6 @@
-import { FormControl } from "@angular/forms";
+import {AbstractControl, FormControl} from "@angular/forms";
 
-export function assertFormControl(control: any, name: string): FormControl {
+export function assertFormControl(control: AbstractControl | null, name: string): FormControl {
     if (control instanceof FormControl) {
       return control;
     } else {

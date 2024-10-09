@@ -12,38 +12,38 @@ import { HandleFormErrorService } from '../../services/handle-form-error.service
   styleUrl: './input.component.css',
 })
 export class InputComponent implements OnInit {
-  
+
   @ViewChild('inputField') inputField!: ElementRef;
-  @Input() public autocomplete = 'off';
+  @Input() public autocomplete: string = 'off';
   @Input({ required: true }) public control!: FormControl;
   @Input({ required: true }) public controlName = '';
   @Input() public controlType: ControlType = '';
-  @Input() public debounce = 400;
-  @Input() public inputClass = '';
+  @Input() public debounce: number = 400;
+  @Input() public inputClass: string = '';
   @Input() public label?: string;
-  @Input() public labelClass = '';
-  @Input() public placeholder = '';
+  @Input() public labelClass: string = '';
+  @Input() public placeholder: string = '';
   @Input() public type: InputType = 'text';
-  @Input() public disabled = false;
+  @Input() public disabled: boolean = false;
 
-  @Output() public valueChange = new EventEmitter<string>();
+  @Output() public valueChange: EventEmitter<string> = new EventEmitter<string>();
 
 
-  private readonly handleFormErrorService = inject(HandleFormErrorService);
+  private readonly handleFormErrorService: HandleFormErrorService = inject(HandleFormErrorService);
 
   isPasswordVisible: boolean = false;
   isPasswordField: boolean = false;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.isPasswordField = this.type === 'password';
   }
 
-  togglePasswordVisibility() {
+  togglePasswordVisibility(): void {
     this.isPasswordVisible = !this.isPasswordVisible;
     this.type = this.isPasswordVisible ? 'text' : 'password';
   }
 
-  focusInput():void {
+  focusInput(): void {
     this.inputField.nativeElement.focus();
   }
 

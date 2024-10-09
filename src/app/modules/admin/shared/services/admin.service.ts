@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TokenService } from '../../../../core/services/token.service';
-import { UserToken } from '../../../../models/user-token.interface';
 import { environment } from '../../../../../environments/environment.developpment';
 import { UserInfo } from '../../../user/models/user-info.interface';
 import { HttpClient } from '@angular/common/http';
 import { DeleteMsg } from '../../../shared-components/models/delete-msg.interface';
+import {TokenDecrypted} from "../../../../models/token-decrypted.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,8 @@ import { DeleteMsg } from '../../../shared-components/models/delete-msg.interfac
 export class AdminService {
   public currentUserRole$: BehaviorSubject<string | undefined> = new BehaviorSubject<string | undefined>(undefined);
 
-  private http = inject(HttpClient);
-  private tokenService = inject(TokenService);
+  private http: HttpClient = inject(HttpClient);
+  private tokenService: TokenService = inject(TokenService);
 
   private readonly _BASE_URL: string = environment._BASE_URL;
   private readonly _USER: string = environment._USER;
@@ -24,7 +24,7 @@ export class AdminService {
   private readonly _DELETE: string = environment._DELETE;
 
   initializeUserRole(): void {
-    const decodedToken: UserToken = this.tokenService.getTokenFromCookiesAndDecode();
+    const decodedToken: TokenDecrypted | null = this.tokenService.getTokenFromCookiesAndDecode();
     if (decodedToken) {
       this.currentUserRole$.next(decodedToken.role);
     } else {

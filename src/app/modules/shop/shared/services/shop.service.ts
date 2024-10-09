@@ -16,11 +16,11 @@ import { ShopEdit } from '../../models/shop-edit.class';
   providedIn: 'root',
 })
 export class ShopService {
-  private http = inject(HttpClient);
-  private userService = inject(UserService);
-  private storageService = inject(StorageService);
-  private toastService = inject(ToastService);
-  private router = inject(Router);
+  private http: HttpClient = inject(HttpClient);
+  private userService: UserService = inject(UserService);
+  private storageService: StorageService = inject(StorageService);
+  private toastService: ToastService = inject(ToastService);
+  private router: Router = inject(Router);
 
   private readonly _BASE_URL: string = environment._BASE_URL;
   private readonly _USER: string = environment._USER;
@@ -39,7 +39,7 @@ export class ShopService {
   }
 
   getShop$(): Observable<Category[]> {
-    const shopSave = this.storageService.getItem('shop');
+    const shopSave: string | null = this.storageService.getItem('shop');
     if (shopSave) {
       return of(JSON.parse(shopSave));
     } else {
@@ -52,7 +52,7 @@ export class ShopService {
   }
 
   getShopIntoLS(): Category[] {
-    const shopSave = this.storageService.getItem("shop");
+    const shopSave: string | null = this.storageService.getItem("shop");
     return shopSave ? JSON.parse(shopSave) : [];
 }
 
@@ -60,14 +60,14 @@ saveShop(categories: Category[]): void {
   this.storageService.setItem('shop', JSON.stringify(categories));
 }
 
-  addShop$(items: Item[]): Observable<any> {
+  addShop$(items: Item[]): Observable<ShopSave> {
     this.userService.initialize();
-    const itemIds = items.map(item => item.id);
-    const shopToSave = new ShopSave(itemIds, this.userService.id);
+    const itemIds: number[] = items.map(item => item.id);
+    const shopToSave: ShopSave = new ShopSave(itemIds, this.userService.id);
     this.storageService.removeItem('shop');
-    
+
     return this.http
-    .post(`${this._BASE_URL}${this._USER}${this._SHOP}${this._CREATE}`, shopToSave)
+    .post<ShopSave>(`${this._BASE_URL}${this._USER}${this._SHOP}${this._CREATE}`, shopToSave)
     .pipe(
       map((response) => {
         this.toastService.success('Votre Panier à bien été validé.');
@@ -80,15 +80,15 @@ saveShop(categories: Category[]): void {
       })
     );
   }
-  
-  editShop$(items: Item[], id: number): Observable<any> {
+
+  editShop$(items: Item[], id: number): Observable<ShopEdit> {
     this.userService.initialize();
-    const itemIds = items.map(item => item.id);
-    const shopToSave = new ShopEdit(itemIds, this.userService.id);
+    const itemIds: number[] = items.map(item => item.id);
+    const shopToSave: ShopEdit = new ShopEdit(itemIds, this.userService.id);
     this.storageService.removeItem('shop');
 
     return this.http
-    .put(`${this._BASE_URL}${this._USER}${this._SHOP}${this._UPDATE}/${id}`, shopToSave)
+    .put<ShopEdit>(`${this._BASE_URL}${this._USER}${this._SHOP}${this._UPDATE}/${id}`, shopToSave)
     .pipe(
       map((response) => {
         this.toastService.success('Votre Panier à bien été modifier.');

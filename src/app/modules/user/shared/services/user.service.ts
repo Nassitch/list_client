@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnDestroy, OnInit, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subscription, switchMap } from 'rxjs';
 import { environment } from '../../../../../environments/environment.developpment';
 import { UserInfo } from '../../models/user-info.interface';
 import { AuthService } from '../../../auth/shared/services/auth.service';
+import {UserToken} from "../../../../models/user-token.interface";
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService implements OnDestroy {
-  
-  private profileSubject = new BehaviorSubject<UserInfo | null>(null);
-  profile$ = this.profileSubject.asObservable();
 
-  private http = inject(HttpClient);
-  private authService = inject(AuthService);
+  private profileSubject: BehaviorSubject<UserInfo | null> = new BehaviorSubject<UserInfo | null>(null);
+  profile$: Observable<UserInfo | null>  = this.profileSubject.asObservable();
+
+  private http: HttpClient = inject(HttpClient);
+  private authService: AuthService = inject(AuthService);
 
   public id!: number;
   private currentUserSubscription: Subscription | null = null;
@@ -30,10 +31,9 @@ export class UserService implements OnDestroy {
   private readonly _UPDATE: string = environment._UPDATE;
 
   initialize(): void {
-    this.currentUserSubscription = this.authService.getCurrentUser().subscribe((user) => {
+    this.currentUserSubscription = this.authService.getCurrentUser().subscribe((user: UserToken | null): void => {
       if (user) {
         this.id = user.userId;
-      } else {
       }
     });
   }
@@ -45,7 +45,7 @@ export class UserService implements OnDestroy {
   getAllUserProfile$(): Observable<UserInfo[]> {
     return this.http.get<UserInfo[]>(`${this._BASE_URL}${this._ADMIN}${this._USER}${this._READ_ALL}`);
   }
-  
+
   getUserProfile$(): Observable<UserInfo> {
     return this.http.get<UserInfo>(
       `${this._BASE_URL}${this._USER}${this._THIS_USER}${this._READ}/${this.id}`
@@ -58,7 +58,7 @@ export class UserService implements OnDestroy {
 
   putUserProfile$(userInfo: UserInfo): Observable<UserInfo> {
     return this.authService.getCurrentUser().pipe(
-      switchMap((user) => {
+      switchMap((user: UserToken | null): Observable<UserInfo> => {
         if (user !== null) {
           return this.http.put<UserInfo>(
             `${this._BASE_URL}${this._USER}${this._THIS_USER}${this._UPDATE}/${user.userId}`,

@@ -8,9 +8,9 @@ import { Router } from '@angular/router';
 })
 export class DashBoardComponent {
 
-  private router = inject(Router);
+  private router: Router = inject(Router);
 
   navigateTo(path: string): void {
-    this.router.navigate(['/admin/' + path]);  
+    this.router.navigate(['/admin/' + path]);
   }
 }

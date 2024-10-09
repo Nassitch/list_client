@@ -1,5 +1,4 @@
-import { inject, Injectable } from '@angular/core';
-import { StorageService } from '../../../core/services/storage.service';
+import { Injectable } from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -7,7 +6,7 @@ import { StorageService } from '../../../core/services/storage.service';
 export class DeviceService {
 
   isMobileDevice(): boolean {
-    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    const userAgent: string = navigator.userAgent || navigator.vendor;
     return /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent);
   }
 }

@@ -2,11 +2,11 @@
 
     <section class="manager-section">
         <h2>Produit.</h2>
-        
+
         <div class="cards">
             @if (categoryList$ | async; as categoryList) {
                 @for (category of categoryList; track $index) {
-                    <app-card 
+                    <app-card
                     [type]="'static'"
                     [id]="category.id"
                     [imgContent]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture"
@@ -48,8 +48,8 @@
     </section>
 
     <form>
-        
-        <div class="manager-input-text" (click)="focusInput()">
+
+        <div class="manager-input-text" (click)="focusInput()" tabindex="0" (keydown.enter)="focusInput()">
             <label for="name">NOM *</label>
             <input #inputField type="text" name="name" [(ngModel)]="this.name" />
         </div>

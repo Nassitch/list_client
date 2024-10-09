@@ -14,7 +14,7 @@ export class CategoryService {
 
   categoryList$: BehaviorSubject<Category[]> = new BehaviorSubject<Category[]>([]);
 
-  private http = inject(HttpClient);
+  private http: HttpClient = inject(HttpClient);
 
   private readonly _BASE_URL: string = environment._BASE_URL;
   private readonly _ADMIN: string = environment._ADMIN;
@@ -27,7 +27,7 @@ export class CategoryService {
   private readonly _DELETE: string = environment._DELETE;
 
   getAllCategories$(): Observable<Category[]> {
-    const storedCategories = this.categoryList$.getValue();
+    const storedCategories: Category[] = this.categoryList$.getValue();
     if (storedCategories.length > 0) {
       return of(storedCategories);
     } else {
@@ -49,7 +49,7 @@ export class CategoryService {
     }
     return this.http.post<CategoryResponse>(`${this._BASE_URL}${this._ADMIN}${this._CATEGORY}${this._CREATE}`,  category);
   }
-  
+
   editCategory$(name: string, picture: string, id: number): Observable<CategoryResponse> {
       const category: CategoryRequest = {
         name: name,

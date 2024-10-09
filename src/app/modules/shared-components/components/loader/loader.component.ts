@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { LoaderService } from '../../services/loader.service';
 import { Observable } from 'rxjs';
 
@@ -12,12 +12,10 @@ import { Observable } from 'rxjs';
 export class LoaderComponent {
 
   @Input() public state: boolean = true;
-  
-  // private loaderService = inject(LoaderService);
 
   constructor(private loaderService: LoaderService) {
     this.isLoading$ = this.loaderService.loading$;
   }
-  
+
   isLoading$: Observable<boolean>;
 }

@@ -1,10 +1,10 @@
 <main>
     @if (profile$ | async; as profile) {
-        <app-last-log [lastLog]="profile.lastLog"  />
+        <app-last-log [lastLog]="profile?.lastLog ?? 'yesterday'"  />
     }
-    
+
     <app-landing-msg [title]="this.titleLandingMsg" [description]="this.descriptionLandingMsg" />
-    
+
     @if (statistics$ | async; as statistics) {
         <app-line-chart
         [months]="statistics.months"
@@ -46,7 +46,7 @@
             </div>
         </article>
     </menu>
-    
+
     <menu class="bckgrnd-clr-main">
         <article class="d-flex">
             <div class="menu-img">
@@ -63,7 +63,7 @@
             </div>
         </article>
     </menu>
-    
+
     <menu class="bckgrnd-clr-main">
         <article class="d-flex">
             <div class="menu-img">

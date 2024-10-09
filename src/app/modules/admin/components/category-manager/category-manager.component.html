@@ -8,7 +8,7 @@
 
             @if (categoryList$ | async; as categoryList) {
                 @for (category of categoryList; track $index) {
-                    <app-card 
+                    <app-card
                     [type]="'edit'"
                     [id]="category.id"
                     [imgContent]="this.imageService._BASE_URL_CATEGORY_IMG + category.picture"
@@ -32,11 +32,11 @@
 
         <form>
 
-            <div class="manager-input-text" (click)="focusInput()">
+            <div class="manager-input-text" (click)="focusInput()" tabindex="0" (keydown.enter)="focusInput()">
                 <label for="name">NOM *</label>
                 <input #inputField type="text" name="name" [(ngModel)]="this.name" />
             </div>
-            
+
             <div class="manager-input-file" >
                 <label for="name">Séléctionner une image</label>
                 <input type="file" (change)="onFile($event)" name="picture" accept="image/*" />
@@ -46,6 +46,6 @@
         <div class="submit-btn mt-8">
             <app-submit-btn [text]="textBtn" (buttonClick)="onSubmit()" />
         </div>
-       
+
     <app-confirm-modal (response)="handleConfirmSubmission($event)" />
 </main>

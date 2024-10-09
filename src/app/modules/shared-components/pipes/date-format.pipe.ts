@@ -6,17 +6,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateFormatPipe implements PipeTransform {
   transform(value: string): string {
-    const date = new Date(value);
-    const today = new Date();
-    const yesterday = new Date(today);
+    const date: Date = new Date(value);
+    const today: Date = new Date();
+    const yesterday: Date = new Date(today);
     yesterday.setDate(today.getDate() - 1);
 
-    const isToday =
+    const isToday: boolean =
       date.getDate() === today.getDate() &&
       date.getMonth() === today.getMonth() &&
       date.getFullYear() === today.getFullYear();
 
-    const isYesterday =
+    const isYesterday: boolean =
       date.getDate() === yesterday.getDate() &&
       date.getMonth() === yesterday.getMonth() &&
       date.getFullYear() === yesterday.getFullYear();
@@ -29,9 +29,9 @@ export class DateFormatPipe implements PipeTransform {
       return 'hier';
     }
 
-    const day = ('0' + date.getDate()).slice(-2);
-    const month = ('0' + (date.getMonth() + 1)).slice(-2);
-    const year = date.getFullYear();
+    const day: string = ('0' + date.getDate()).slice(-2);
+    const month: string = ('0' + (date.getMonth() + 1)).slice(-2);
+    const year: number = date.getFullYear();
 
     return `${day}.${month}.${year}`;
   }

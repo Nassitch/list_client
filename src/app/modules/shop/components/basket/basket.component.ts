@@ -2,7 +2,6 @@ import { AfterViewInit, Component, inject, OnDestroy, OnInit, ViewChild } from '
 import { Observable, Subscription, switchMap } from 'rxjs';
 import { Category } from '../../../category/models/category.interface';
 import { ShopService } from '../../shared/services/shop.service';
-import { CategoryService } from '../../../category/shared/services/category.service';
 import { Item } from '../../../item/models/item.interface';
 import { ActivatedRoute } from '@angular/router';
 import { Shop } from '../../models/shop.interface';
@@ -18,11 +17,10 @@ import { ConfirmModalComponent } from '../../../shared-components/components/con
 export class BasketComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(ConfirmModalComponent) confirmModal!: ConfirmModalComponent;
 
-  private shopService = inject(ShopService);
-  private route = inject(ActivatedRoute);
-  protected categoryService = inject(CategoryService);
-  public imageService = inject(ImageService);
-  private confirmModalService = inject(ConfirmModalService);
+  private shopService: ShopService = inject(ShopService);
+  private route: ActivatedRoute = inject(ActivatedRoute);
+  public imageService: ImageService = inject(ImageService);
+  private confirmModalService: ConfirmModalService = inject(ConfirmModalService);
 
   shopList$!: Observable<Category[]>;
   shop$!: Observable<Shop>;
@@ -47,7 +45,7 @@ export class BasketComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSelectedItemsChange(categoryId: number, items: Item[]): void {
     this.selectedItems[categoryId] = items;
-    this.total = Object.values(this.selectedItems).reduce((acc, items) => acc + items.length, 0);
+    this.total = Object.values(this.selectedItems).reduce((acc: number, items: Item[]) => acc + items.length, 0);
   }
 
   getAllSelectedItems(): Item[] {
@@ -57,10 +55,10 @@ export class BasketComponent implements OnInit, OnDestroy, AfterViewInit {
   ngAfterViewInit(): void {
     this.confirmModalService.setModalComponent(this.confirmModal);
   }
-  
+
   handleConfirmSubmission(response: { confirmed: boolean, action: 'save' | 'delete' }): void {
     if (response.confirmed) {
-    const allSelectedItems = this.getAllSelectedItems();
+    const allSelectedItems: Item[] = this.getAllSelectedItems();
     if (this.edit) {
       this.responseSubscription$ = this.shop$
       .pipe(
@@ -72,11 +70,11 @@ export class BasketComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  
+
   onSubmit(): void {
     this.confirmModalService.save();
   }
-  
+
   ngOnDestroy(): void {
     this.responseSubscription$.unsubscribe();
   }
