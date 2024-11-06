@@ -10,7 +10,7 @@
 <ng-template #defaultTemplate>
   <div class="input-text mb-4" (click)="focusInput()" tabindex="0" (keydown.enter)="focusInput()">
     <label class="form-label {{ labelClass }}" for="form-{{ controlName }}-id">
-      {{ label }}</label
+      {{ label | uppercase }}</label
     >
     <input
       #inputField
@@ -34,7 +34,7 @@
         class="form-label {{ labelClass }}"
         for="form-{{ controlName }}-id"
       >
-        {{ label }}
+        {{ label | uppercase }}
       </label>
       <input
         #inputField
@@ -48,7 +48,7 @@
     </div>
 
     <button (click)="togglePasswordVisibility()">
-      <img src="../../../../assets/icons/view.svg" alt="Voir/Masquer" />
+      <img [src]="isPasswordVisible ? unViewIcon : viewIcon" alt="Voir/Masquer" />
     </button>
   </div>
   @if (showError) {
