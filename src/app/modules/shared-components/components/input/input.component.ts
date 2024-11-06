@@ -34,6 +34,9 @@ export class InputComponent implements OnInit {
   isPasswordVisible: boolean = false;
   isPasswordField: boolean = false;
 
+  unViewIcon: string = "../../../../assets/icons/un-view.svg";
+  viewIcon: string = "../../../../assets/icons/view.svg";
+
   ngOnInit(): void {
     this.isPasswordField = this.type === 'password';
   }
