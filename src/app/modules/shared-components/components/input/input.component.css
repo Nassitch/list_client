@@ -21,7 +21,7 @@
 /* Password. */
 .input-password {
   width: 100%;
-  max-width: 285px;
+  max-width: 250px;
 }
 
 .input-password > button {
