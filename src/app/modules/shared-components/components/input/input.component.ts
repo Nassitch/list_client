@@ -16,7 +16,7 @@ export class InputComponent implements OnInit {
   @ViewChild('inputField') inputField!: ElementRef;
   @Input() public autocomplete: string = 'off';
   @Input({ required: true }) public control!: FormControl;
-  @Input({ required: true }) public controlName = '';
+  @Input({ required: true }) public controlName: string = '';
   @Input() public controlType: ControlType = '';
   @Input() public debounce: number = 400;
   @Input() public inputClass: string = '';
