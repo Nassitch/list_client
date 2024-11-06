@@ -2,7 +2,7 @@
 .input-text {
   height: 50px;
   width: 100%;
-  max-width: 285px;
+  max-width: 250px;
   padding: 5px 15px;
   background-color: var(--background-color);
   border-radius: 10px;
@@ -50,6 +50,7 @@
 
 /* Error. */
 .error-input {
+  max-width: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
