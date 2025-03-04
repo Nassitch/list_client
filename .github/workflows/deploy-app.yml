@@ -24,11 +24,13 @@ jobs:
       - name: Build Angular Application
         run: npm run build
 
-      - name: Deploy to FTP Server
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy to Server from SSH Agent.
+        uses: appleboy/scp-action@0.1.7
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: dist/list_client/browser/
-          protocol: ftps
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: "22"
+          source: "dist/list_client/browser/"
+          target: "list_app/client/"
