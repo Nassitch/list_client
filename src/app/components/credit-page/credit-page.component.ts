@@ -8,6 +8,8 @@ import { Technologies } from '../../models/technologies.interface';
 })
 export class CreditPageComponent {
 
+  protected currentYear: number = new Date().getFullYear();
+
   technologiesCardList: Technologies[] = [
     {
       picture: "../../../../../assets/technologies/angular.svg",
