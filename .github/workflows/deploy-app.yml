@@ -59,14 +59,15 @@ jobs:
       - name: Test SSH Connection
         run: |
           set -e
-          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'SSH connection successful'" || (echo "SSH connection failed!" && exit 1)
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no \
+          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'Connexion SSH réussie !'"
 
-      - name: Deploy to Server from SCP.
+      - name: Deploy to Server from SCP
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
           port: "22"
           source: "dist/list_client/browser/"
           target: "list_app/client/"
