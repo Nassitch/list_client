@@ -11,26 +11,38 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Build Angular Application
         run: npm run build
 
-      - name: Deploy to Server from SSH Agent.
+      - name: Configure WireGuard
+        run: |
+          sudo apt update
+          sudo apt install -y wireguard-tools
+          echo "${{ secrets.WG_CONFIG }}" | sudo tee /etc/wireguard/wg0.conf > /dev/null
+          sudo wg-quick up wg0
+          sudo ping -c 3 10.8.0.1 || exit 1
+
+      - name: Deploy to Server from SCP.
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: "22"
           source: "dist/list_client/browser/"
           target: "list_app/client/"
+          overwrite: true
+
+      - name: Cleanup VPN
+        if: always()
+        run: sudo wg-quick down wg0
