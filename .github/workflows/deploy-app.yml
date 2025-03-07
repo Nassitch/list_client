@@ -42,7 +42,7 @@ jobs:
           set -e
           ip a | grep wg0 || (echo "WireGuard interface not found!" && exit 1)
           ip route || (echo "No routing information!" && exit 1)
-          sudo ping -c 3 10.13.13.0 || (echo "VPN Ping failed!" && exit 1)
+          sudo ping -c 3 10.13.13.4 || (echo "VPN Ping failed!" && exit 1)
 
       - name: Test SSH Connection
         run: |
