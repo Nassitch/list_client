@@ -44,6 +44,11 @@ jobs:
           ip route || (echo "No routing information!" && exit 1)
           sudo ping -c 3 10.13.13.4 || (echo "VPN Ping failed!" && exit 1)
 
+      - name: Test if SSH Port 22 is Open
+        run: |
+          set -e
+          nc -zv ${{ secrets.SSH_HOST }} 22 || (echo "Port 22 is closed, SSH connections are not accepted !" && exit 1)
+          
       - name: Test SSH Connection
         run: |
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=no -o PreferredAuthentications=password ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'SSH connection successful'" || (echo "SSH connection failed!" && exit 1)
