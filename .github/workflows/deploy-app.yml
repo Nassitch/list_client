@@ -46,8 +46,7 @@ jobs:
 
       - name: Test SSH Connection
         run: |
-          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'SSH connection successful'" || (echo "SSH connection failed!" && exit 1)
-
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no -o PubkeyAuthentication=no -o PreferredAuthentications=password ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'SSH connection successful'" || (echo "SSH connection failed!" && exit 1)
 
       - name: Deploy to Server from SCP.
         uses: appleboy/scp-action@v0.1.7
