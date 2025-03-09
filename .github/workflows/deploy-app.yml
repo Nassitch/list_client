@@ -40,7 +40,7 @@ jobs:
       - name: Test VPN Connectivity
         run: |
           set -e
-          sudo ping -c 3 10.13.13.4 || (echo "VPN Ping failed!" && exit 1)
+          sudo ping -c 3 10.8.0.4 || (echo "VPN Ping failed!" && exit 1)
           
       - name: Test SSH Connection
         run: |
