@@ -77,7 +77,7 @@ jobs:
           target: "~/list_app/client/"
       
       - name: Deploy on server
-        uses: appleboy/ssh-action@v1.3.0
+        uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
