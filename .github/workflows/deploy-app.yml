@@ -29,19 +29,19 @@ jobs:
           set -e
           sudo apt update
           sudo apt install -y wireguard-tools sshpass
-          
+
       - name: Configure WireGuard
         run: |
           echo "${{ secrets.WG_CONFIG }}" | sudo tee /etc/wireguard/wg0.conf > /dev/null
           sudo wg-quick up wg0 || (echo "WireGuard failed to start!" && exit 1)
           sleep 3
           sudo wg
-          
+
       - name: Test VPN Connectivity
         run: |
           set -e
           sudo ping -c 3 10.8.0.4 || (echo "VPN Ping failed!" && exit 1)
-          
+
       - name: Test SSH Connection
         run: |
           set -e
@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: "22"
-          source: "dist/list_client/browser/"
+          source: "dist/list_client/browser/."
           target: "list_app/client/"
           overwrite: true
 
