@@ -86,7 +86,7 @@ jobs:
           script: |
             cd ~/list_app/client/
             sudo docker load -i list_client_app.tar
-            sudo docker compose up -d
+            sudo docker run -d list_client_app
 
       - name: Cleanup VPN
         if: always()
