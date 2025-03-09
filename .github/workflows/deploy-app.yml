@@ -55,7 +55,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: "22"
-          source: "dist/list_client/browser/*"
+          source: "dist/list_client/"
           target: "list_app/client/"
           overwrite: true
 
