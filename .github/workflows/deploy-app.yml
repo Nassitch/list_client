@@ -74,7 +74,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
           source: "list_client_app.tar"
-          target: "~/list_app/client/"
+          target: "/tmp/"
       
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.2.1
