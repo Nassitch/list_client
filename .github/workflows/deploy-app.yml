@@ -42,7 +42,7 @@ jobs:
             list_client_app:${{ steps.get-commit-hash.outputs.short_sha }}
           output: type=docker,dest=list_client_app.tar
 
-      - name: Install WireGuard et SSHPass
+      - name: Install WireGuard and SSHPass
         run: |
           set -e
           sudo apt update
@@ -65,19 +65,28 @@ jobs:
           set -e
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no \
           ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'Connexion SSH successfully !'"
-
-      - name: Deploy to Server from SCP
+          
+      - name: Transfer Docker image
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          port: "22"
+          port: 22
+          source: "list_client_app.tar"
+          target: "~/list_app/client/"
+      
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.3.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: 22
           script: |
-            cd list_app/client/
-            sudo docker compose down
-            sudo docker load -i list_client_app.tar || true
-            TAG=$(git rev-parse --short HEAD) sudo docker compose up -d --force-recreate
+            cd ~/list_app/client/
+            docker load -i list_client_app.tar
+            TAG=$(git rev-parse --short HEAD) docker compose up -d
 
       - name: Cleanup VPN
         if: always()
