@@ -37,10 +37,8 @@ jobs:
         uses: docker/build-push-action@v6.15.0
         with:
           context: .
-          tags: |
-            list_client_app:latest
-            list_client_app:${{ steps.get-commit-hash.outputs.short_sha }}
-          output: type=docker,dest=list_client_app.tar
+          tags: list_client_app:latest
+          output: type=docker,dest=./list_client_app.tar
 
       - name: Install WireGuard and SSHPass
         run: |
@@ -73,8 +71,13 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
-          source: "list_client_app.tar"
+          source: "./list_client_app.tar"
           target: "/tmp/"
+          overwrite: true
+          strip_components: 0
+          tar_dereference: true
+          tar_tmp_path: "/tmp"
+          tar_exec: "tar"
       
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.2.1
