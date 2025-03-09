@@ -4,11 +4,13 @@ services:
     container_name: list_client_app
     build:
       dockerfile: ./Dockerfile
-    ports:
-      - "85:80"
+    expose:
+      - 80
     restart: unless-stopped
     networks:
-      - list_network
+      - dmz_network
 
 networks:
-  list_network:
+  dmz_network:
+    external: true
+    name: network_dmz_network

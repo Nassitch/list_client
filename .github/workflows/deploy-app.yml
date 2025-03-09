@@ -1,4 +1,4 @@
-name: Deploy Angular Application and PWA with FTP
+name: Deploy Angular Application and PWA with FTP.
 
 on:
   push:
@@ -10,56 +10,56 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout code.
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
+      - name: Set up Docker Buildx.
         uses: docker/setup-buildx-action@v3.10.0
 
-      - name: Build Docker image
+      - name: Build Docker image.
         uses: docker/build-push-action@v6.15.0
         with:
           context: .
           tags: list_client_app:latest
           load: true
 
-      - name: Save Docker image to tar file
+      - name: Save Docker image to .tar file.
         run: docker save list_client_app:latest -o ./list_client_app.tar && sudo chmod 644 ./list_client_app.tar
 
-      - name: Verify tar file exists
+      - name: Verify .tar file exists.
         run: |
           ls -lh ./list_client_app.tar || exit 1
 
-      - name: Install WireGuard and SSHPass
+      - name: Install WireGuard and SSHPass.
         run: |
           set -e
           sudo apt update
           sudo apt install -y wireguard-tools sshpass
 
-      - name: Configure WireGuard
+      - name: Configure WireGuard.
         run: |
           echo "${{ secrets.WG_CONFIG }}" | sudo tee /etc/wireguard/wg0.conf > /dev/null
           sudo wg-quick up wg0 || (echo "WireGuard failed to start!" && exit 1)
           sleep 3
           sudo wg
 
-      - name: Test VPN Connectivity
+      - name: Test VPN Connectivity.
         run: |
           set -e
           sudo ping -c 3 "${{ secrets.WG_SUB_NETWORK }}" || (echo "VPN Ping failed!" && exit 1)
 
-      - name: Test SSH Connection
+      - name: Test SSH Connection.
         run: |
           set -e
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no \
           ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'Connexion SSH successfully !'"
 
-      - name: Transfer Docker image and compose to VPS
+      - name: Transfer Docker image and compose to VPS.
         run: |
           sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no list_client_app.tar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:./list_app/client/
           sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:./list_app/client/
 
-      - name: Deploy on server
+      - name: Deploy on server.
         uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -72,6 +72,6 @@ jobs:
             sudo docker compose down
             sudo docker compose up -d
 
-      - name: Cleanup VPN
+      - name: Cleanup VPN.
         if: always()
         run: sudo wg-quick down wg0
