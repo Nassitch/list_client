@@ -35,7 +35,7 @@ jobs:
           load: true
 
       - name: Save Docker image to tar file
-        run: docker save list_client_app:latest -o ./list_client_app.tar
+        run: docker save list_client_app:latest -o ./list_client_app.tar && sudo chmod 644 ./list_client_app.tar
 
       - name: Verify tar file exists
         run: |
