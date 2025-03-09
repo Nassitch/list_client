@@ -31,8 +31,14 @@ jobs:
         uses: docker/build-push-action@v6.15.0
         with:
           context: .
-          tags: list_client_app:latest,list_client_app:$(git rev-parse --short HEAD)
+          tags: |
+            list_client_app:latest
+            list_client_app:${{ steps.get-commit-hash.outputs.short_sha }}
           output: type=docker,dest=list_client_app.tar
+
+      - name: Get commit hash
+        id: get-commit-hash
+        run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Install WireGuard et SSHPass
         run: |
