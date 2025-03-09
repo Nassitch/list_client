@@ -1,0 +1,14 @@
+services:
+  angular:
+    image: list_client_app:${TAG:-latest}
+    container_name: list_client_app
+    build:
+      dockerfile: ./Dockerfile
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    networks:
+      - list_network
+
+networks:
+  list_network:
