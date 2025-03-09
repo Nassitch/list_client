@@ -27,6 +27,12 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3.10.0
 
+      - name: Get commit hash
+        id: get-commit-hash
+        run: |
+          SHORT_SHA=$(git rev-parse --short HEAD)
+          echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+
       - name: Build Docker image
         uses: docker/build-push-action@v6.15.0
         with:
@@ -35,10 +41,6 @@ jobs:
             list_client_app:latest
             list_client_app:${{ steps.get-commit-hash.outputs.short_sha }}
           output: type=docker,dest=list_client_app.tar
-
-      - name: Get commit hash
-        id: get-commit-hash
-        run: echo "short_sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
 
       - name: Install WireGuard et SSHPass
         run: |
