@@ -58,7 +58,7 @@ jobs:
       - name: Test VPN Connectivity
         run: |
           set -e
-          sudo ping -c "${{ secrets.WG_SUB_NETWORK }} || (echo "VPN Ping failed!" && exit 1)
+          sudo ping -c "${{ secrets.WG_SUB_NETWORK }}" || (echo "VPN Ping failed!" && exit 1)
 
       - name: Test SSH Connection
         run: |
