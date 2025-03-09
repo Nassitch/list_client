@@ -31,8 +31,8 @@ jobs:
         uses: docker/build-push-action@v6.15.0
         with:
           context: .
-          tags: list_client_app:latest
-          load: true
+          tags: list_client_app:latest,list_client_app:$(git rev-parse --short HEAD)
+          output: type=docker,dest=list_client_app.tar
 
       - name: Install WireGuard et SSHPass
         run: |
@@ -56,7 +56,7 @@ jobs:
         run: |
           set -e
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no \
-          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'Connexion SSH réussie !'"
+          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'Connexion SSH successfully !'"
 
       - name: Deploy to Server from SCP
         uses: appleboy/scp-action@v0.1.7
@@ -69,7 +69,7 @@ jobs:
             cd list_app/client/
             sudo docker compose down
             sudo docker load -i list_client_app.tar || true
-            TAG=$(git rev-parse --short HEAD) sudo docker compose up -d
+            TAG=$(git rev-parse --short HEAD) sudo docker compose up -d --force-recreate
 
       - name: Cleanup VPN
         if: always()
