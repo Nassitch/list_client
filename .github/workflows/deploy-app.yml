@@ -47,6 +47,12 @@ jobs:
           sudo apt update
           sudo apt install -y wireguard-tools sshpass
 
+      - name: Download SSH Action binary
+        run: |
+          mkdir -p ~/.ssh-action
+          curl -sL https://github.com/appleboy/drone-ssh/releases/download/v1.8.0/drone-ssh-1.8.0-linux-amd64 -o ~/.ssh-action/drone-ssh
+          chmod +x ~/.ssh-action/drone-ssh
+
       - name: Configure WireGuard
         run: |
           echo "${{ secrets.WG_CONFIG }}" | sudo tee /etc/wireguard/wg0.conf > /dev/null
@@ -78,6 +84,8 @@ jobs:
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.2.1
+        env:
+          SSH_ACTION_PATH: ~/.ssh-action/drone-ssh
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
