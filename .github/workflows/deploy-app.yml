@@ -58,7 +58,7 @@ jobs:
           source: "dist/list_client/browser/*"
           target: "list_app/client/"
           cwd: "dist/list_client/browser"
-          strip_components: 4
+          strip_components: 3
           overwrite: true
 
       - name: Cleanup VPN
