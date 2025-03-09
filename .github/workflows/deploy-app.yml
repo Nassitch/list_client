@@ -65,20 +65,16 @@ jobs:
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no \
           ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'Connexion SSH successfully !'"
 
-      - name: Transfer Docker image
+      - name: Upload file to server
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: 22
-          source: "./list_client_app.tar"
-          target: "/tmp/"
+          source: ./list_client_app.tar
+          target: "list_app/client/"
           overwrite: true
-          strip_components: 0
-          tar_dereference: true
-          tar_tmp_path: "/tmp"
-          tar_exec: "tar"
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.2.1
