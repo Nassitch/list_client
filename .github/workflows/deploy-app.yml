@@ -34,6 +34,10 @@ jobs:
           tags: list_client_app:latest
           output: type=docker,dest=./list_client_app.tar
 
+      - name: Verify tar file exists
+        run: |
+          ls -lh ./list_client_app.tar || exit 1
+
       - name: Install WireGuard and SSHPass
         run: |
           set -e
