@@ -32,7 +32,7 @@ jobs:
         with:
           context: .
           tags: list_client_app:latest
-          output: type=docker,dest=./list_client_app.tar
+          load: true
 
       - name: Save Docker image to tar file
         run: docker save list_client_app:latest -o ./list_client_app.tar
