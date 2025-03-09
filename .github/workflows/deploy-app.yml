@@ -47,12 +47,6 @@ jobs:
           sudo apt update
           sudo apt install -y wireguard-tools sshpass
 
-      - name: Pre-download SSH binary
-        run: |
-          mkdir -p ~/.ssh-action
-          curl -sL https://github.com/appleboy/drone-ssh/releases/download/v1.8.0/drone-ssh-1.8.0-linux-amd64 -o ~/.ssh-action/drone-ssh
-          chmod +x ~/.ssh-action/drone-ssh
-
       - name: Configure WireGuard
         run: |
           echo "${{ secrets.WG_CONFIG }}" | sudo tee /etc/wireguard/wg0.conf > /dev/null
@@ -84,8 +78,6 @@ jobs:
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.2.1
-        env:
-          DRONE_SSH_BINARY: /home/runner/.ssh-action/drone-ssh
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
@@ -93,8 +85,6 @@ jobs:
           port: 22
           script: |
             cd ~/list_app/client/
-            sudo docker compose down
-            sudo docker image rm -f list_client_app:latest || true
             sudo docker load -i list_client_app.tar
             sudo docker compose up -d
 
