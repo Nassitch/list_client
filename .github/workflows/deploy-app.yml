@@ -65,16 +65,10 @@ jobs:
           sshpass -p "${{ secrets.SSH_PASSWORD }}" ssh -o StrictHostKeyChecking=no \
           ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "echo 'Connexion SSH successfully !'"
 
-      - name: Upload file to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: 22
-          source: ./list_client_app.tar
-          target: "list_app/client/"
-          overwrite: true
+      - name: Transfer Docker image and compose to VPS
+        run: |
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no list_client_app.tar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:./list_app/client/
+          sshpass -p "${{ secrets.SSH_PASSWORD }}" scp -o StrictHostKeyChecking=no compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:./list_app/client/
 
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.2.1
@@ -86,7 +80,8 @@ jobs:
           script: |
             cd ~/list_app/client/
             sudo docker load -i list_client_app.tar
-            sudo docker run -d list_client_app
+            sudo docker compose down
+            sudo docker compose up -d
 
       - name: Cleanup VPN
         if: always()
